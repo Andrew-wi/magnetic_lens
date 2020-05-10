@@ -3,6 +3,7 @@ import time
 import threading
 import sys
 
+from astropy.io import fits
 from scipy.stats import maxwell
 
 # -----------------------------------------------------------------------------
@@ -51,6 +52,13 @@ for i in range(n):
 # -----------------------------------------------------------------------------
 # kinematic propagation
 # -----------------------------------------------------------------------------
+
+# import matrices, source:
+# https://mathematica.stackexchange.com/questions/163685/export-a-3d-array-from-mathematica-and-import-it-in-python-as-a-numpy-array
+hdul = fits.open('/Users/andrewwinnicki/desktop/andrew/2019-2020/Doyle Lab/Modeling Project/B-Matrix/bxMatrix.fits')
+bxMatrix = np.array([hdul[i].data for i in range(1)][0])
+gradBxMatrix = np.gradient(bxMatrix, axis=0)
+print(gradBxMatrix)
 
 # will propagate for 100 mm, 0.1 s timesteps
 
