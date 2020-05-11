@@ -49,7 +49,8 @@ class Point():
 # Generate particles with velocity distributed standard normally, except
 # for in the z-coordinate, distributed Maxwell-Boltzmann
 for i in range(n):
-    particles.append(Point(np.array([0.0, 0.0, 0.0]), np.array([np.random.standard_normal(), \
+    particles.append(Point(np.array([0.0, 0.0, 0.0]), \
+        np.array([np.random.standard_normal(), \
         np.random.standard_normal(), maxwell.rvs()]), 1.0))
 
 # Store original points in x- and y-coordinates
@@ -63,20 +64,7 @@ for i in range(n):
 # Kinematic propagation
 # -----------------------------------------------------------------------------
 
-# Import matrices, source:
-# https://mathematica.stackexchange.com/questions/163685/
-# export-a-3d-array-from-mathematica-and-import-it-in-python-as-a-numpy-array
-hdul = fits.open('/Users/andrewwinnicki/desktop/andrew/2019-2020/Doyle Lab/Modeling Project/B-Matrix/bxMatrix.fits')
-bxMatrix = np.array([hdul[i].data for i in range(1)][0])
-gradBxMatrix = np.gradient(bxMatrix, axis=0)
-
-# Calculate force field at each spacing
-forceField = np.array([[[g * mu_B * s * gradBxMatrix[i][j][k] \
-    for k in range(sp)] for j in range(sp)] for i in range(sp)])
-
 # Will propagate for 5 s, 0.1 s timesteps
-# Note: this is the first 100 mm, so we don't use the Halbach array
-# forceField yet, and the particles simply travel straight
 for step in np.linspace(0, 1, num=100, endpoint=False):
     for i in range(0, n):
         particles[i].move(dt)
@@ -89,13 +77,24 @@ for i in range(0, n):
 
 plt.xlabel('z (mm)')
 plt.ylabel('x (mm)')
-plt.title('Kinetic Propagation of {} particles in the z- and x-coordinates'.format(n))
+plt.title('Kinematic Propagation of {} particles in the z- and x-coordinates'\
+    .format(n))
 plt.show()
 
+# -----------------------------------------------------------------------------
+# Deflection by force field
+# -----------------------------------------------------------------------------
 
-# -----------------------------------------------------------------------------
-# Deflected by force
-# -----------------------------------------------------------------------------
+# Import matrices, source:
+# https://mathematica.stackexchange.com/questions/163685/
+# export-a-3d-array-from-mathematica-and-import-it-in-python-as-a-numpy-array
+hdul = fits.open('/Users/andrewwinnicki/desktop/andrew/2019-2020/Doyle Lab/Modeling Project/B-Matrix/bxMatrix.fits')
+bxMatrix = np.array([hdul[i].data for i in range(1)][0])
+gradBxMatrix = np.gradient(bxMatrix, axis=0)
+
+# Calculate force field at each spacing
+forceField = np.array([[[g * mu_B * s * gradBxMatrix[i][j][k] \
+    for k in range(sp)] for j in range(sp)] for i in range(sp)])
 
 # -----------------------------------------------------------------------------
 # Calculate how many molecules end up in the trap region
