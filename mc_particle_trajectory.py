@@ -1,3 +1,4 @@
+import datetime
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -79,7 +80,7 @@ plt.xlabel('z (mm)')
 plt.ylabel('x (mm)')
 plt.title('Kinematic Propagation of {} particles in the z- and x-coordinates'\
     .format(n))
-plt.show()
+plt.savefig('/Users/andrewwinnicki/desktop/andrew/2019-2020/Doyle Lab/Modeling Project/Particle Trajectory Plots/{}_kinematic_{}.png'.format(n, datetime.date.today()))
 
 # -----------------------------------------------------------------------------
 # Deflection by force field
