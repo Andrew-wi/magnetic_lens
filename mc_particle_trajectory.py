@@ -52,7 +52,7 @@ class Point():
 for i in range(n):
     particles.append(Point(np.array([0.0, 0.0, 0.0]), \
         np.array([np.random.standard_normal(), \
-        np.random.standard_normal(), maxwell.rvs()]), 1.0))
+        np.random.standard_normal(), np.random.normal(loc=100.0, scale=1.0)]), 1.0))
 
 # Store original points in x- and y-coordinates
 z = []
@@ -65,12 +65,12 @@ for i in range(n):
 # Kinematic propagation
 # -----------------------------------------------------------------------------
 
-# Will propagate for 5 s, 0.1 s timesteps
+# Will propagate for 5 s, 0.05 s timesteps
 for step in np.linspace(0, 1, num=100, endpoint=False):
     for i in range(0, n):
         particles[i].move(dt)
 
-# Trace the trajectories of the particles (just look at x- and y-coordinates)
+# Trace the trajectories of the particles (just look at x- and z-coordinates)
 for i in range(0, n):
     z[i].append(particles[i].coords[2])
     x[i].append(particles[i].coords[0])
@@ -80,7 +80,9 @@ plt.xlabel('z (mm)')
 plt.ylabel('x (mm)')
 plt.title('Kinematic Propagation of {} particles in the z- and x-coordinates'\
     .format(n))
-plt.savefig('/Users/andrewwinnicki/desktop/andrew/2019-2020/Doyle Lab/Modeling Project/Particle Trajectory Plots/{}_kinematic_{}.png'.format(n, datetime.date.today()))
+# Save figure
+# plt.savefig('/Users/andrewwinnicki/desktop/andrew/2019-2020/Doyle Lab/Modeling Project/Particle Trajectory Plots/{}_kinematic_{}.png'.format(n, datetime.date.today()))
+plt.show()
 
 # -----------------------------------------------------------------------------
 # Deflection by force field
