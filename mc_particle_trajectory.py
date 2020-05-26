@@ -12,7 +12,7 @@ from scipy.stats import maxwell
 # Number of particles
 n = 1000
 
-# Spacing, same as variable n in halbach.nb Mathematica
+# Spacing, must be same as variable n in halbach.nb Mathematica
 sp = 4
 
 # Time and timestep
@@ -31,6 +31,7 @@ g = 2.0
 mu_B = 9.274e-24
 
 # vectorized velocity and acceleration
+p = np.array([[]])
 v = np.array([[]])
 a = np.array([[]])
 
@@ -73,6 +74,7 @@ for i in range(n):
 for step in np.linspace(0, 1, num=100, endpoint=False):
     for i in range(0, n):
         particles[i].move(dt)
+
 
 # Trace the trajectories of the particles (just look at x- and z-coordinates)
 for i in range(0, n):
