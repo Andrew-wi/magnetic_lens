@@ -40,7 +40,6 @@ a = []
 # ----------------------------------------------------------------------------
 # # Initialize n molecules
 # ----------------------------------------------------------------------------
-# ----------------------------------------------------------------------------
 
 # Generate particles with velocity distributed standard normally, except
 # for in the z-coordinate, distributed Maxwell-Boltzmann
@@ -71,9 +70,9 @@ print('Done.')
 # Import matrices, source:
 # https://mathematica.stackexchange.com/questions/163685/
 # export-a-3d-array-from-mathematica-and-import-it-in-python-as-a-numpy-array
-hdul = fits.open('/Users/andrewwinnicki/desktop/andrew/2019-2020/Doyle Lab/Modeling Project/B-Matrix/normbMatrix.fits')
-normbMatrix = np.array([hdul[i].data for i in range(1)][0])
-gradBxMatrix = np.gradient(normbMatrix, axis=0)
+hdul = fits.open('/Users/andrewwinnicki/desktop/andrew/2019-2020/Doyle Lab/Modeling Project/B-Matrix/bMatrix.fits')
+bMatrix = np.array([hdul[i].data for i in range(1)][0])
+gradBxMatrix = np.gradient(bMatrix, axis=0)
 
 # Calculate force field at each spacing
 forceField = np.array([[[g * mu_B * s * gradBxMatrix[i][j][k] \
@@ -117,7 +116,7 @@ for step in np.linspace(0, 1, num=100, endpoint=False):
         try:
             # Attempt to set new acceleration to the F/m given by force field's
             # coordinate
-            a[index] = forceField[position] / m
+            a[index] = forceField[position] // m
             print('Made it to the break loop. I need to reshape the array.')
             print('I also need to have a force field that uses not the norm,\
                 but a vector for the force (need to do gradient on the\
@@ -126,8 +125,8 @@ for step in np.linspace(0, 1, num=100, endpoint=False):
             # Set new accelerations to [0, 0, 0] if outside the scope of our
             # Force field's coordinates
             a[index] = [0, 0, 0]
-            print('New acceleration is outside scope of calculated coordinates.\
-                New acceleration set to [0, 0, 0].')
+            print('New acceleration outside scope of calculated coordinates. ' \
+                + 'New acceleration set to [0, 0, 0].')
     print('New accelerations array: {}'.format(a))
 
     # Change the velocities:
