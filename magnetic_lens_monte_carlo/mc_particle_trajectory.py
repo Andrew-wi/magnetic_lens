@@ -1,3 +1,7 @@
+# ----------------------------------------------------------------------------
+# Dependencies
+# ----------------------------------------------------------------------------
+
 print('Importing dependencies...')
 import datetime
 import matplotlib.pyplot as plt
@@ -5,18 +9,15 @@ import numpy as np
 
 from astropy.io import fits
 from mpl_toolkits import mplot3d
+from pathlib import Path
 from scipy.stats import maxwell
 print('Done.')
-
-# ----------------------------------------------------------------------------
-# Initialize variables
-# ----------------------------------------------------------------------------
 
 # Number of particles
 n = 3
 
 # Mesh spacing, must be same as variable m in halbach.nb Mathematica code
-m = 6
+m = 18
 
 # Radius of circular Halbach array, same as in halbach.nb code
 R = 25.4
@@ -45,8 +46,7 @@ a = np.array([])
 # # Initialize n molecules
 # ----------------------------------------------------------------------------
 
-# Generate particles with velocity distributed standard normally, except
-# for in the z-coordinate, distributed Maxwell-Boltzmann
+# Generate particles
 print('Generating particles...')
 
 for i in range(n):
@@ -57,57 +57,78 @@ for i in range(n):
     a = np.append(a, [0.0, 0.0, 0.0])
 print('Done.')
 
-# convert to numpy array
 print('Positions array: \n {} \n'.format(p))
 print('Velocities array: \n {} \n'.format(v))
 print('Accelerations array: \n {} \n'.format(a))
 
 # ----------------------------------------------------------------------------
-# Force Field
+# Force Vector Field
 # ----------------------------------------------------------------------------
 
-# Import matrices, source:
-# https://mathematica.stackexchange.com/questions/163685/
-# export-a-3d-array-from-mathematica-and-import-it-in-python-as-a-numpy-array
-hdulBxMatrix = fits.open('/Users/andrewwinnicki/desktop/andrew/2019-2020/Doyle Lab/Modeling Project/B-Matrix/bxMatrix.fits')
-hdulByMatrix = fits.open('/Users/andrewwinnicki/desktop/andrew/2019-2020/Doyle Lab/Modeling Project/B-Matrix/byMatrix.fits')
-hdulBzMatrix = fits.open('/Users/andrewwinnicki/desktop/andrew/2019-2020/Doyle Lab/Modeling Project/B-Matrix/bzMatrix.fits')
+# Import matrices
+hdulBxMatrix = fits.open('/Users/andrewwinnicki/Desktop/Andrew/2019-2020/Doyle Lab/Modeling Magnetic Lens/magnetic_lens_monte_carlo/bmatrix/bxMatrix.fits')
+hdulByMatrix = fits.open('/Users/andrewwinnicki/desktop/Andrew/2019-2020/Doyle Lab/Modeling Magnetic Lens/magnetic_lens_monte_carlo/bmatrix/byMatrix.fits')
+hdulBzMatrix = fits.open('/Users/andrewwinnicki/desktop/Andrew/2019-2020/Doyle Lab/Modeling Magnetic Lens/magnetic_lens_monte_carlo/bmatrix/bzMatrix.fits')
 
 bxMatrix = np.array([hdulBxMatrix[0].data[i] for i in range(m)])
 byMatrix = np.array([hdulByMatrix[0].data[i] for i in range(m)])
 bzMatrix = np.array([hdulBzMatrix[0].data[i] for i in range(m)])
 
-# Take gradients of all matrices in x, y, z coordinates respectively
-gradBxMatrix = np.gradient(bxMatrix, axis=0)
-gradByMatrix = np.gradient(byMatrix, axis=1)
-gradBzMatrix = np.gradient(bzMatrix, axis=2)
+# Plot b-field in three dimensions
+bMatrixFig3D = plt.figure()
+bMatrixAx3D = bMatrixFig3D.gca(projection='3d')
 
-# Splice together gradients of all matrices here to get force field w/ vectors
-gradBMatrix = np.stack([gradBxMatrix, gradByMatrix, gradBzMatrix], axis=3)
-
-# Plot the 3D Matrix to visualize force field in space
-gradBMatrixFig = plt.figure()
-gradBMatrixAx = gradBMatrixFig.gca(projection='3d')
-
-# Create mesh grid in 3D space for visualization purposes
 x, y, z = np.meshgrid(np.linspace(-R/2, R/2, m),
                       np.linspace(-R/2, R/2, m),
                       np.linspace(-R/2, R/2, m))
 
-gradBMatrixAx.quiver(x, y, z, bxMatrix, byMatrix, bzMatrix, length=3, \
+bMatrixAx3D.quiver(x, y, z, bxMatrix, byMatrix, bzMatrix, length=3, \
     normalize=True)
-plt.show()
+
+bMatrixAx3D.set_title('Magnetic Field in Circular Halbach Array')
+bMatrixAx3D.set_xlabel('x (mm)')
+bMatrixAx3D.set_ylabel('y (mm)')
+bMatrixAx3D.set_zlabel('z (mm)')
+
+Path('/Users/andrewwinnicki/desktop/Andrew/2019-2020/Doyle Lab/Modeling Magnetic Lens/magnetic_lens_monte_carlo/bfield_plots_{}'\
+    .format(datetime.date.today())).mkdir(parents=True, exist_ok=True)
+plt.savefig('/Users/andrewwinnicki/desktop/Andrew/2019-2020/Doyle Lab/Modeling Magnetic Lens/magnetic_lens_monte_carlo/bfield_plots_{}/bfield_3D_{}'\
+    .format(datetime.date.today(), datetime.date.today()))
+
+# Plot slice of b-field in two dimensions
+bMatrixFigSlice = plt.figure()
+bMatrixAxSlice = plt.subplot()
+
+x2d, y2d = np.meshgrid(np.linspace(-R/2, R/2, m), np.linspace(-R/2, R/2, m))
+
+bxMatrixSlice = bxMatrix[:, :, int(m/2)]
+byMatrixSlice = byMatrix[:, :, int(m/2)]
+
+bMatrixAxSlice.quiver(x2d, y2d, bxMatrixSlice, byMatrixSlice)
+
+bMatrixAxSlice.set_title(\
+    '2D Slice of Magnetic Field in Circular Halbach Array')
+bMatrixAxSlice.set_ylabel('y (mm)')
+bMatrixAxSlice.set_xlabel('x (mm)')
+plt.savefig('/Users/andrewwinnicki/desktop/Andrew/2019-2020/Doyle Lab/Modeling Magnetic Lens/magnetic_lens_monte_carlo/bfield_plots_{}/bfield_2D_slice_{}'\
+    .format(datetime.date.today(), datetime.date.today()))
+
+# Generate force field
+gradBxMatrix = np.gradient(bxMatrix, axis=0)
+gradByMatrix = np.gradient(byMatrix, axis=1)
+gradBzMatrix = np.gradient(bzMatrix, axis=2)
+
+gradBMatrix = np.stack([gradBxMatrix, gradByMatrix, gradBzMatrix], axis=3)
 
 # # Add F = 0 for anywhere we're not counting the magnetic lens' effect
-# # by adding rows and columns to matrix
 
 # # Spacing between cell aperture and circular Halbach array is 8x greater than
 # # spacing within array; 18x greater between array and MOT
 # # Todo: fix the '* 1' to be '* 4'
 # for _ in range((m - 1) * 1):
 #     # Since the distance from 4K aperture to lens is 8x the length of the lens
-#     # bore, we must have an additional (m - 1)*8 points in the force field with
-#     # value 0
+#     # bore, we must have an additional (m - 1)*8 points in the force field
+#     # with value 0
 #     forceField = np.insert(forceField, 0, [[0.0 for _ in range(m)]\
 #         for _ in range(m)], axis=0)
 
@@ -167,6 +188,7 @@ plt.show()
 # plt.title('Kinematic Propagation of {} particles in the z- and x-coordinates'\
 #     .format(n))
 # # Save figure
+# Todo: change path
 # # plt.savefig('/Users/andrewwinnicki/desktop/andrew/2019-2020/Doyle Lab/Modeling Project/Particle Trajectory Plots/{}_kinematic_{}.png'.format(n, datetime.date.today()))
 # plt.show()
 
