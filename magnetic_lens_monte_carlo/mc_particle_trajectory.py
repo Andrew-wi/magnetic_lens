@@ -69,9 +69,9 @@ print('Accelerations array: \n {} \n'.format(a))
 # Import matrices, source:
 # https://mathematica.stackexchange.com/questions/163685/
 # export-a-3d-array-from-mathematica-and-import-it-in-python-as-a-numpy-array
-hdulBxMatrix = fits.open('/Users/andrewwinnicki/desktop/Andrew/2019-2020/Doyle Lab/Modeling Project/magnetic_lens_monte_carlo/bmatrix/bxMatrix.fits')
-hdulByMatrix = fits.open('/Users/andrewwinnicki/desktop/Andrew/2019-2020/Doyle Lab/Modeling Project/magnetic_lens_monte_carlo/bmatrix/byMatrix.fits')
-hdulBzMatrix = fits.open('/Users/andrewwinnicki/desktop/Andrew/2019-2020/Doyle Lab/Modeling Project/magnetic_lens_monte_carlo/bmatrix/bzMatrix.fits')
+hdulBxMatrix = fits.open('/Users/andrewwinnicki/desktop/andrew/2019-2020/Doyle Lab/Modeling Project/B-Matrix/bxMatrix.fits')
+hdulByMatrix = fits.open('/Users/andrewwinnicki/desktop/andrew/2019-2020/Doyle Lab/Modeling Project/B-Matrix/byMatrix.fits')
+hdulBzMatrix = fits.open('/Users/andrewwinnicki/desktop/andrew/2019-2020/Doyle Lab/Modeling Project/B-Matrix/bzMatrix.fits')
 
 bxMatrix = np.array([hdulBxMatrix[0].data[i] for i in range(m)])
 byMatrix = np.array([hdulByMatrix[0].data[i] for i in range(m)])
@@ -167,7 +167,6 @@ plt.show()
 # plt.title('Kinematic Propagation of {} particles in the z- and x-coordinates'\
 #     .format(n))
 # # Save figure
-# Todo: change path
 # # plt.savefig('/Users/andrewwinnicki/desktop/andrew/2019-2020/Doyle Lab/Modeling Project/Particle Trajectory Plots/{}_kinematic_{}.png'.format(n, datetime.date.today()))
 # plt.show()
 
