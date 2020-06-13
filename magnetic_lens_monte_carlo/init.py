@@ -1,6 +1,7 @@
 # ----------------------------------------------------------------------------
 # # Initialize n molecules
 # ----------------------------------------------------------------------------
+from dependencies import *
 
 # Generate particles
 print('Generating particles...')

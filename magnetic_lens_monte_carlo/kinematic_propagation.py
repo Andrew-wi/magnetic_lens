@@ -36,24 +36,24 @@ for step in np.linspace(0, 1, num=10, endpoint=False):
 
 print('Done.')
 
-print('Plotting...')
+# print('Plotting...')
 
-# Trace the trajectories of the particles (just look at x- and z-coordinates)
-for i in range(0, n):
-    z[i].append(particles[i].coords[2])
-    x[i].append(particles[i].coords[0])
-    plt.plot(z[i], x[i], 'r-')
+# # Trace the trajectories of the particles (just look at x- and z-coordinates)
+# for i in range(0, n):
+#     z[i].append(particles[i].coords[2])
+#     x[i].append(particles[i].coords[0])
+#     plt.plot(z[i], x[i], 'r-')
 
-plt.xlabel('z (mm)')
-plt.ylabel('x (mm)')
-plt.title('Kinematic Propagation of {} particles in the z- and x-coordinates'\
-    .format(n))
-# Save figure
-Todo: change path
-# plt.savefig('/Users/andrewwinnicki/desktop/andrew/2019-2020/Doyle Lab/Modeling Project/Particle Trajectory Plots/{}_kinematic_{}.png'.format(n, datetime.date.today()))
-plt.show()
+# plt.xlabel('z (mm)')
+# plt.ylabel('x (mm)')
+# plt.title('Kinematic Propagation of {} particles in the z- and x-coordinates'\
+#     .format(n))
+# # Save figure
+# # Todo: change path
+# # plt.savefig('/Users/andrewwinnicki/desktop/andrew/2019-2020/Doyle Lab/Modeling Project/Particle Trajectory Plots/{}_kinematic_{}.png'.format(n, datetime.date.today()))
+# plt.show()
 
-print('Done.')
+# print('Done.')
 
 # ----------------------------------------------------------------------------
 # Calculate how many molecules end up in the trap region
