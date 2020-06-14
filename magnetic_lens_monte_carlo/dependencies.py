@@ -19,7 +19,7 @@ n = 3
 # Mesh spacing, must be same as variable m in halbach.nb Mathematica code
 m = 5
 
-# Radius of circular Halbach array, same as in halbach.nb code
+# Radius of circular Halbach array, same as in halbach.nb code; units of mm
 R = 25.4
 
 # Time and timestep
@@ -37,7 +37,11 @@ mu_B = 9.274e-24
 # Mass of a single CaOCH3 molecule (in kg)
 mass = 1.1789827e-22
 
-# vectorized velocity and acceleration
+# Vectorized velocity and acceleration
 p = np.array([])
 v = np.array([])
 a = np.array([])
+
+# Propagation
+tFinal = 0.01
+steps = 10
