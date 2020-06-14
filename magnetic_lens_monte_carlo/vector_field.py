@@ -61,15 +61,14 @@ gradBMatrix = np.stack([gradBxMatrix, gradByMatrix, gradBzMatrix], axis=3)
 
 # Spacing between cell aperture and circular Halbach array is 8x greater than
 # spacing within array; 18x greater between array and MOT
-# Todo: fix the '* 1' to be '* 4'
-for _ in range((m - 1) * 1):
-    # Since the distance from 4K aperture to lens is 8x the length of the lens
-    # bore, we must have an additional (m - 1)*8 points in the force field
-    # with value 0
-    forceField = np.insert(forceField, 0, [[0.0 for _ in range(m)]\
-        for _ in range(m)], axis=0)
+# Todo: fix the '* 1' to be '* 18'
+for i in range((m-1) * 1):
+    gradBMatrix= np.insert(gradBMatrix, m, [[[0.0, 0.0, 0.0] for _ in range(m)]\
+        for _ in range(m)], axis=2)
 
-# # Add in 18x 0's in the force field between the lens and the MOT
-# Todo: add the 0's in the force field after the lens
+# Todo: fix the '* 1' to be '* 8'
+for i in range((m - 1) * 1):
+    gradBMatrix = np.insert(gradBMatrix, 0, [[[0.0, 0.0, 0.0] for _ in range(m)]\
+        for _ in range(m)], axis=2)
 
-# print("New force field: \n {} \n ".format(forceField))
+print("New gradient matrix: \n {} \n ".format(gradBMatrix))

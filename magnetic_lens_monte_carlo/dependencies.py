@@ -17,7 +17,7 @@ print('Done.')
 n = 3
 
 # Mesh spacing, must be same as variable m in halbach.nb Mathematica code
-m = 18
+m = 5
 
 # Radius of circular Halbach array, same as in halbach.nb code
 R = 25.4
