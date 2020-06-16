@@ -61,12 +61,12 @@ gradBMatrix = np.stack([gradBxMatrix, gradByMatrix, gradBzMatrix], axis=3)
 
 # # Spacing between cell aperture and circular Halbach array is 8x greater than
 # # spacing within array; 18x greater between array and MOT
-# # Todo: fix the '* 1' to be '* 18'; place 0's back into the array
+# # todo: fix the '* 1' to be '* 18'; place 0's back into the array
 # for i in range((m-1) * 1):
 #     gradBMatrix= np.insert(gradBMatrix, m, [[[0.0, 0.0, 0.0] for _ in range(m)]\
 #         for _ in range(m)], axis=2)
 
-# # Todo: fix the '* 1' to be '* 8'; place 0's back into the array
+# # todo: fix the '* 1' to be '* 8'; place 0's back into the array
 # for i in range((m - 1) * 1):
 #     gradBMatrix = np.insert(gradBMatrix, 0, [[[0.0, 0.0, 0.0] for _ in range(m)]\
 #         for _ in range(m)], axis=2)

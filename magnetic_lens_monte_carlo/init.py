@@ -12,8 +12,10 @@ for i in range(n):
         np.random.standard_normal(),\
         np.random.normal(loc=100.0, scale=1.0)])
     a = np.append(a, [0.0, 0.0, 0.0])
-print('Done.')
+print('Done. \n')
 
+print('====================================== Initial ======================================')
 print('Positions array: \n {} \n'.format(p))
 print('Velocities array: \n {} \n'.format(v))
-print('Accelerations array: \n {} \n'.format(a))
+print('Accelerations array: \n {}'.format(a))
+print('=====================================================================================\n')

@@ -5,36 +5,51 @@ from dependencies import *
 from init import *
 from vector_field import *
 
-print('Propagating...')
+print('Propagating...\n')
 
 # Evolve system through time
 for time in np.linspace(0, tFinal, num=steps, endpoint=False):
     timestep = tFinal / steps
 
     # Prune out particles not in areas of interest
-    # todo
+    for index in range(0, n * 3, 3):
+        if p[index + 2] >= lCellTo4k and\
+        ((p[index] ** 2 + p[index + 1] ** 2) ** (1/2)) > 0.01
+
+        v[index:index + 3] = [0, 0, 0]
+
+        print('Pruned particle {}'.format())
 
     # Change accelerations
-    for index in range(0, n, 3):
-        position = p[index:index + 3]
-        if -0.0125 <= position[0] <= 0.0125 and -0.0125 <= position[1] <= \
-            0.0125 and 0.2 <= position[2] <= 0.225:
-            a[index:index + 3] = gradBMatrix[position[0], position[1],\
-                position[2]] / mass
+    for index in range(0, n * 3, 3):
+        if -(R / 1e3) / 2 <= p[index] <= (R / 1e3) / 2\
+            and -(R / 1e3) / 2 <= p[index + 1] <= (R / 1e3) / 2\
+            and lCellTo4k + l4kToAperture <= p[index + 2] <= lCellTo4k + l4kToAperture + R:
+
+            # get spacing
+            l = (R / 1e3) / (m - 1)
+
+            print('p[0]: {}'.format(p[index]))
+            print('x: {}'.format(abs(-((R / 2) / 1e3) - p[index]) / l))
+            print('p[1]: {}'.format(p[index + 1]))
+            print('y: {}'.format(abs(-((R / 2) / 1e3) - p[index + 1]) / l))
+            print('p[2]: {}'.format(p[index + 2]))
+            print('z: {}\n'.format((p[index + 2] - (lCellTo4k + l4kToAperture)) / l))
+
+            # x, y, z direction deviation
+            xCoord = round(abs(-((R / 2) / 1e3) - p[index]) / l)
+            yCoord = round(abs(-((R / 2) / 1e3) - p[index + 1]) / l)
+            zCoord = round((p[index + 2] - (lCellTo4k + l4kToAperture)) / l)
+
+            a[index:index + 3] = gradBMatrix[int(xCoord), int(yCoord),\
+                int(zCoord)] / mass
         else:
             a[index:index + 3] = [0, 0, 0]
 
-    print('a at time {}: \n {}'.format(time + timestep, a))
-
-    # Change the velocities:
     v += a * timestep
-
-    print('v at time {}: \n {}'.format(time + timestep, v))
-
-    # Change the positions:
     p += v * timestep
 
-    print('p at time {}: \n {} \n'.format(time + timestep, p))
+print('ending positions: {}\n'.format(p))
 
 print('Done.')
 
