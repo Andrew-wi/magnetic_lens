@@ -14,10 +14,10 @@ from scipy.stats import maxwell
 print('Done.')
 
 # Number of particles
-n = 5
+n = 40
 
 # Mesh spacing, must be same as variable m in halbach.nb Mathematica code
-m = 5
+m = 18
 
 # Radius of circular Halbach array, as in halbach.nb code, units of mm
 R = 25.4
@@ -45,4 +45,5 @@ a = np.array([])
 
 # Propagation
 tFinal = 0.01
-steps = 1000
+steps = 10
+

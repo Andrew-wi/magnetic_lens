@@ -59,6 +59,28 @@ gradBzMatrix = np.gradient(bzMatrix, axis=2)
 
 gradBMatrix = np.stack([gradBxMatrix, gradByMatrix, gradBzMatrix], axis=3)
 
+# Plot force field
+forceFieldSlice2DFig = plt.figure()
+forceFieldSlice2DAx = plt.subplot()
+
+x2d, y2d = np.meshgrid(np.linspace(-R/2, R/2, m), np.linspace(-R/2, R/2, m))
+
+gradbxMatrixSlice = gradBxMatrix[:, :, int(m/2)]
+gradByMatrixSlice = gradByMatrix[:, :, int(m/2)]
+
+forceFieldSlice2DAx.quiver(x2d, y2d, gradbxMatrixSlice, gradByMatrixSlice)
+
+forceFieldSlice2DAx.set_title(\
+    '2D Slice of Force Field in Circular Halbach Array Magnetic Field')
+forceFieldSlice2DAx.set_ylabel('y (mm)')
+forceFieldSlice2DAx.set_xlabel('x (mm)')
+
+Path('/Users/andrewwinnicki/desktop/Andrew/2019-2020/Doyle Lab/Modeling Magnetic Lens/magnetic_lens_monte_carlo/force_field_plots_{}'\
+    .format(datetime.date.today())).mkdir(parents=True, exist_ok=True)
+plt.savefig('/Users/andrewwinnicki/desktop/Andrew/2019-2020/Doyle Lab/Modeling Magnetic Lens/magnetic_lens_monte_carlo/force_field_plots_{}/force_field_2D_slice_{}'\
+    .format(datetime.date.today(), datetime.date.today()))
+
+
 # # Spacing between cell aperture and circular Halbach array is 8x greater than
 # # spacing within array; 18x greater between array and MOT
 # # todo: fix the '* 1' to be '* 18'; place 0's back into the array
