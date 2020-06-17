@@ -6,12 +6,19 @@ from dependencies import *
 # Generate particles
 print('Generating particles...')
 
-for i in range(n):
-    p = np.append(p, [0.0, 0.0, 0.0])
-    v = np.append(v, [np.random.normal(loc=0.0, scale=2.0), \
-        np.random.normal(loc=0.0, scale=2.0),\
+for index in range(0, int(n) * 3, 3):
+    p = np.append(p, [np.random.normal(loc=0.0, scale=0.005), \
+        np.random.normal(loc=0.0, scale=0.005), \
+        0.0])
+    v = np.append(v, [np.random.normal(loc=0.0, scale=0.5), \
+        np.random.normal(loc=0.0, scale=0.5), \
         np.random.normal(loc=40.0, scale=1.0)])
     a = np.append(a, [0.0, 0.0, 0.0])
+
+    while p[index] <= -0.005 or p[index] >= 0.005 or \
+        p[index + 1] <= -0.005 or p[index + 1] >= 0.005:
+        p[index:index + 2] = [np.random.normal(loc=0.0, scale=0.005), \
+        np.random.normal(loc=0.0, scale=0.005)]
 print('Done.\n')
 
 print('====================================== Initial Conditions ======================================')

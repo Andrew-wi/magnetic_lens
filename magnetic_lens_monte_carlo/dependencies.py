@@ -2,6 +2,7 @@
 # Dependencies
 # ----------------------------------------------------------------------------
 print('\nImporting dependencies...')
+
 import datetime
 import matplotlib.pyplot as plt
 import matplotlib.path as pltPath
@@ -12,10 +13,11 @@ from astropy.io import fits
 from mpl_toolkits import mplot3d
 from pathlib import Path
 from scipy.stats import maxwell
+
 print('Done.\n')
 
 # Number of particles
-n = 40
+n = 5e2
 
 # Mesh spacing, must be same as variable m in halbach.nb Mathematica code
 m = 18
@@ -49,6 +51,7 @@ v = np.array([])
 a = np.array([])
 
 # Propagation
-tFinal = 0.01
-steps = 10
+tFinal = 0.02
+steps = 3000
+success = 0
 
