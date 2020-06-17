@@ -4,6 +4,7 @@
 print('Importing dependencies...')
 import datetime
 import matplotlib.pyplot as plt
+import matplotlib.path as pltPath
 import math
 import numpy as np
 
@@ -17,10 +18,14 @@ print('Done.')
 n = 40
 
 # Mesh spacing, must be same as variable m in halbach.nb Mathematica code
-m = 18
+m = 4
 
 # Radius of circular Halbach array, as in halbach.nb code, units of mm
 R = 25.4
+
+# Change in angle of each array segment, as in halbach.nb code, in radians
+dPhi = np.pi / 6
+segs = 12
 
 # Time and timestep, units of s
 t = 0.0
