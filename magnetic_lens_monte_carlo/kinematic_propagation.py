@@ -38,7 +38,7 @@ for time in np.linspace(0, tFinal, num=steps, endpoint=False):
             and lCellTo4k + l4kToAperture <= p[index + 2] <= lCellTo4k + l4kToAperture + R / 1e3:
 
             if not path.contains_point((p[index], p[index + 1])):
-                print('Found a point outside the bore! x, y: {}, {}\n'.format(p[index], p[index + 1]))
+                print('Found a point outside the bore. x, y: {}, {}\n'.format(p[index], p[index + 1]))
                 v[index:index + 3] = [0, 0, 0]
                 p[index:index + 3] = [0, 0, 0]
                 continue
@@ -70,8 +70,8 @@ for time in np.linspace(0, tFinal, num=steps, endpoint=False):
         plotZ[int(index / 3)].append(p[index + 2])
         plotX[int(index / 3)].append(p[index])
 
-print('ending positions: {}\n'.format(p))
-print('Done.')
+print('Ending positions: {}\n'.format(p))
+print('Done.\n')
 
 print('Plotting...')
 

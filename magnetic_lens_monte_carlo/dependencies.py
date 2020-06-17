@@ -1,7 +1,7 @@
 # ----------------------------------------------------------------------------
 # Dependencies
 # ----------------------------------------------------------------------------
-print('Importing dependencies...')
+print('\nImporting dependencies...')
 import datetime
 import matplotlib.pyplot as plt
 import matplotlib.path as pltPath
@@ -12,13 +12,13 @@ from astropy.io import fits
 from mpl_toolkits import mplot3d
 from pathlib import Path
 from scipy.stats import maxwell
-print('Done.')
+print('Done.\n')
 
 # Number of particles
 n = 40
 
 # Mesh spacing, must be same as variable m in halbach.nb Mathematica code
-m = 4
+m = 18
 
 # Radius of circular Halbach array, as in halbach.nb code, units of mm
 R = 25.4

@@ -1,0 +1,76 @@
+# ----------------------------------------------------------------------------
+# Visualize
+# ----------------------------------------------------------------------------
+from dependencies import *
+from init import *
+from vector_field import *
+
+print('Visualizing fields...\n')
+
+# Plot b-field in three dimensions
+bMatrixFig3D = plt.figure()
+bMatrixAx3D = bMatrixFig3D.gca(projection='3d')
+
+x, y, z = np.meshgrid(np.linspace(-R/2, R/2, m),
+                      np.linspace(-R/2, R/2, m),
+                      np.linspace(-R/2, R/2, m))
+
+bMatrixAx3D.quiver(x, y, z, bxMatrix, byMatrix, bzMatrix, length=3, \
+    normalize=True)
+
+bMatrixAx3D.set_title('Magnetic Field in Circular Halbach Array')
+bMatrixAx3D.set_xlabel('x (mm)')
+bMatrixAx3D.set_ylabel('y (mm)')
+bMatrixAx3D.set_zlabel('z (mm)')
+
+Path('/Users/andrewwinnicki/desktop/Andrew/2019-2020/Doyle Lab/Modeling Magnetic Lens/magnetic_lens_monte_carlo/bfield_plots_{}'\
+    .format(datetime.date.today())).mkdir(parents=True, exist_ok=True)
+plt.savefig('/Users/andrewwinnicki/desktop/Andrew/2019-2020/Doyle Lab/Modeling Magnetic Lens/magnetic_lens_monte_carlo/bfield_plots_{}/bfield_3D_{}'\
+    .format(datetime.date.today(), datetime.date.today()))
+
+# Plot slice of b-field in two dimensions
+bMatrixFigSlice, bMatrixAxSlice = plt.subplots()
+hexagon = [[R / 2 * np.cos(angle), R / 2 * np.sin(angle)] for angle in np.linspace(0, 2 * np.pi, segs, endpoint=False)]
+hexagon.append(hexagon[0])
+x, y = list(zip(*hexagon))
+bMatrixAxSlice.plot(x, y, 'k')
+bMatrixAxSlice.axis('equal')
+
+x2d, y2d = np.meshgrid(np.linspace(-R/2, R/2, m), np.linspace(-R/2, R/2, m))
+
+bxMatrixSlice = bxMatrix[:, :, int(m/2)]
+byMatrixSlice = byMatrix[:, :, int(m/2)]
+
+bMatrixAxSlice.quiver(x2d, y2d, bxMatrixSlice, byMatrixSlice)
+
+bMatrixAxSlice.set_title(\
+    '2D Slice of Magnetic Field in Circular Halbach Array')
+bMatrixAxSlice.set_ylabel('y (mm)')
+bMatrixAxSlice.set_xlabel('x (mm)')
+plt.savefig('/Users/andrewwinnicki/desktop/Andrew/2019-2020/Doyle Lab/Modeling Magnetic Lens/magnetic_lens_monte_carlo/bfield_plots_{}/bfield_2D_slice_{}'\
+    .format(datetime.date.today(), datetime.date.today()))
+
+# Plot force field
+forceFieldSlice2DFig, forceFieldSlice2DAx = plt.subplots()
+forceFieldSlice2DAx.plot(x, y, 'k')
+
+x2d, y2d = np.meshgrid(np.linspace(-R/2, R/2, m), np.linspace(-R/2, R/2, m))
+
+gradbxMatrixSlice = gradNormBMatrix[0][:, :, int(m/2)]
+gradByMatrixSlice = gradNormBMatrix[1][:, :, int(m/2)]
+
+forceFieldSlice2DAx.quiver(x2d, y2d, gradbxMatrixSlice, gradByMatrixSlice)
+
+forceFieldSlice2DAx.axis('equal')
+
+forceFieldSlice2DAx.set_title(\
+    '2D Slice of Force Field in Circular Halbach Array Magnetic Field')
+forceFieldSlice2DAx.set_ylabel('y (mm)')
+forceFieldSlice2DAx.set_xlabel('x (mm)')
+
+Path('/Users/andrewwinnicki/desktop/Andrew/2019-2020/Doyle Lab/Modeling Magnetic Lens/magnetic_lens_monte_carlo/force_field_plots_{}'\
+    .format(datetime.date.today())).mkdir(parents=True, exist_ok=True)
+plt.savefig('/Users/andrewwinnicki/desktop/Andrew/2019-2020/Doyle Lab/Modeling Magnetic Lens/magnetic_lens_monte_carlo/force_field_plots_{}/force_field_2D_slice_{}'\
+    .format(datetime.date.today(), datetime.date.today()))
+
+print('Done.\n')
