@@ -7,6 +7,35 @@ from vector_field import *
 
 print('Visualizing fields...\n')
 
+# Plot magnetization of circular Halbach array
+mMatrixFigSlice, mMatrixAxSlice = plt.subplots()
+
+hexagonInner = [[R / 2 * np.cos(angle), R / 2 * np.sin(angle)] for angle in np.linspace(0, 2 * np.pi, segs, endpoint=False)]
+hexagonInner.append(hexagonInner[0])
+x1, y1 = list(zip(*hexagonInner))
+
+hexagonOuter = [[R * np.cos(angle), R * np.sin(angle)] for angle in np.linspace(0, 2 * np.pi, segs, endpoint=False)]
+hexagonOuter.append(hexagonOuter[0])
+x2, y2 = list(zip(*hexagonOuter))
+
+mMatrixAxSlice.plot(x1, y1, 'k')
+mMatrixAxSlice.plot(x2, y2, 'k')
+mMatrixAxSlice.axis('equal')
+
+x2d, y2d = np.meshgrid(np.linspace(-R, R, m), np.linspace(-R, R, m))
+
+mMatrixAxSlice.quiver(x2d, y2d, mxMatrixSlice, myMatrixSlice)
+
+mMatrixAxSlice.set_title(\
+    '2D Slice of Magnetization in Circular Halbach Array')
+mMatrixAxSlice.set_ylabel('y (mm)')
+mMatrixAxSlice.set_xlabel('x (mm)')
+
+Path('/Users/andrewwinnicki/desktop/Andrew/2019-2020/Doyle Lab/Modeling Magnetic Lens/magnetic_lens_monte_carlo/magnetization_plots_2D_{}'\
+    .format(datetime.date.today())).mkdir(parents=True, exist_ok=True)
+plt.savefig('/Users/andrewwinnicki/desktop/Andrew/2019-2020/Doyle Lab/Modeling Magnetic Lens/magnetic_lens_monte_carlo/magnetization_plots_2D_{}/magnetization_2D_{}'\
+    .format(datetime.date.today(), datetime.date.today()))
+
 # Plot b-field in three dimensions
 bMatrixFig3D = plt.figure()
 bMatrixAx3D = bMatrixFig3D.gca(projection='3d')

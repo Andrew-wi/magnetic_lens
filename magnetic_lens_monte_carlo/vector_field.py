@@ -1,20 +1,24 @@
 # ----------------------------------------------------------------------------
-# Force Vector Field
+# Vector Fields
 # ----------------------------------------------------------------------------
 from dependencies import *
 from init import *
 
-print('Generating force field...\n')
+print('Generating vector fields...\n')
 
 # Import matrices
 hdulBxMatrix = fits.open('/Users/andrewwinnicki/Desktop/Andrew/2019-2020/Doyle Lab/Modeling Magnetic Lens/magnetic_lens_monte_carlo/bmatrix/bxMatrix.fits')
 hdulByMatrix = fits.open('/Users/andrewwinnicki/desktop/Andrew/2019-2020/Doyle Lab/Modeling Magnetic Lens/magnetic_lens_monte_carlo/bmatrix/byMatrix.fits')
 hdulBzMatrix = fits.open('/Users/andrewwinnicki/desktop/Andrew/2019-2020/Doyle Lab/Modeling Magnetic Lens/magnetic_lens_monte_carlo/bmatrix/bzMatrix.fits')
+hdulMxMatrixSlice = fits.open('/Users/andrewwinnicki/desktop/Andrew/2019-2020/Doyle Lab/Modeling Magnetic Lens/magnetic_lens_monte_carlo/m_matrix/mxMatrix.fits')
+hdulMyMatrixSlice = fits.open('/Users/andrewwinnicki/desktop/Andrew/2019-2020/Doyle Lab/Modeling Magnetic Lens/magnetic_lens_monte_carlo/m_matrix/myMatrix.fits')
 hdulNormBMatrix = fits.open('/Users/andrewwinnicki/desktop/Andrew/2019-2020/Doyle Lab/Modeling Magnetic Lens/magnetic_lens_monte_carlo/bmatrix/normbMatrix.fits')
 
 bxMatrix = np.array([hdulBxMatrix[0].data[i] for i in range(m)])
 byMatrix = np.array([hdulByMatrix[0].data[i] for i in range(m)])
 bzMatrix = np.array([hdulBzMatrix[0].data[i] for i in range(m)])
+mxMatrixSlice = np.array([hdulMxMatrixSlice[0].data[i] for i in range(m)])
+myMatrixSlice = np.array([hdulMyMatrixSlice[0].data[i] for i in range(m)])
 normBMatrix = np.array([hdulNormBMatrix[0].data[i] for i in range(m)])
 
 # Generate force field
