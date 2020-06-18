@@ -14,44 +14,29 @@ from mpl_toolkits import mplot3d
 from pathlib import Path
 from scipy.stats import maxwell
 
-print('Done.\n')
-
-# Number of particles
-n = 1e3
-
-# Mesh spacing, must be same as variable m in halbach.nb Mathematica code
-m = 18
-
-# Radius of circular Halbach array, as in halbach.nb code, units of mm
-R = 25.4
-
-# Change in angle of each array segment, as in halbach.nb code, in radians
-segs = 12
-
-# Time and timestep, units of s
+n = 1e4
 t = 0.0
 dt = 0.1
-
-# Distance parameters, units of m
 lCellTo4k = 0.1
-l4kToAperture = 0.1
-
-# Physical constants
+l4kToLensAperture = 0.1
+l4kToBeamShutter = 0.26
 s = -0.5
 g = 2.0
 mu_B = 9.274e-24
-
-# Mass of a single CaOCH3 molecule, units of kg
 mass = 1.1789827e-22
-
-# Vectorized velocity and acceleration
 p = np.array([])
 v = np.array([])
 a = np.array([])
-
-# Propagation
-tFinal = 0.01
+tFinal = 0.02
 steps = 1000
 successfulParticles = []
 successes = 0
+motLeftEdge = 0.5500
+motSideLength = 0.0025
 
+# As in mathematica code
+m = 50
+R = 25.4
+segs = 12
+
+print('Done.\n')

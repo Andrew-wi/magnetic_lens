@@ -8,10 +8,9 @@ print('Generating particles...')
 
 for index in range(0, int(n) * 3, 3):
     p = np.append(p, [np.random.normal(loc=0.0, scale=0.005), \
-        np.random.normal(loc=0.0, scale=0.005), \
-        0.0])
-    v = np.append(v, [np.random.normal(loc=0.0, scale=0.5), \
-        np.random.normal(loc=0.0, scale=0.5), \
+        np.random.normal(loc=0.0, scale=0.005), 0.0])
+    v = np.append(v, [np.random.normal(loc=0.0, scale=1.5), \
+        np.random.normal(loc=0.0, scale=1.5), \
         np.random.normal(loc=100.0, scale=10.0)])
     a = np.append(a, [0.0, 0.0, 0.0])
 
