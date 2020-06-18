@@ -24,6 +24,6 @@ normBMatrix = np.array([hdulNormBMatrix[0].data[i] for i in range(m)])
 # Generate force field
 gradNormBMatrix = np.gradient(normBMatrix)
 
-gradBMatrix = s * g * mu_B * np.stack([gradNormBMatrix[0], gradNormBMatrix[1], gradNormBMatrix[2]], axis=3)
+forceField = s * g * mu_B * np.stack([gradNormBMatrix[0], gradNormBMatrix[1], gradNormBMatrix[2]], axis=3)
 
 print('Done.\n')

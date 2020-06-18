@@ -85,10 +85,12 @@ forceFieldSlice2DAx.plot(x, y, 'k')
 
 x2d, y2d = np.meshgrid(np.linspace(-R/2, R/2, m), np.linspace(-R/2, R/2, m))
 
-gradbxMatrixSlice = gradNormBMatrix[0][:, :, int(m/2)]
+gradBxMatrixSlice = gradNormBMatrix[0][:, :, int(m/2)]
 gradByMatrixSlice = gradNormBMatrix[1][:, :, int(m/2)]
+# todo: get the color right, graded by strength of field
+color = normBMatrix[:, :, int(m/2)]
 
-forceFieldSlice2DAx.quiver(x2d, y2d, gradbxMatrixSlice, gradByMatrixSlice)
+forceFieldSlice2DAx.quiver(x2d, y2d, gradBxMatrixSlice, gradByMatrixSlice, color=color)
 
 forceFieldSlice2DAx.axis('equal')
 

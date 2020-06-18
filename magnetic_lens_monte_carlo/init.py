@@ -20,9 +20,9 @@ for index in range(0, int(n) * 3, 3):
         np.random.normal(loc=0.0, scale=0.005)]
 
     while v[index + 2] < 0:
-        v[index:index + 3] = [np.random.normal(loc=0.0, scale=0.5), \
-        np.random.normal(loc=0.0, scale=0.5), \
-        np.random.normal(loc=40.0, scale=10.0)]
+        v[index:index + 3] = [np.random.normal(loc=0.0, scale=1.5), \
+        np.random.normal(loc=0.0, scale=1.5), \
+        np.random.normal(loc=100.0, scale=10.0)]
 print('Done.\n')
 
 print('====================================== Initial Conditions ======================================')

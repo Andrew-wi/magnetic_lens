@@ -74,7 +74,7 @@ for time in np.linspace(0, tFinal, num=steps, endpoint=False):
             # print('z calculation: {}\n'.format(zCoord))
 
             # todo: optimize additional force scaling factor
-            a[index:index + 3] = gradBMatrix[int(xCoord), int(yCoord), int(zCoord)] / mass * 1e6
+            a[index:index + 3] = forceField[int(xCoord), int(yCoord), int(zCoord)] / mass * 1e6
 
         else:
             a[index:index + 3] = [0, 0, 0]
