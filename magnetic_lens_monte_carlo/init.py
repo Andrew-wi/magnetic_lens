@@ -12,13 +12,18 @@ for index in range(0, int(n) * 3, 3):
         0.0])
     v = np.append(v, [np.random.normal(loc=0.0, scale=0.5), \
         np.random.normal(loc=0.0, scale=0.5), \
-        np.random.normal(loc=40.0, scale=1.0)])
+        np.random.normal(loc=100.0, scale=10.0)])
     a = np.append(a, [0.0, 0.0, 0.0])
 
     while p[index] <= -0.005 or p[index] >= 0.005 or \
         p[index + 1] <= -0.005 or p[index + 1] >= 0.005:
         p[index:index + 2] = [np.random.normal(loc=0.0, scale=0.005), \
         np.random.normal(loc=0.0, scale=0.005)]
+
+    while v[index + 2] < 0:
+        v[index:index + 3] = [np.random.normal(loc=0.0, scale=0.5), \
+        np.random.normal(loc=0.0, scale=0.5), \
+        np.random.normal(loc=40.0, scale=10.0)]
 print('Done.\n')
 
 print('====================================== Initial Conditions ======================================')

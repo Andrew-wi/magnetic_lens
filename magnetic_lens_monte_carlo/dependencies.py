@@ -17,7 +17,7 @@ from scipy.stats import maxwell
 print('Done.\n')
 
 # Number of particles
-n = 5e2
+n = 1e3
 
 # Mesh spacing, must be same as variable m in halbach.nb Mathematica code
 m = 18
@@ -26,7 +26,6 @@ m = 18
 R = 25.4
 
 # Change in angle of each array segment, as in halbach.nb code, in radians
-dPhi = np.pi / 6
 segs = 12
 
 # Time and timestep, units of s
@@ -51,7 +50,8 @@ v = np.array([])
 a = np.array([])
 
 # Propagation
-tFinal = 0.02
-steps = 3000
-success = 0
+tFinal = 0.01
+steps = 1000
+successfulParticles = []
+successes = 0
 
