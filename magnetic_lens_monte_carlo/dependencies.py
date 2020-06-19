@@ -17,6 +17,10 @@ from scipy.stats import maxwell
 n = 1e3
 t = 0.0
 dt = 0.1
+sigmaXY = 0.005
+sigmaVxy = 1.5
+sigmaVz = 30.0
+muVz = 100.0
 lCellTo4k = 0.1
 l4kToLensAperture = 0.1
 l4kToBeamShutter = 0.26

@@ -52,9 +52,9 @@ bMatrixAx3D.set_xlabel('x (mm)')
 bMatrixAx3D.set_ylabel('y (mm)')
 bMatrixAx3D.set_zlabel('z (mm)')
 
-Path('/Users/andrewwinnicki/desktop/Andrew/2019-2020/Doyle Lab/Modeling Magnetic Lens/magnetic_lens_monte_carlo/bfield_plots_{}'\
+Path('/Users/andrewwinnicki/desktop/Andrew/2019-2020/Doyle Lab/Modeling Magnetic Lens/magnetic_lens_monte_carlo/b_field_plots_{}'\
     .format(datetime.date.today())).mkdir(parents=True, exist_ok=True)
-plt.savefig('/Users/andrewwinnicki/desktop/Andrew/2019-2020/Doyle Lab/Modeling Magnetic Lens/magnetic_lens_monte_carlo/bfield_plots_{}/bfield_3D_{}'\
+plt.savefig('/Users/andrewwinnicki/desktop/Andrew/2019-2020/Doyle Lab/Modeling Magnetic Lens/magnetic_lens_monte_carlo/b_field_plots_{}/b_field_3D_{}'\
     .format(datetime.date.today(), datetime.date.today()))
 
 # Plot slice of b-field in two dimensions
@@ -76,7 +76,7 @@ bMatrixAxSlice.set_title(\
     '2D Slice of Magnetic Field in Circular Halbach Array')
 bMatrixAxSlice.set_ylabel('y (mm)')
 bMatrixAxSlice.set_xlabel('x (mm)')
-plt.savefig('/Users/andrewwinnicki/desktop/Andrew/2019-2020/Doyle Lab/Modeling Magnetic Lens/magnetic_lens_monte_carlo/bfield_plots_{}/bfield_2D_slice_{}'\
+plt.savefig('/Users/andrewwinnicki/desktop/Andrew/2019-2020/Doyle Lab/Modeling Magnetic Lens/magnetic_lens_monte_carlo/b_field_plots_{}/b_field_2D_slice_{}'\
     .format(datetime.date.today(), datetime.date.today()))
 
 # Plot force field
