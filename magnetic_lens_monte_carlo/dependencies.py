@@ -14,7 +14,7 @@ from mpl_toolkits import mplot3d
 from pathlib import Path
 from scipy.stats import maxwell
 
-n = 1e4
+n = 1e3
 t = 0.0
 dt = 0.1
 lCellTo4k = 0.1

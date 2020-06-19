@@ -1,5 +1,5 @@
 # ----------------------------------------------------------------------------
-# Kinematic propagation
+# Propagation
 # ----------------------------------------------------------------------------
 from dependencies import *
 from init import *
@@ -8,8 +8,8 @@ from vector_field import *
 print('Propagating...\n')
 
 # Initialize variables
-kinematicPropagationFig = plt.figure()
-kinematicPropagationAx = plt.subplots()
+propagationFig = plt.figure()
+propagationAx = plt.subplots()
 
 plotZ = [[] for _ in range(int(n))]
 plotX = [[] for _ in range(int(n))]
@@ -51,6 +51,8 @@ for time in np.linspace(0, tFinal, num=steps, endpoint=False):
         if -(R / 1e3) / 2 <= p[index] <= (R / 1e3) / 2 \
             and -(R / 1e3) / 2 <= p[index + 1] <= (R / 1e3) / 2 \
             and lCellTo4k + l4kToLensAperture <= p[index + 2] <= lCellTo4k + l4kToLensAperture + R / 1e3:
+
+            # todo: fix units
 
             if not path.contains_point((p[index], p[index + 1])):
                 # print('Found a point outside the bore. x, y: {}, {}\n'.format(p[index], p[index + 1]))
@@ -128,10 +130,10 @@ plt.ylabel('x (m)')
 plt.grid(True)
 plt.axis([0.0, 0.7, -0.008, 0.008])
 
-plt.title('Kinematic Propagation of {} Particles in the z- and x-Coordinates'.format(int(n)))
-Path('/Users/andrewwinnicki/desktop/Andrew/2019-2020/Doyle Lab/Modeling Magnetic Lens/magnetic_lens_monte_carlo/kinematic_propagation_plots_{}'\
+plt.title('Propagation of {} Particles in the z- and x-Coordinates'.format(int(n)))
+Path('/Users/andrewwinnicki/desktop/Andrew/2019-2020/Doyle Lab/Modeling Magnetic Lens/magnetic_lens_monte_carlo/propagation_plots_{}'\
     .format(datetime.date.today())).mkdir(parents=True, exist_ok=True)
-plt.savefig('/Users/andrewwinnicki/desktop/Andrew/2019-2020/Doyle Lab/Modeling Magnetic Lens/magnetic_lens_monte_carlo/kinematic_propagation_plots_{}/kinematic_propagation_{}_particles{}'\
+plt.savefig('/Users/andrewwinnicki/desktop/Andrew/2019-2020/Doyle Lab/Modeling Magnetic Lens/magnetic_lens_monte_carlo/propagation_plots_{}/propagation_{}_particles{}'\
     .format(datetime.date.today(), int(n), datetime.date.today()))
 
 print('Done.\n')
