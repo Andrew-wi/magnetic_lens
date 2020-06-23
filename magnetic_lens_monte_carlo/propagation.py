@@ -44,6 +44,7 @@ for time in np.linspace(0, tFinal, num=steps, endpoint=False):
                 a[index:index + 3] = [0, 0, 0]
                 continue
 
+            # todo: check all R/2 vs R
             l = (R / 1e3) / (m - 1)
             xCoord = round(abs(-((R / 2) / 1e3) - p[index]) / l)
             yCoord = round(abs(-((R / 2) / 1e3) - p[index + 1]) / l)

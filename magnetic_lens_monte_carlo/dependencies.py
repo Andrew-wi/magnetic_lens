@@ -39,7 +39,7 @@ motLeftEdge = 0.5500
 motSideLength = 0.0025
 
 # As in mathematica code
-m = 50
+m = 16
 R = 25.4
 segs = 12
 
