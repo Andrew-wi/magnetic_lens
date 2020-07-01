@@ -32,11 +32,11 @@ for time in np.linspace(0, tFinal, num=steps, endpoint=False):
             a[index:index + 3] = [0, 0, 0]
             # p[index:index + 3] = [0, 0, 0]
             # Prettify
-            # plotZ[int(index / 3)] = [0.0, 0.0]
-            # plotX[int(index / 3)] = [0.0, 0.0]
+            plotZ[int(index / 3)] = [0.0, 0.0]
+            plotX[int(index / 3)] = [0.0, 0.0]
             continue
 
-    # Lens
+    # Lens ---------------
         elif lCellTo4k + l4kToLensAperture <= p[index + 2] <= lCellTo4k + l4kToLensAperture + R / 1e3:
 
             if not hexPath.contains_point((p[index], p[index + 1])):
@@ -44,14 +44,23 @@ for time in np.linspace(0, tFinal, num=steps, endpoint=False):
                 a[index:index + 3] = [0, 0, 0]
                 continue
 
+            # temp, todo: remove
+            if ((p[index] ** 2 + p[index + 1] ** 2) ** (1/2)) > 0.010:
+                v[index:index + 3] = [0, 0, 0]
+                a[index:index + 3] = [0, 0, 0]
+                p[index:index + 3] = [0, 0, 0]
+                continue
+
+
             # todo: check all R/2 vs R
             l = (R / 1e3) / (m - 1)
             xCoord = round(abs(-((R / 2) / 1e3) - p[index]) / l)
             yCoord = round(abs(-((R / 2) / 1e3) - p[index + 1]) / l)
             zCoord = round((p[index + 2] - (lCellTo4k + l4kToLensAperture)) / l)
             # todo: adjust mass scaling factor
-            a[index:index + 3] = forceField[int(xCoord), int(yCoord), int(zCoord)] / mass * 1e6
+            a[index:index + 3] = forceField[int(xCoord), int(yCoord), int(zCoord)] / mass
             continue
+    # Lens ---------------
 
         elif lCellTo4k + l4kToBeamShutter <= p[index + 2] <= lCellTo4k + l4kToBeamShutter + 0.005 and \
             ((p[index] ** 2 + p[index + 1] ** 2) ** (1/2)) > 0.007:
@@ -59,8 +68,8 @@ for time in np.linspace(0, tFinal, num=steps, endpoint=False):
             a[index:index + 3] = [0, 0, 0]
             # p[index:index + 3] = [0, 0, 0]
             # Prettify
-            # plotZ[int(index / 3)] = [0.0, 0.0]
-            # plotX[int(index / 3)] = [0.0, 0.0]
+            plotZ[int(index / 3)] = [0.0, 0.0]
+            plotX[int(index / 3)] = [0.0, 0.0]
             continue
 
         elif p[index + 2] >= 0.7:
@@ -87,11 +96,14 @@ for time in np.linspace(0, tFinal, num=steps, endpoint=False):
         plotX[int(index / 3)].append(p[index])
 
 # todo: prettify, prune out stray trajectories
-# for index in range(0, int(n) * 3, 3):
-#     if p[index + 2] >= lCellTo4k and \
-#         ((p[index] ** 2 + p[index + 1] ** 2) ** (1/2)) > 0.006:
-#         plotZ[int(index / 3)] = [0.0, 0.0]
-#         plotX[int(index / 3)] = [0.0, 0.0]
+for index in range(0, int(n) * 3, 3):
+    if p[index + 2] >= lCellTo4k and \
+        ((p[index] ** 2 + p[index + 1] ** 2) ** (1/2)) > 0.006:
+        plotZ[int(index / 3)] = [0.0, 0.0]
+        plotX[int(index / 3)] = [0.0, 0.0]
+    if p[index + 2] <= lCellTo4k + l4kToLensAperture:
+        plotZ[int(index / 3)] = [0.0, 0.0]
+        plotX[int(index / 3)] = [0.0, 0.0]
 
 print('Ending positions: {}'.format(p))
 print('Total particles through MOT region: {}'.format(successes))
@@ -133,8 +145,8 @@ plt.plot(x2, y2, 'k')
 plt.xlabel('z (m)')
 plt.ylabel('x (m)')
 plt.grid(True)
-# plt.axis([0.0, 0.7, -0.008, 0.008]) (tighter waist)
-plt.axis([0.0, 0.6, -0.015, 0.015])
+plt.axis([0.0, 0.6, -0.008, 0.008])
+# plt.axis([0.0, 0.6, -0.015, 0.015])
 
 plt.title('Propagation of {} Particles in the z- and x-Coordinates'.format(int(n)))
 Path('/Users/andrewwinnicki/desktop/Andrew/2019-2020/Doyle Lab/Modeling Magnetic Lens/magnetic_lens_monte_carlo/propagation_plots_{}'\

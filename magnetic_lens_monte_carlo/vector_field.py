@@ -22,13 +22,13 @@ hdulBMatrix = fits.open('/Users/andrewwinnicki/desktop/Andrew/2019-2020/Doyle La
 # myMatrixSlice = np.array([hdulMyMatrixSlice[0].data[i] for i in range(m)])
 normBMatrix = np.array([hdulNormBMatrix[0].data[i] for i in range(m)])
 bMatrix = np.array([hdulBMatrix[0].data[i] for i in range(m)])
-
-print(bMatrix)
+bMatrix = np.transpose(bMatrix, (1, 0, 2, 3))
 
 # Generate force field
 gradNormBx, gradNormBy, gradNormBz = np.gradient(normBMatrix)
-
-print(gradNormBx)
+gradNormBx = np.transpose(gradNormBx, (1, 0, 2))
+gradNormBy = np.transpose(gradNormBy, (1, 0, 2))
+gradNormBz = np.transpose(gradNormBz, (1, 0, 2))
 
 forceField = s * g * mu_B * np.stack([gradNormBx, gradNormBy, gradNormBz], axis=3)
 

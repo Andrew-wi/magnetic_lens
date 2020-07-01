@@ -57,27 +57,27 @@ Path('/Users/andrewwinnicki/desktop/Andrew/2019-2020/Doyle Lab/Modeling Magnetic
 # plt.savefig('/Users/andrewwinnicki/desktop/Andrew/2019-2020/Doyle Lab/Modeling Magnetic Lens/magnetic_lens_monte_carlo/b_field_plots_{}/b_field_3D_{}'\
 #     .format(datetime.date.today(), datetime.date.today()))
 
-# # Plot slice of b-field in two dimensions
-# bMatrixFigSlice, bMatrixAxSlice = plt.subplots()
+# Plot slice of b-field in two dimensions
+bMatrixFigSlice, bMatrixAxSlice = plt.subplots()
 hexagon = [[R / 2 * np.cos(angle), R / 2 * np.sin(angle)] for angle in np.linspace(0, 2 * np.pi, segs, endpoint=False)]
 hexagon.append(hexagon[0])
 x, y = list(zip(*hexagon))
-# bMatrixAxSlice.plot(x, y, 'k')
-# bMatrixAxSlice.axis('equal')
+bMatrixAxSlice.plot(x, y, 'k')
+bMatrixAxSlice.axis('equal')
 
-# x2d, y2d = np.meshgrid(np.linspace(-R/2, R/2, m), np.linspace(-R/2, R/2, m))
+x2d, y2d = np.meshgrid(np.linspace(-R/2, R/2, m), np.linspace(-R/2, R/2, m))
 
-# bxMatrixSlice = bMatrix[:, :, int(m/2), 0]
-# byMatrixSlice = bMatrix[:, :, int(m/2), 1]
+bxMatrixSlice = bMatrix[:, :, int(m/2), 0]
+byMatrixSlice = bMatrix[:, :, int(m/2), 1]
 
-# bMatrixAxSlice.quiver(x2d, y2d, bxMatrixSlice, byMatrixSlice)
+bMatrixAxSlice.quiver(x2d, y2d, bxMatrixSlice, byMatrixSlice)
 
-# bMatrixAxSlice.set_title(\
-#     '2D Slice of Magnetic Field in Circular Halbach Array')
-# bMatrixAxSlice.set_ylabel('y (mm)')
-# bMatrixAxSlice.set_xlabel('x (mm)')
-# plt.savefig('/Users/andrewwinnicki/desktop/Andrew/2019-2020/Doyle Lab/Modeling Magnetic Lens/magnetic_lens_monte_carlo/b_field_plots_{}/b_field_2D_slice_{}'\
-#     .format(datetime.date.today(), datetime.date.today()))
+bMatrixAxSlice.set_title(\
+    '2D Slice of Magnetic Field in Circular Halbach Array')
+bMatrixAxSlice.set_ylabel('y (mm)')
+bMatrixAxSlice.set_xlabel('x (mm)')
+plt.savefig('/Users/andrewwinnicki/desktop/Andrew/2019-2020/Doyle Lab/Modeling Magnetic Lens/magnetic_lens_monte_carlo/b_field_plots_{}/b_field_2D_slice_{}'\
+    .format(datetime.date.today(), datetime.date.today()))
 
 # Plot force field
 forceFieldSlice2DFig, forceFieldSlice2DAx = plt.subplots()
@@ -85,12 +85,10 @@ forceFieldSlice2DAx.plot(x, y, 'k')
 
 x2d, y2d = np.meshgrid(np.linspace(-R/2, R/2, m), np.linspace(-R/2, R/2, m))
 
-forceX = forceField[:, :, int(m/2), 0].transpose()
-forceY = forceField[:, :, int(m/2), 1].transpose()
+forceX = forceField[:, :, int(m/2), 0]
+forceY = forceField[:, :, int(m/2), 1]
 # todo: get the color right, graded by strength of field
 # color = normBMatrix[:, :, int(m/2)]
-
-print(forceX)
 
 forceFieldSlice2DAx.quiver(x2d, y2d, forceX, forceY)
 

@@ -18,8 +18,8 @@ n = 1e3
 t = 0.0
 dt = 0.1
 sigmaXY = 0.005
-sigmaVxy = 1.5
-sigmaVz = 30.0
+sigmaVxy = 1.0
+sigmaVz = 10.0
 muVz = 100.0
 lCellTo4k = 0.1
 l4kToLensAperture = 0.1
@@ -27,19 +27,19 @@ l4kToBeamShutter = 0.26
 s = -0.5
 g = 2.0
 mu_B = 9.274e-24
-mass = 1.1789827e-22
+mass = 1.18084e-25
 p = np.array([])
 v = np.array([])
 a = np.array([])
 tFinal = 0.02
-steps = 1000
+steps = 3000
 successfulParticles = []
 successes = 0
 motLeftEdge = 0.5500
 motSideLength = 0.0025
 
 # As in mathematica code
-m = 18
+m = 50
 R = 25.4
 segs = 12
 
