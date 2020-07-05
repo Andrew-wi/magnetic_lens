@@ -31,10 +31,8 @@ print('Visualizing fields...\n')
 # mMatrixAxSlice.set_ylabel('y (mm)')
 # mMatrixAxSlice.set_xlabel('x (mm)')
 
-# Path('/Users/andrewwinnicki/desktop/Andrew/2019-2020/Doyle Lab/Modeling Magnetic Lens/magnetic_lens_monte_carlo/magnetization_plots_2D_{}'\
-#     .format(datetime.date.today())).mkdir(parents=True, exist_ok=True)
-# plt.savefig('/Users/andrewwinnicki/desktop/Andrew/2019-2020/Doyle Lab/Modeling Magnetic Lens/magnetic_lens_monte_carlo/magnetization_plots_2D_{}/magnetization_2D_{}'\
-#     .format(datetime.date.today(), datetime.date.today()))
+Path('{}/magnetization_plots_2D_{}'.format(datetime.date.today(), datetime.date.today())).mkdir(parents=True, exist_ok=True)
+# plt.savefig('{}/magnetization_plots_2D_{}/magnetization_2D_{}'format(datetime.date.today(), datetime.date.today(), datetime.date.today()))
 
 # # Plot b-field in three dimensions
 # bMatrixFig3D = plt.figure()
@@ -52,10 +50,8 @@ print('Visualizing fields...\n')
 # bMatrixAx3D.set_ylabel('y (mm)')
 # bMatrixAx3D.set_zlabel('z (mm)')
 
-Path('/Users/andrewwinnicki/desktop/Andrew/2019-2020/Doyle Lab/Modeling Magnetic Lens/magnetic_lens_monte_carlo/b_field_plots_{}'\
-    .format(datetime.date.today())).mkdir(parents=True, exist_ok=True)
-# plt.savefig('/Users/andrewwinnicki/desktop/Andrew/2019-2020/Doyle Lab/Modeling Magnetic Lens/magnetic_lens_monte_carlo/b_field_plots_{}/b_field_3D_{}'\
-#     .format(datetime.date.today(), datetime.date.today()))
+Path('{}/b_field_plots_{}'.format(datetime.date.today(), datetime.date.today())).mkdir(parents=True, exist_ok=True)
+# plt.savefig('{}/b_field_plots_{}/b_field_3D_{}'.format(datetime.date.today(), datetime.date.today(), datetime.date.today()))
 
 # Plot slice of b-field in two dimensions
 bMatrixFigSlice, bMatrixAxSlice = plt.subplots()
@@ -76,8 +72,7 @@ bMatrixAxSlice.set_title(\
     '2D Slice of Magnetic Field in Circular Halbach Array')
 bMatrixAxSlice.set_ylabel('y (mm)')
 bMatrixAxSlice.set_xlabel('x (mm)')
-plt.savefig('/Users/andrewwinnicki/desktop/Andrew/2019-2020/Doyle Lab/Modeling Magnetic Lens/magnetic_lens_monte_carlo/b_field_plots_{}/b_field_2D_slice_{}'\
-    .format(datetime.date.today(), datetime.date.today()))
+plt.savefig('{}/b_field_plots_{}/b_field_2D_slice_{}'.format(datetime.date.today(), datetime.date.today(), datetime.date.today()))
 
 # Plot force field
 forceFieldSlice2DFig, forceFieldSlice2DAx = plt.subplots()
@@ -99,9 +94,7 @@ forceFieldSlice2DAx.set_title(\
 forceFieldSlice2DAx.set_ylabel('y (mm)')
 forceFieldSlice2DAx.set_xlabel('x (mm)')
 
-Path('/Users/andrewwinnicki/desktop/Andrew/2019-2020/Doyle Lab/Modeling Magnetic Lens/magnetic_lens_monte_carlo/force_field_plots_{}'\
-    .format(datetime.date.today())).mkdir(parents=True, exist_ok=True)
-plt.savefig('/Users/andrewwinnicki/desktop/Andrew/2019-2020/Doyle Lab/Modeling Magnetic Lens/magnetic_lens_monte_carlo/force_field_plots_{}/force_field_2D_slice_{}'\
-    .format(datetime.date.today(), datetime.date.today()))
+Path('{}/force_field_plots_{}'.format(datetime.date.today(), datetime.date.today())).mkdir(parents=True, exist_ok=True)
+plt.savefig('{}/force_field_plots_{}/force_field_2D_slice_{}'.format(datetime.date.today(), datetime.date.today(), datetime.date.today()))
 
 print('Done.\n')

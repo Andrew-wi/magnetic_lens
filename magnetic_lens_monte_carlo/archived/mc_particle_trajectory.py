@@ -91,9 +91,9 @@ bMatrixAx3D.set_ylabel('y (mm)')
 bMatrixAx3D.set_zlabel('z (mm)')
 
 Path('/Users/andrewwinnicki/desktop/Andrew/2019-2020/Doyle Lab/Modeling Magnetic Lens/magnetic_lens_monte_carlo/bfield_plots_{}'\
-    .format(datetime.date.today())).mkdir(parents=True, exist_ok=True)
+    .format(date())).mkdir(parents=True, exist_ok=True)
 plt.savefig('/Users/andrewwinnicki/desktop/Andrew/2019-2020/Doyle Lab/Modeling Magnetic Lens/magnetic_lens_monte_carlo/bfield_plots_{}/bfield_3D_{}'\
-    .format(datetime.date.today(), datetime.date.today()))
+    .format(date(), date()))
 
 # Plot slice of b-field in two dimensions
 bMatrixFigSlice = plt.figure()
@@ -111,7 +111,7 @@ bMatrixAxSlice.set_title(\
 bMatrixAxSlice.set_ylabel('y (mm)')
 bMatrixAxSlice.set_xlabel('x (mm)')
 plt.savefig('/Users/andrewwinnicki/desktop/Andrew/2019-2020/Doyle Lab/Modeling Magnetic Lens/magnetic_lens_monte_carlo/bfield_plots_{}/bfield_2D_slice_{}'\
-    .format(datetime.date.today(), datetime.date.today()))
+    .format(date(), date()))
 
 # Generate force field
 gradBxMatrix = np.gradient(bxMatrix, axis=0)
@@ -189,7 +189,7 @@ gradBMatrix = np.stack([gradBxMatrix, gradByMatrix, gradBzMatrix], axis=3)
 #     .format(n))
 # # Save figure
 # Todo: change path
-# # plt.savefig('/Users/andrewwinnicki/desktop/andrew/2019-2020/Doyle Lab/Modeling Project/Particle Trajectory Plots/{}_kinematic_{}.png'.format(n, datetime.date.today()))
+# # plt.savefig('/Users/andrewwinnicki/desktop/andrew/2019-2020/Doyle Lab/Modeling Project/Particle Trajectory Plots/{}_kinematic_{}.png'.format(n, date()))
 # plt.show()
 
 # print('Done.')

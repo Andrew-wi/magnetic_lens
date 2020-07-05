@@ -7,13 +7,13 @@ from init import *
 print('Generating vector fields...\n')
 
 # Import matrices
-# hdulBxMatrix = fits.open('/Users/andrewwinnicki/Desktop/Andrew/2019-2020/Doyle Lab/Modeling Magnetic Lens/magnetic_lens_monte_carlo/b_matrix/bxMatrix_{}.fits'.format(m))
-# hdulByMatrix = fits.open('/Users/andrewwinnicki/desktop/Andrew/2019-2020/Doyle Lab/Modeling Magnetic Lens/magnetic_lens_monte_carlo/b_matrix/byMatrix_{}.fits'.format(m))
-# hdulBzMatrix = fits.open('/Users/andrewwinnicki/desktop/Andrew/2019-2020/Doyle Lab/Modeling Magnetic Lens/magnetic_lens_monte_carlo/b_matrix/bzMatrix_{}.fits'.format(m))
-hdulNormBMatrix = fits.open('/Users/andrewwinnicki/desktop/Andrew/2019-2020/Doyle Lab/Modeling Magnetic Lens/magnetic_lens_monte_carlo/b_matrix/normbMatrix_{}.fits'.format(m))
-hdulBMatrix = fits.open('/Users/andrewwinnicki/desktop/Andrew/2019-2020/Doyle Lab/Modeling Magnetic Lens/magnetic_lens_monte_carlo/b_matrix/bMatrix_{}.fits'.format(m))
-# hdulMxMatrixSlice = fits.open('/Users/andrewwinnicki/desktop/Andrew/2019-2020/Doyle Lab/Modeling Magnetic Lens/magnetic_lens_monte_carlo/m_matrix/mxMatrix_{}.fits'.format(m))
-# hdulMyMatrixSlice = fits.open('/Users/andrewwinnicki/desktop/Andrew/2019-2020/Doyle Lab/Modeling Magnetic Lens/magnetic_lens_monte_carlo/m_matrix/myMatrix_{}.fits'.format(m))
+# hdulBxMatrix = fits.open('b_matrix/bxMatrix_{}.fits'.format(m))
+# hdulByMatrix = fits.open('b_matrix/byMatrix_{}.fits'.format(m))
+# hdulBzMatrix = fits.open('b_matrix/bzMatrix_{}.fits'.format(m))
+hdulNormBMatrix = fits.open('b_matrix/normbMatrix_{}.fits'.format(m))
+hdulBMatrix = fits.open('b_matrix/bMatrix_{}.fits'.format(m))
+# hdulMxMatrixSlice = fits.open('m_matrix/mxMatrix_{}.fits'.format(m))
+# hdulMyMatrixSlice = fits.open('m_matrix/myMatrix_{}.fits'.format(m))
 
 # bxMatrix = np.array([hdulBxMatrix[0].data[i] for i in range(m)])
 # byMatrix = np.array([hdulByMatrix[0].data[i] for i in range(m)])
