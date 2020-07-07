@@ -28,10 +28,7 @@ s = -0.5
 g = 2.0
 mu_B = 9.274e-24
 mass = 1.18084e-25
-p = np.array([])
-v = np.array([])
-a = np.array([])
-t_final = 0.02
+t_final = 0.01
 steps = 3000
 mot_left_edge = 0.5500
 mot_side_length = 0.0025
@@ -40,6 +37,9 @@ scan_points = 3
 scan_l_4k_to_lens_aperture_start = 0.0
 successfulParticles = []
 successes = 0
+p = np.array([])
+v = np.array([])
+a = np.array([])
 
 # As in mathematica code
 m = 50

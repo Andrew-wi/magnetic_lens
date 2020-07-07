@@ -19,7 +19,12 @@ for index in range(0, int(n) * 3, 3):
 
 # step through time
 def propagate():
+    global p
+    global v
+    global a
+    global successes
     print('Propagating...\n')
+    print('positions: {}\n'.format(p))
     for time in np.linspace(0, t_final, num=steps, endpoint=False):
         for index in range(0, int(n) * 3, 3):
             if l_cell_to_4k <= p[index + 2] <= l_cell_to_4k + 0.005 and \
@@ -65,9 +70,14 @@ def propagate():
                 int(index / 3) not in successfulParticles:
                 successfulParticles.append(int(index / 3))
                 successes += 1
+                print('made one!')
+                print(successes)
             plotZ[int(index / 3)].append(p[index + 2])
             plotX[int(index / 3)].append(p[index])
-propagate()
+            # save plotz, plotx to files
+            # save p, v, a to files
+
+# propagate()
 
 # todo: prettify, prune out stray trajectories (visualization)
 for index in range(0, int(n) * 3, 3):

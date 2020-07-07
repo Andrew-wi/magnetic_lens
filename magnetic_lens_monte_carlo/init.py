@@ -31,11 +31,11 @@ def generate():
 
         while v[index + 2] < 0:
             v[index + 2] = np.random.normal(loc=mu_vz, scale=sigma_vz)
+    print('====================================== Initial Conditions ======================================')
+    print('Positions array: \n {} \n'.format(p))
+    print('Velocities array: \n {} \n'.format(v))
+    print('Accelerations array: \n {}'.format(a))
+    print('================================================================================================\n')
     print('Done.\n')
 
 generate()
-print('====================================== Initial Conditions ======================================')
-print('Positions array: \n {} \n'.format(p))
-print('Velocities array: \n {} \n'.format(v))
-print('Accelerations array: \n {}'.format(a))
-print('================================================================================================\n')

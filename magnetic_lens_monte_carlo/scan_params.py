@@ -4,8 +4,9 @@
 from dependencies import *
 from init import *
 from vector_field import *
+from propagation import *
 
-with open('./lens_variation_{}.csv'.format(datetime.date.today()), 'w+') as file:
+with open('{}/lens_variation_{}.csv'.format(datetime.date.today(), datetime.date.today()), 'w+') as file:
     writer = csv.writer(file)
     writer.writerow(['l_4k_to_lens_aperture', 'successes'])
 
@@ -14,13 +15,15 @@ for i, add_len in enumerate(np.linspace(scan_l_4k_to_lens_aperture_start, scan_l
     # set global variables for scan through parameters and initialize
     global l_4k_to_lens_aperture
     global successes
-    global successfulParticles
+    global p
+    global v
+    global a
     successes = 0
     successfulParticles = []
     generate()
     propagate()
     # write successes to csv file
-    with open('./lens_variation_{}.csv'.format(datetime.date.today()), 'a') as file:
+    with open('{}/lens_variation_{}.csv'.format(datetime.date.today(), datetime.date.today()), 'a') as file:
         writer = csv.writer(file)
         writer.writerow([l_cell_to_4k + l_4k_to_lens_aperture, successes])
     # iterate on distance to lens
