@@ -129,13 +129,13 @@ gradBMatrix = np.stack([gradBxMatrix, gradByMatrix, gradBzMatrix], axis=3)
 #     # Since the distance from 4K aperture to lens is 8x the length of the lens
 #     # bore, we must have an additional (m - 1)*8 points in the force field
 #     # with value 0
-#     forceField = np.insert(forceField, 0, [[0.0 for _ in range(m)]\
+#     force_field = np.insert(force_field, 0, [[0.0 for _ in range(m)]\
 #         for _ in range(m)], axis=0)
 
 # # Add in 18x 0's in the force field between the lens and the MOT
 # Todo: add the 0's in the force field after the lens
 
-# print("New force field: \n {} \n ".format(forceField))
+# print("New force field: \n {} \n ".format(force_field))
 
 # ----------------------------------------------------------------------------
 # Kinematic propagation
@@ -157,7 +157,7 @@ gradBMatrix = np.stack([gradBxMatrix, gradByMatrix, gradBzMatrix], axis=3)
 #         try:
 #             # Attempt to set new acceleration to the F/m given by force field's
 #             # coordinate
-#             a[index] = forceField[position] / m
+#             a[index] = force_field[position] / m
 
 #             # I need to reshape the array.
 #             # I also need to have a force field that uses not the norm,

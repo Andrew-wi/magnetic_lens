@@ -75,24 +75,24 @@ bMatrixAxSlice.set_xlabel('x (mm)')
 plt.savefig('{}/b_field_plots_{}/b_field_2D_slice_{}'.format(datetime.date.today(), datetime.date.today(), datetime.date.today()))
 
 # Plot force field
-forceFieldSlice2DFig, forceFieldSlice2DAx = plt.subplots()
-forceFieldSlice2DAx.plot(x, y, 'k')
+force_fieldSlice2DFig, force_fieldSlice2DAx = plt.subplots()
+force_fieldSlice2DAx.plot(x, y, 'k')
 
 x2d, y2d = np.meshgrid(np.linspace(-R/2, R/2, m), np.linspace(-R/2, R/2, m))
 
-forceX = forceField[:, :, int(m/2), 0]
-forceY = forceField[:, :, int(m/2), 1]
+forceX = force_field[:, :, int(m/2), 0]
+forceY = force_field[:, :, int(m/2), 1]
 # todo: get the color right, graded by strength of field
 # color = normBMatrix[:, :, int(m/2)]
 
-forceFieldSlice2DAx.quiver(x2d, y2d, forceX, forceY)
+force_fieldSlice2DAx.quiver(x2d, y2d, forceX, forceY)
 
-forceFieldSlice2DAx.axis('equal')
+force_fieldSlice2DAx.axis('equal')
 
-forceFieldSlice2DAx.set_title(\
+force_fieldSlice2DAx.set_title(\
     '2D Slice of Force Field in Circular Halbach Array Magnetic Field')
-forceFieldSlice2DAx.set_ylabel('y (mm)')
-forceFieldSlice2DAx.set_xlabel('x (mm)')
+force_fieldSlice2DAx.set_ylabel('y (mm)')
+force_fieldSlice2DAx.set_xlabel('x (mm)')
 
 Path('{}/force_field_plots_{}'.format(datetime.date.today(), datetime.date.today())).mkdir(parents=True, exist_ok=True)
 plt.savefig('{}/force_field_plots_{}/force_field_2D_slice_{}'.format(datetime.date.today(), datetime.date.today(), datetime.date.today()))
