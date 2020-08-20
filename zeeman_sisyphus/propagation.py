@@ -16,7 +16,7 @@ for index in range(0, int(n) * 3, 3):
     plotX[int(index / 3)].append(p[index])
 
 # step through time
-def propagate(p, v, a, successes, successful_particles, l_4k_to_lens_aperture):
+def propagate(p, v, a, successes, successful_particles, l_4k_to_lens_aperture, z_deceleration):
     print('Propagating...')
     for time in np.linspace(0, t_final, num=steps, endpoint=False):
         for index in range(0, int(n) * 3, 3):
@@ -26,21 +26,24 @@ def propagate(p, v, a, successes, successful_particles, l_4k_to_lens_aperture):
                 v[index:index + 3] = [0, 0, 0]
                 a[index:index + 3] = [0, 0, 0]
                 continue
-            # # Lens ---------------
-            # elif l_cell_to_4k + l_4k_to_lens_aperture <= p[index + 2] <= l_cell_to_4k + l_4k_to_lens_aperture + R / 1e3 \
-            #     and ((p[index] ** 2 + p[index + 1] ** 2) ** (1/2)) < 0.0107:
-            #     # if not hexPath.contains_point((p[index], p[index + 1])):
-            #     #     v[index:index + 3] = [0, 0, 0]
-            #     #     a[index:index + 3] = [0, 0, 0]
-            #     #     continue
-            #     l = (R / 1e3) / (m - 1)
-            #     xCoord = round(((R / 2) / 1e3 + p[index]) / l)
-            #     yCoord = round(((R / 2) / 1e3 + p[index + 1]) / l)
-            #     zCoord = round((p[index + 2] - (l_cell_to_4k + l_4k_to_lens_aperture)) / l)
-            #     # todo: adjust scaling factor
-            #     a[index:index + 3] = force_field[int(yCoord), int(xCoord), int(zCoord)] / mass
-            #     continue
-            # # Lens ---------------
+            # Lens ---------------
+            elif l_cell_to_4k + l_4k_to_lens_aperture <= p[index + 2] <= l_cell_to_4k + l_4k_to_lens_aperture + R / 1e3 \
+                and ((p[index] ** 2 + p[index + 1] ** 2) ** (1/2)) < 0.0107:
+                # if not hexPath.contains_point((p[index], p[index + 1])):
+                #     v[index:index + 3] = [0, 0, 0]
+                #     a[index:index + 3] = [0, 0, 0]
+                #     continue
+                l = (R / 1e3) / (m - 1)
+                xCoord = round(((R / 2) / 1e3 + p[index]) / l)
+                yCoord = round(((R / 2) / 1e3 + p[index + 1]) / l)
+                zCoord = round((p[index + 2] - (l_cell_to_4k + l_4k_to_lens_aperture)) / l)
+                # todo: adjust scaling factor
+                # take x, y, z coords and take only the first two components for x and y acceleration
+                a[index:index + 2] = force_field[int(yCoord), int(xCoord), int(zCoord)][:-1] / mass
+                # adjust z acceleration by setting to a negative constant
+                a[index + 2] = z_deceleration
+                continue
+            # Lens ---------------
             # beam shutter
             elif l_cell_to_4k + l_4k_to_beam_shutter <= p[index + 2] <= l_cell_to_4k + l_4k_to_beam_shutter + 0.005 and \
                 ((p[index] ** 2 + p[index + 1] ** 2) ** (1/2)) > 0.007:

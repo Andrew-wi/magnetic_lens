@@ -5,7 +5,7 @@ from dependencies import *
 from init import *
 from vector_field import *
 
-print('Visualizing fields...\n')
+print('Visualizing fields...')
 
 # # Plot magnetization of circular Halbach array
 # mMatrixFigSlice, mMatrixAxSlice = plt.subplots()
@@ -96,5 +96,3 @@ force_fieldSlice2DAx.set_xlabel('x (mm)')
 
 Path('{}/force_field_plots_{}'.format(datetime.date.today(), datetime.date.today())).mkdir(parents=True, exist_ok=True)
 plt.savefig('{}/force_field_plots_{}/force_field_2D_slice_{}'.format(datetime.date.today(), datetime.date.today(), datetime.date.today()))
-
-print('Done.\n')
