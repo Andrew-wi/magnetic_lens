@@ -28,7 +28,7 @@ bMatrix = np.transpose(bMatrix, (1, 0, 2, 3))
 l = (R / 1e3) / (m - 1)
 
 # Generate force field
-gradNormBx, gradNormBy, gradNormBz = np.gradient(normBMatrix)
+gradNormBx, gradNormBy, gradNormBz = np.gradient(normBMatrix, edge_order=2)
 gradNormBx = np.transpose(gradNormBx, (1, 0, 2))
 gradNormBy = np.transpose(gradNormBy, (1, 0, 2))
 gradNormBz = np.transpose(gradNormBz, (1, 0, 2))
