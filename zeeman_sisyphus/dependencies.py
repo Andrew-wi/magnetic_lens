@@ -40,6 +40,6 @@ scan_points = 9 # number of points to scan
 trials = 12 # number of trials at each scan_point
 
 # same as in mathematica code
-m = 200 # mesh spacing
+m = 50 # mesh spacing
 R = 25.4 # outer radius of lens (in mm, as Radia is in mm by default)
 segs = 12 # number of segments

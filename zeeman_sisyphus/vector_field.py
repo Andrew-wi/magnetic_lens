@@ -25,7 +25,7 @@ bMatrix = np.array([hdulBMatrix[0].data[i] for i in range(m)])
 bMatrix = np.transpose(bMatrix, (1, 0, 2, 3))
 
 # mesh spacing length
-l = (R / 1e3) / (m - 1)
+l = (2*R / 1e3) / (m - 1)
 
 # Generate force field
 gradNormBx, gradNormBy, gradNormBz = np.gradient(normBMatrix, edge_order=2)

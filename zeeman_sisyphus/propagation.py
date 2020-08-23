@@ -27,21 +27,21 @@ def propagate(p, v, a, successes, successful_particles, l_4k_to_lens_aperture, z
                 a[index:index + 3] = [0, 0, 0]
                 continue
             # Lens ---------------
-            elif l_cell_to_4k + l_4k_to_lens_aperture <= p[index + 2] <= l_cell_to_4k + l_4k_to_lens_aperture + R / 1e3 \
-                and ((p[index] ** 2 + p[index + 1] ** 2) ** (1/2)) < 0.0107:
-                # if not hexPath.contains_point((p[index], p[index + 1])):
-                #     v[index:index + 3] = [0, 0, 0]
-                #     a[index:index + 3] = [0, 0, 0]
-                #     continue
-                l = (R / 1e3) / (m - 1)
-                xCoord = round(((R / 2) / 1e3 + p[index]) / l)
-                yCoord = round(((R / 2) / 1e3 + p[index + 1]) / l)
-                zCoord = round((p[index + 2] - (l_cell_to_4k + l_4k_to_lens_aperture)) / l)
+            elif l_cell_to_4k + l_4k_to_lens_aperture - R/2/1e3 <= p[index + 2] \
+                    <= l_cell_to_4k + l_4k_to_lens_aperture + R/1e3 + R/2/1e3:
+                if not hexPath.contains_point((p[index], p[index + 1])):
+                    v[index:index + 3] = [0, 0, 0]
+                    a[index:index + 3] = [0, 0, 0]
+                    continue
+                l = (2*R/1e3) / (m - 1)
+                xCoord = round((R/1e3 + p[index]) / l)
+                yCoord = round((R/1e3 + p[index + 1]) / l)
+                zCoord = round((p[index + 2] - (l_cell_to_4k + l_4k_to_lens_aperture - R/2/1e3)) / l)
                 # todo: adjust scaling factor
                 # take x, y, z coords and take only the first two components for x and y acceleration
-                a[index:index + 2] = force_field[int(yCoord), int(xCoord), int(zCoord)][:-1] / mass
-                # adjust z acceleration by setting to a negative constant
-                a[index + 2] = z_deceleration
+                a[index:index + 3] = force_field[int(yCoord), int(xCoord), int(zCoord)] / mass
+                # adjust z acceleration; beam will not decelerate inside the magnet (zeeman shifted out of resonance)
+                a[index + 2] = 0
                 continue
             # Lens ---------------
             # beam shutter
@@ -57,6 +57,8 @@ def propagate(p, v, a, successes, successful_particles, l_4k_to_lens_aperture, z
                 continue
             else:
                 a[index:index + 3] = [0, 0, 0]
+                # decelerate if not inside magnet
+                a[index + 2] = z_deceleration
         timestep = t_final / steps
         v += a * timestep
         p += v * timestep

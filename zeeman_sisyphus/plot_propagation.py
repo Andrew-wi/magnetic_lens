@@ -26,7 +26,8 @@ for index in range(0, int(n) * 3, 3):
     plotX[int(index / 3)].append(p[index])
 
 # change lens distance; todo: remove arguments for this file
-z_deceleration = float(sys.argv[1])
+# z_deceleration = float(sys.argv[1])
+z_deceleration = -1.0579e-23/mass
 print('z-deceleration in lens: {}'.format(z_deceleration))
 
 # propagate

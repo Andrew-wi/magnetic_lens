@@ -10,10 +10,9 @@ import seaborn as sns
 sns.set_style("darkgrid")
 
 # initialize values
-z_scan = np.linspace(0, R/1e3, 200)
+z_scan = np.linspace(0, 2*R/1e3, 50)
 
 # initialize arrays for storing acceleration
-radial_acc_ind = []
 radial_acc_mean = []
 
 # loop through z_scan
@@ -22,7 +21,7 @@ for z_val in z_scan:
     zCoord = round(z_val / l)
 
     # take slice of magnet
-    mag_slice = np.linalg.norm(force_field[50:100, 50:100, int(zCoord)] / mass, axis=2)
+    mag_slice = np.linalg.norm(force_field[:, :, int(zCoord)] / mass, axis=2)
 
     # take mean of array and append it to the radial acc array
     radial_acc_mean.append(np.mean(mag_slice))

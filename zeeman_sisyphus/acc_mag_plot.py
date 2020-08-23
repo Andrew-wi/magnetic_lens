@@ -10,7 +10,7 @@ import seaborn as sns
 sns.set_style("darkgrid")
 
 # initialize values
-radii = np.linspace(0, R/ 2 / 1e3, 100)
+radii = np.linspace(0, R / 1e3, 100)
 thetas = np.linspace(0, 2*np.pi, 100)
 
 # initialize arrays for storing acceleration
@@ -25,9 +25,9 @@ for radius in radii:
         y = radius * np.sin(theta)
 
         # do interpolation
-        l = (R / 1e3) / (m - 1)
-        xCoord = round(((R / 2) / 1e3 + x) / l)
-        yCoord = round(((R / 2) / 1e3 + y) / l)
+        l = (2*R / 1e3) / (m - 1)
+        xCoord = round((R/1e3 + x) / l)
+        yCoord = round((R/1e3 + y) / l)
         zCoord = round(m/2)
         # take x, y, z coords and get acc; append to array
         radial_acc_ind.append(np.linalg.norm(force_field[int(yCoord), int(xCoord), int(zCoord)] / mass))
