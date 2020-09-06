@@ -42,14 +42,14 @@ for index in range(0, int(n) * 3, 3):
         plotZ[int(index / 3)] = [0.0, 0.0]
         plotX[int(index / 3)] = [0.0, 0.0]
 
-# save plotz and plotx to files
-print('Writing to files...')
-with open('{}/plotZ_{}.csv'.format(datetime.date.today(), datetime.date.today()), 'w+') as plotting:
-    writer = csv.writer(plotting)
-    writer.writerows(plotZ)
-with open('{}/plotX_{}.csv'.format(datetime.date.today(), datetime.date.today()), 'w+') as plotting:
-    writer = csv.writer(plotting)
-    writer.writerows(plotX)
+# # save plotz and plotx to files
+# print('Writing to files...')
+# with open('{}/plotZ_{}.csv'.format(datetime.date.today(), datetime.date.today()), 'w+') as plotting:
+#     writer = csv.writer(plotting)
+#     writer.writerows(plotZ)
+# with open('{}/plotX_{}.csv'.format(datetime.date.today(), datetime.date.today()), 'w+') as plotting:
+#     writer = csv.writer(plotting)
+#     writer.writerows(plotX)
 
 print('Success rate: {}'.format(successes / n))
 
@@ -97,7 +97,7 @@ plt.title('Propagation of {} Particles in the z- and x-Coordinates'.format(int(n
 # # ylims to show lens
 # plt.axis([0.0, 0.6, -0.02, 0.02])
 # ylims close-up
-plt.axis([0.0, 0.65, -0.008, 0.008])
+plt.axis([0.0, mot_left_edge + 0.1, -0.008, 0.008])
 
 # save figure
 Path('{}/propagation_plots_{}'.format(datetime.date.today(), datetime.date.today())).mkdir(parents=True, exist_ok=True)

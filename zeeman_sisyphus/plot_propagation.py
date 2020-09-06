@@ -27,21 +27,21 @@ for index in range(0, int(n) * 3, 3):
 
 # change lens distance; todo: remove arguments for this file
 # z_deceleration = float(sys.argv[1])
-z_deceleration = -1.0579e-23/mass
+z_deceleration = 0 #-11300
 print('z-deceleration in lens: {}'.format(z_deceleration))
 
 # propagate
 p, v, a, successes, plotZ, plotX = propagate(p, v, a, successes, successful_particles, l_4k_to_lens_aperture, z_deceleration)
 
-# # prune out stray trajectories
-# for index in range(0, int(n) * 3, 3):
-#     if p[index + 2] >= l_cell_to_4k and \
-#         ((p[index] ** 2 + p[index + 1] ** 2) ** (1/2)) > 0.01: # todo: make 0.008
-#         plotZ[int(index / 3)] = [0.0, 0.0]
-#         plotX[int(index / 3)] = [0.0, 0.0]
-#     elif p[index + 2] <= l_cell_to_4k + l_4k_to_beam_shutter + 0.05:
-#         plotZ[int(index / 3)] = [0.0, 0.0]
-#         plotX[int(index / 3)] = [0.0, 0.0]
+# prune out stray trajectories
+for index in range(0, int(n) * 3, 3):
+    if p[index + 2] >= l_cell_to_4k and \
+        ((p[index] ** 2 + p[index + 1] ** 2) ** (1/2)) > 0.01: # todo: make 0.008
+        plotZ[int(index / 3)] = [0.0, 0.0]
+        plotX[int(index / 3)] = [0.0, 0.0]
+    elif p[index + 2] <= l_cell_to_4k + l_4k_to_beam_shutter + 0.05:
+        plotZ[int(index / 3)] = [0.0, 0.0]
+        plotX[int(index / 3)] = [0.0, 0.0]
 
 # save plotz and plotx to files
 print('Writing to files...')
