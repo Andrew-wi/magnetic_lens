@@ -26,7 +26,7 @@ def propagate(p, v, a, successes, successful_particles, l_4k_to_lens_aperture):
                 v[index:index + 3] = [0, 0, 0]
                 a[index:index + 3] = [0, 0, 0]
                 continue
-            # # lens ---------------
+            # # lens --------------
             # elif l_cell_to_4k + l_4k_to_lens_aperture - R/2/1e3 <= p[index + 2] \
             #         <= l_cell_to_4k + l_4k_to_lens_aperture + R/1e3 + R/2/1e3:
             #     if not hexPath.contains_point((p[index], p[index + 1])):
@@ -67,4 +67,4 @@ def propagate(p, v, a, successes, successful_particles, l_4k_to_lens_aperture):
                 successes += 1
             plotZ[int(index / 3)].append(p[index + 2])
             plotX[int(index / 3)].append(p[index])
-    return p, v, a, successes, plotZ, plotX
+    return p, v, a, successes, plotZ, plotX, successful_particles
