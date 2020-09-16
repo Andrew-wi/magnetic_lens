@@ -37,7 +37,6 @@ def propagate(p, v, a, successes, successful_particles, l_4k_to_lens_aperture, l
                 xCoord = round(((R / 2) / 1e3 + p[index]) / l)
                 yCoord = round(((R / 2) / 1e3 + p[index + 1]) / l)
                 zCoord = round((p[index + 2] - (l_cell_to_4k + l_4k_to_lens_aperture)) / l)
-                # todo: adjust scaling factor
                 a[index:index + 3] = force_field[int(yCoord), int(xCoord), int(zCoord)] / mass
                 continue
             # Lens ---------------

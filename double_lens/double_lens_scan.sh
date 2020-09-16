@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # dependencies
-trials=3; # number of trials at each scan_point
+trials=10; # number of trials at each scan_point
 
 # create list of values over which to lens distances
 distances=($(seq 0 0.05 0.5));

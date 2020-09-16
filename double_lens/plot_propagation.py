@@ -25,10 +25,10 @@ for index in range(0, int(n) * 3, 3):
     plotZ[int(index / 3)].append(p[index + 2])
     plotX[int(index / 3)].append(p[index])
 
-# change lens distance
-l_4k_to_lens_aperture = float(sys.argv[1])
-l_4k_to_lens_aperture_2 = float(sys.argv[2])
-print('new lens to 4k distances: {}, {}'.format(l_4k_to_lens_aperture, l_4k_to_lens_aperture_2))
+# # change lens distance
+# l_4k_to_lens_aperture = float(sys.argv[1])
+# l_4k_to_lens_aperture_2 = float(sys.argv[2])
+# print('new lens to 4k distances: {}, {}'.format(l_4k_to_lens_aperture, l_4k_to_lens_aperture_2))
 
 # propagate
 p, v, a, successes, plotZ, plotX = propagate(p, v, a, successes, successful_particles, l_4k_to_lens_aperture, l_4k_to_lens_aperture_2)
