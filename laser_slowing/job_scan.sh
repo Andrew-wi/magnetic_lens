@@ -4,7 +4,7 @@
 export PYTHONPATH="'':'/Library/Frameworks/Python.framework/Versions/3.7/lib/python37.zip':'/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7':'/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/lib-dynload':'/Users/andrewwinnicki/Library/Python/3.7/lib/python/site-packages':'/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages'";
 
 # dependencies
-trials=20; # number of trials at each scan_point
+trials=5; # number of trials at each scan_point
 
 # create new csv file and write header to it
 touch manual_test.csv;

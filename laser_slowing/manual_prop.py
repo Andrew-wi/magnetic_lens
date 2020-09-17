@@ -26,6 +26,6 @@ for index in range(0, int(n) * 3, 3):
 l_4k_to_lens_aperture = float(sys.argv[1])
 
 # propagate
-p, v, a, successes, plotZ, plotX = propagate(p, v, a, successes, successful_particles, l_4k_to_lens_aperture)
+p, v, a, successes, plotZ, plotX, _ = propagate(p, v, a, successes, successful_particles, l_4k_to_lens_aperture)
 
 print('Success rate: {}'.format(successes / n))
