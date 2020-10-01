@@ -30,7 +30,7 @@ for index in range(0, int(n) * 3, 3):
 # print('new lens to 4k distance: {}'.format(l_4k_to_lens_aperture))
 
 # propagate
-p, v, a, successes, plotZ, plotX = propagate(p, v, a, successes, successful_particles, l_4k_to_lens_aperture)
+p, v, a, successes, plotZ, plotX, _ = propagate(p, v, a, successes, successful_particles, l_4k_to_lens_aperture)
 
 # prune out stray trajectories
 for index in range(0, int(n) * 3, 3):

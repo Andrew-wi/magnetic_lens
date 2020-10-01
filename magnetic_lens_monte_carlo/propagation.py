@@ -26,21 +26,21 @@ def propagate(p, v, a, successes, successful_particles, l_4k_to_lens_aperture):
                 v[index:index + 3] = [0, 0, 0]
                 a[index:index + 3] = [0, 0, 0]
                 continue
-            # # lens --------------
-            # elif l_cell_to_4k + l_4k_to_lens_aperture - R/2/1e3 <= p[index + 2] \
-            #         <= l_cell_to_4k + l_4k_to_lens_aperture + R/1e3 + R/2/1e3:
-            #     if not hexPath.contains_point((p[index], p[index + 1])):
-            #         v[index:index + 3] = [0, 0, 0]
-            #         a[index:index + 3] = [0, 0, 0]
-            #         continue
-            #     l = (2*R/1e3) / (m - 1)
-            #     xCoord = round((R/1e3 + p[index]) / l)
-            #     yCoord = round((R/1e3 + p[index + 1]) / l)
-            #     zCoord = round((p[index + 2] - (l_cell_to_4k + l_4k_to_lens_aperture - R/2/1e3)) / l)
-            #     # todo: adjust scaling factor
-            #     a[index:index + 3] = force_field[int(yCoord), int(xCoord), int(zCoord)] / mass
-            #     continue
-            # # lens ---------------
+            # lens --------------
+            elif l_cell_to_4k + l_4k_to_lens_aperture - R/2/1e3 <= p[index + 2] \
+                    <= l_cell_to_4k + l_4k_to_lens_aperture + R/1e3 + R/2/1e3:
+                if not hexPath.contains_point((p[index], p[index + 1])):
+                    v[index:index + 3] = [0, 0, 0]
+                    a[index:index + 3] = [0, 0, 0]
+                    continue
+                l = (2*R/1e3) / (m - 1)
+                xCoord = round((R/1e3 + p[index]) / l)
+                yCoord = round((R/1e3 + p[index + 1]) / l)
+                zCoord = round((p[index + 2] - (l_cell_to_4k + l_4k_to_lens_aperture - R/2/1e3)) / l)
+                # todo: adjust scaling factor
+                a[index:index + 3] = force_field[int(yCoord), int(xCoord), int(zCoord)] / mass
+                continue
+            # lens ---------------
             # beam shutter
             elif l_cell_to_4k + l_4k_to_beam_shutter <= p[index + 2] <= l_cell_to_4k + l_4k_to_beam_shutter + 0.005 and \
                 ((p[index] ** 2 + p[index + 1] ** 2) ** (1/2)) > 0.007:

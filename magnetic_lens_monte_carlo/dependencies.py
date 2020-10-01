@@ -10,18 +10,23 @@ import matplotlib.pyplot as plt
 import matplotlib.path as pltPath
 import math
 import numpy as np
+import seaborn as sns
+import sys
+
+# set seaborn theme
+sns.set_style("darkgrid")
 
 from astropy.io import fits
 from mpl_toolkits import mplot3d
 from pathlib import Path
 # from scipy.stats import maxwell
 
-n = 1e3
+n = 1e4
 t = 0.0
 sigma_xy = 0.0042
 sigma_vxy = 12.0
 sigma_vz = 30.0
-mu_vz = 100.0
+mu_vz = 110.0
 l_cell_to_4k = 0.1
 l_4k_to_lens_aperture = 0.2 # origin is at l_cell_to_4k. Can be negative to scan behind the 4k
 l_4k_to_beam_shutter = 0.26

@@ -98,7 +98,7 @@ plt.title('Propagation of {} Particles in the z- and x-Coordinates'.format(int(n
 # # ylims to show lens
 # plt.axis([0.0, 0.6, -0.02, 0.02])
 # ylims close-up
-plt.axis([0.0, 0.65, -0.008, 0.008])
+plt.axis([0.0, 0.70, -0.008, 0.008])
 
 # save figure
 Path('{}/propagation_plots_{}'.format(datetime.date.today(), datetime.date.today())).mkdir(parents=True, exist_ok=True)

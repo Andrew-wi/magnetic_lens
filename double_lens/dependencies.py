@@ -16,7 +16,7 @@ from mpl_toolkits import mplot3d
 from pathlib import Path
 # from scipy.stats import maxwell
 
-n = 1e3
+n = 1e4
 t = 0.0
 sigma_xy = 0.0042
 sigma_vxy = 12.0
@@ -24,7 +24,7 @@ sigma_vz = 30.0
 mu_vz = 100.0
 l_cell_to_4k = 0.1
 l_4k_to_lens_aperture = 0.05 # origin is at l_cell_to_4k. Can be negative to scan behind the 4k
-l_4k_to_lens_aperture_2 = 0.2 # as above
+l_4k_to_lens_aperture_2 = 0.08 # as above
 l_4k_to_beam_shutter = 0.26
 m_s = 0.5
 g = 2.0
