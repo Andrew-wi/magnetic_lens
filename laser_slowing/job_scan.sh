@@ -4,7 +4,7 @@
 export PYTHONPATH="'':'/Library/Frameworks/Python.framework/Versions/3.7/lib/python37.zip':'/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7':'/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/lib-dynload':'/Users/andrewwinnicki/Library/Python/3.7/lib/python/site-packages':'/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages'";
 
 # dependencies
-trials=5; # number of trials at each scan_point
+trials=2; # number of trials at each scan_point
 
 # create new csv file and write header to it
 touch manual_test.csv;
@@ -14,7 +14,7 @@ printf "%s," "${vals[@]}" >> manual_test.csv;
 printf "\n" >> manual_test.csv;
 
 # create range of values to scan lens distance over
-lens_dist=($(seq 0 0.05 0.7));
+lens_dist=($(seq 0 0.1 0.7));
 
 # # create log file and overwrite old
 # touch log_manual_prop.txt;
