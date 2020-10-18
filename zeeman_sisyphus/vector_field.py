@@ -11,7 +11,6 @@ print('Generating vector fields...')
 # hdulByMatrix = fits.open('b_matrix/byMatrix_{}.fits'.format(m))
 # hdulBzMatrix = fits.open('b_matrix/bzMatrix_{}.fits'.format(m))
 hdulNormBMatrix = fits.open('b_matrix/normbMatrix_{}.fits'.format(m))
-hdulBMatrix = fits.open('b_matrix/bMatrix_{}.fits'.format(m))
 # hdulMxMatrixSlice = fits.open('m_matrix/mxMatrix_{}.fits'.format(m))
 # hdulMyMatrixSlice = fits.open('m_matrix/myMatrix_{}.fits'.format(m))
 
@@ -21,11 +20,14 @@ hdulBMatrix = fits.open('b_matrix/bMatrix_{}.fits'.format(m))
 # mxMatrixSlice = np.array([hdulMxMatrixSlice[0].data[i] for i in range(m)])
 # myMatrixSlice = np.array([hdulMyMatrixSlice[0].data[i] for i in range(m)])
 normBMatrix = np.array([hdulNormBMatrix[0].data[i] for i in range(m)])
+
+# bMatrix
+hdulBMatrix = fits.open('b_matrix/bMatrix_{}.fits'.format(m))
 bMatrix = np.array([hdulBMatrix[0].data[i] for i in range(m)])
 bMatrix = np.transpose(bMatrix, (1, 0, 2, 3))
 
 # mesh spacing length
-l = (R / 1e3) / (m - 1)
+l = (grid_radius*2 / 1e3) / (m - 1)
 
 # Generate force field
 gradNormBx, gradNormBy, gradNormBz = np.gradient(normBMatrix)

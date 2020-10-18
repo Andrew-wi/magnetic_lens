@@ -8,8 +8,6 @@ from vector_field import *
 # initialize plotting variables
 plotZ = [[] for _ in range(int(n))]
 plotX = [[] for _ in range(int(n))]
-hexagon = [[R / 2 / 1e3 * np.cos(angle), R / 2 / 1e3 * np.sin(angle)] for angle in np.linspace(0, 2 * np.pi, segs, endpoint=False)]
-hexPath = pltPath.Path(hexagon)
 
 for index in range(0, int(n) * 3, 3):
     plotZ[int(index / 3)].append(p[index + 2])
@@ -29,10 +27,6 @@ def propagate(p, v, a, successes, successful_particles, l_4k_to_lens_aperture):
             # lens --------------
             elif l_cell_to_4k + l_4k_to_lens_aperture - R/2/1e3 <= p[index + 2] \
                     <= l_cell_to_4k + l_4k_to_lens_aperture + R/1e3 + R/2/1e3:
-                if not hexPath.contains_point((p[index], p[index + 1])):
-                    v[index:index + 3] = [0, 0, 0]
-                    a[index:index + 3] = [0, 0, 0]
-                    continue
                 l = (2*R/1e3) / (m - 1)
                 xCoord = round((R/1e3 + p[index]) / l)
                 yCoord = round((R/1e3 + p[index + 1]) / l)

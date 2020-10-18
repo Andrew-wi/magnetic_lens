@@ -29,10 +29,9 @@ g = 2.0
 mu_B = 9.274e-24
 mass = 9.48671e-26 # caoh mass # 1.18084e-25 # caoch3 mass
 t_final = 0.02
-steps = 3000
-mot_left_edge = 0.6700
+steps = 200
+mot_left_edge = 1.50
 mot_side_length = 0.01
-z_deceleration = -11300
 
 # parameter scan variables
 lens_range = 0.5 # range of values over which we scan the lens. Origin is at l_4k_to_lens_aperture
@@ -40,6 +39,9 @@ scan_points = 9 # number of points to scan
 trials = 21 # number of trials at each scan_point
 
 # same as in mathematica code
-m = 200 # mesh spacing
-R = 25.4 # outer radius of lens (in mm, as Radia is in mm by default)
+m = 50 # mesh spacing
+r_inner = 3 # inner radius of lens (in mm, as Radia is in mm by default, same as in Mathematica)
+r_outer = 20 # outer radius of lens (mm, as in Radia, same as in Mathematica)
+grid_radius = 70 # the half-length of the cube that spans the magnet grid
+dz = 8
 segs = 12 # number of segments
