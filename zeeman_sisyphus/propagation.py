@@ -2,20 +2,18 @@
 # Propagation
 # ----------------------------------------------------------------------------
 from dependencies import *
-from init import *
 from vector_field import *
 
 # initialize plotting variables
 plotZ = [[] for _ in range(int(n))]
 plotX = [[] for _ in range(int(n))]
 
-for index in range(0, int(n) * 3, 3):
-    plotZ[int(index / 3)].append(p[index + 2])
-    plotX[int(index / 3)].append(p[index])
-
 # step through time
 def propagate(p, v, a, successes, successful_particles, l_4k_to_lens_aperture):
     print('Propagating...')
+    for index in range(0, int(n) * 3, 3):
+        plotZ[int(index / 3)].append(p[index + 2])
+        plotX[int(index / 3)].append(p[index])
     for time in np.linspace(0, t_final, num=steps, endpoint=False):
         for index in range(0, int(n)*3, 3):
             # 4k aperture

@@ -18,10 +18,10 @@ from pathlib import Path
 
 n = 1e2
 t = 0.0
-sigma_xy = 0.001 #0.0042
-sigma_vxy = 20.0 #12.0
-sigma_vz = 0.0 #30.0
-mu_vz = 100.0 #110.0
+sigma_xy = 0.0042
+sigma_vxy = 12.0
+sigma_vz = 30.0
+mu_vz = 110.0
 l_cell_to_4k = 0.1
 l_4k_to_lens_aperture = 0.1 # origin is at l_cell_to_4k. Can be negative to scan behind the 4k
 l_4k_to_beam_shutter = 0.26

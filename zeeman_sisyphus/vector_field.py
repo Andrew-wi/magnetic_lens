@@ -2,7 +2,7 @@
 # Vector Fields
 # ----------------------------------------------------------------------------
 from dependencies import *
-from init import *
+# from init import *
 
 print('Generating vector fields...')
 
