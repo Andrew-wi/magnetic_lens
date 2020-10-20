@@ -7,8 +7,8 @@ from vector_field import *
 
 print('Visualizing fields...')
 
-Path('{}/b_field_plots_{}'.format(datetime.date.today(), datetime.date.today())).mkdir(parents=True, exist_ok=True)
-# plt.savefig('{}/b_field_plots_{}/b_field_3D_{}'.format(datetime.date.today(), datetime.date.today(), datetime.date.today()))
+# Path('{}/b_field_plots_{}'.format(datetime.date.today(), datetime.date.today())).mkdir(parents=True, exist_ok=True)
+# # plt.savefig('{}/b_field_plots_{}/b_field_3D_{}'.format(datetime.date.today(), datetime.date.today(), datetime.date.today()))
 
 # Plot slice of b-field in two dimensions
 bMatrixFigSlice, bMatrixAxSlice = plt.subplots()
@@ -18,32 +18,36 @@ x, y = list(zip(*hexagon))
 bMatrixAxSlice.plot(x, y, 'k')
 bMatrixAxSlice.axis('equal')
 
-x2d, y2d = np.meshgrid(np.linspace(-grid_radius, grid_radius, m), np.linspace(-grid_radius, grid_radius, m))
+# x2d, y2d = np.meshgrid(np.linspace(-r_inner, r_inner, mxy), np.linspace(-r_inner, r_inner, mxy))
 
-bxMatrixSlice = bMatrix[:, :, int(m/2), 0]
-byMatrixSlice = bMatrix[:, :, int(m/2), 1]
+# bxMatrixSlice = bMatrix[:, :, int(mz/2), 0]
+# byMatrixSlice = bMatrix[:, :, int(mz/2), 1]
 
-breakpoint()
+# # # normalize
+# # bxMatrixSlice = bxMatrixSlice/np.sqrt(bxMatrixSlice ** 2)
+# # byMatrixSlice = byMatrixSlice/np.sqrt(byMatrixSlice ** 2)
 
-# # normalize
-# bxMatrixSlice = bxMatrixSlice/np.sqrt(bxMatrixSlice ** 2)
-# byMatrixSlice = byMatrixSlice/np.sqrt(byMatrixSlice ** 2)
+# bMatrixAxSlice.quiver(x2d, y2d, bxMatrixSlice, byMatrixSlice)
 
-bMatrixAxSlice.quiver(x2d, y2d, bxMatrixSlice, byMatrixSlice)
-
-bMatrixAxSlice.set_title('2D Slice of Magnetic Field in Circular Halbach Array')
-bMatrixAxSlice.set_ylabel('y (mm)')
-bMatrixAxSlice.set_xlabel('x (mm)')
-plt.savefig('{}/b_field_plots_{}/b_field_2D_slice_{}'.format(datetime.date.today(), datetime.date.today(), datetime.date.today()))
+# bMatrixAxSlice.set_title('2D Slice of Magnetic Field in Circular Halbach Array')
+# bMatrixAxSlice.set_ylabel('y (mm)')
+# bMatrixAxSlice.set_xlabel('x (mm)')
+# plt.savefig('{}/b_field_plots_{}/b_field_2D_slice_{}'.format(datetime.date.today(), datetime.date.today(), datetime.date.today()))
 
 # Plot force field
 force_fieldSlice2DFig, force_fieldSlice2DAx = plt.subplots()
 force_fieldSlice2DAx.plot(x, y, 'k')
 
-x2d, y2d = np.meshgrid(np.linspace(-grid_radius, grid_radius, m), np.linspace(-grid_radius, grid_radius, m))
+x2d, y2d = np.meshgrid(np.linspace(-r_inner, r_inner, mxy), np.linspace(-r_inner, r_inner, mxy))
 
-forceX = force_field[:, :, int(m/2), 0]
-forceY = force_field[:, :, int(m/2), 1]
+# forceX = force_field[:, :, int(mz/2), 0]
+# forceY = force_field[:, :, int(mz/2), 1]
+forceX = force_field[:, :, 18, 0]
+forceY = force_field[:, :, 18, 1]
+
+# # normalize
+# forceX = forceX/np.sqrt(forceX ** 2)
+# forceY = forceY/np.sqrt(forceY ** 2)
 
 force_fieldSlice2DAx.quiver(x2d, y2d, forceX, forceY)
 

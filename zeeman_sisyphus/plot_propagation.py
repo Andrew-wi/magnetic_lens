@@ -33,13 +33,13 @@ for index in range(0, int(n) * 3, 3):
 p, v, a, successes, plotZ, plotX, _ = propagate(p, v, a, successes, successful_particles, l_4k_to_lens_aperture)
 
 # prune out stray trajectories
-for index in range(0, int(n) * 3, 3):
-    # if p[index + 2] >= l_cell_to_4k and ((p[index] ** 2 + p[index + 1] ** 2) ** (1/2)) > 0.01:
-    #     plotZ[int(index / 3)] = [0.0, 0.0]
-    #     plotX[int(index / 3)] = [0.0, 0.0]
-    if p[index + 2] <= l_cell_to_4k + l_4k_to_beam_shutter + 0.05:
-        plotZ[int(index / 3)] = [0.0, 0.0]
-        plotX[int(index / 3)] = [0.0, 0.0]
+# for index in range(0, int(n) * 3, 3):
+#     if p[index + 2] >= l_cell_to_4k and ((p[index] ** 2 + p[index + 1] ** 2) ** (1/2)) > 0.01:
+#         plotZ[int(index / 3)] = [0.0, 0.0]
+#         plotX[int(index / 3)] = [0.0, 0.0]
+#     if p[index + 2] <= l_cell_to_4k + l_4k_to_beam_shutter + 0.05:
+#         plotZ[int(index / 3)] = [0.0, 0.0]
+#         plotX[int(index / 3)] = [0.0, 0.0]
 
 # # save plotz and plotx to files
 # print('Writing to files...')
@@ -67,15 +67,15 @@ xMotRegion, yMotRegion = list(zip(*motRegion))
 
 plt.plot(xMotRegion, yMotRegion, 'k', linewidth=1.0)
 
-# magnetic lens
-magneticLensTop = [[l_cell_to_4k + l_4k_to_lens_aperture, R / 1e3], [l_cell_to_4k + l_4k_to_lens_aperture, R / 1e3 / 2], \
-    [l_cell_to_4k + l_4k_to_lens_aperture + R / 1e3, R / 1e3 / 2], [l_cell_to_4k + l_4k_to_lens_aperture + R / 1e3, R / 1e3]]
-magneticLensBottom = [[l_cell_to_4k + l_4k_to_lens_aperture, -R / 1e3], [l_cell_to_4k + l_4k_to_lens_aperture, -R / 1e3 / 2], \
-    [l_cell_to_4k + l_4k_to_lens_aperture + R / 1e3, -R / 1e3 / 2], [l_cell_to_4k + l_4k_to_lens_aperture + R / 1e3, -R / 1e3]]
-magneticLensTop.append(magneticLensTop[0])
-magneticLensBottom.append(magneticLensBottom[0])
-x1, y1 = list(zip(*magneticLensTop))
-x2, y2 = list(zip(*magneticLensBottom))
+# # magnetic lens
+# magneticLensTop = [[l_cell_to_4k + l_4k_to_lens_aperture, R / 1e3], [l_cell_to_4k + l_4k_to_lens_aperture, R / 1e3 / 2], \
+#     [l_cell_to_4k + l_4k_to_lens_aperture + R / 1e3, R / 1e3 / 2], [l_cell_to_4k + l_4k_to_lens_aperture + R / 1e3, R / 1e3]]
+# magneticLensBottom = [[l_cell_to_4k + l_4k_to_lens_aperture, -R / 1e3], [l_cell_to_4k + l_4k_to_lens_aperture, -R / 1e3 / 2], \
+#     [l_cell_to_4k + l_4k_to_lens_aperture + R / 1e3, -R / 1e3 / 2], [l_cell_to_4k + l_4k_to_lens_aperture + R / 1e3, -R / 1e3]]
+# magneticLensTop.append(magneticLensTop[0])
+# magneticLensBottom.append(magneticLensBottom[0])
+# x1, y1 = list(zip(*magneticLensTop))
+# x2, y2 = list(zip(*magneticLensBottom))
 
 # 4k aperture and beam shutter
 plt.vlines(x=l_cell_to_4k, ymin = -10.0, ymax=-0.005, color='green', linewidth=3)
@@ -83,9 +83,9 @@ plt.vlines(x=l_cell_to_4k, ymin = 0.005, ymax=10, color='green', linewidth=3)
 plt.vlines(x=l_cell_to_4k + l_4k_to_beam_shutter, ymin = -10.0, ymax=-0.007, color='green', linewidth=3)
 plt.vlines(x=l_cell_to_4k + l_4k_to_beam_shutter, ymin = 0.007, ymax=10.0, color='green', linewidth=3)
 
-# plot lens
-plt.plot(x1, y1, 'k')
-plt.plot(x2, y2, 'k')
+# # plot lens
+# plt.plot(x1, y1, 'k')
+# plt.plot(x2, y2, 'k')
 
 # labels
 plt.xlabel('z (m)')
@@ -96,7 +96,8 @@ plt.title('Propagation of {} Particles in the z- and x-Coordinates'.format(int(n
 # # ylims to show lens
 # plt.axis([0.0, 0.6, -0.02, 0.02])
 # ylims close-up
-plt.axis([0.0, mot_left_edge + 0.1, -0.008, 0.008])
+# plt.axis([0.0, mot_left_edge + 0.1, -0.008, 0.008])
+plt.axis([0.01, 0.03, -0.008, 0.008])
 
 # save figure
 Path('{}/propagation_plots_{}'.format(datetime.date.today(), datetime.date.today())).mkdir(parents=True, exist_ok=True)
