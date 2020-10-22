@@ -31,5 +31,3 @@ def generate():
         while v[index + 2] < 0:
             v[index + 2] = np.random.normal(loc=mu_vz, scale=sigma_vz)
     return (p,v,a, m_s)
-
-p, v, a, m_s = generate()

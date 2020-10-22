@@ -3,7 +3,6 @@
 # ----------------------------------------------------------------------------
 from dependencies import *
 from helpers import *
-from vector_field import *
 
 # step through time
 def propagate(p, v, a, successes, successful_particles, l_4k_to_lens_aperture, m_s, plot_prop=None):
