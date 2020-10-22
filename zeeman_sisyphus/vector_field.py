@@ -38,5 +38,5 @@ gradNormBy = np.transpose(gradNormBy, (1, 0, 2))
 gradNormBz = np.transpose(gradNormBz, (1, 0, 2))
 
 # force_field = -m_s * g * mu_B * 1/l * np.stack([gradNormBx, gradNormBy, gradNormBz], axis=3)
-force_field = -m_s * g * mu_B * np.stack([gradNormBx, gradNormBy, gradNormBz], axis=3)
+force_field = g * mu_B * np.stack([gradNormBx, gradNormBy, gradNormBz], axis=3)
 # print(force_field)

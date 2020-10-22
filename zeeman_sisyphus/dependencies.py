@@ -6,26 +6,31 @@ print('Importing dependencies...')
 import csv
 import datetime
 import gc
+import h5py
 import matplotlib.pyplot as plt
 import matplotlib.path as pltPath
 import math
 import numpy as np
-import h5py
+import random
 
 # from astropy.io import fits
 # from mpl_toolkits import mplot3d
 from pathlib import Path
 
-n = 1e2
+# set random seed
+random.seed(30)
+np.random.seed(30)
+
+n = 1e3
 t = 0.0
-sigma_xy = 0.0042
-sigma_vxy = 12.0
-sigma_vz = 30.0
+sigma_xy = 0 #0.0042
+sigma_vxy = 1.0 #12.0
+sigma_vz = 0 #30.0
 mu_vz = 110.0
 l_cell_to_4k = 0.1
 l_4k_to_lens_aperture = 0.1 # origin is at l_cell_to_4k. Can be negative to scan behind the 4k
 l_4k_to_beam_shutter = 0.26
-m_s = 0.5
+# m_s = 0.5
 g = 2.0
 mu_B = 9.274e-24
 mass = 9.48671e-26 # caoh mass # 1.18084e-25 # caoch3 mass
@@ -33,6 +38,10 @@ t_final = 0.02
 steps = 200
 mot_left_edge = 1.50
 mot_side_length = 0.01
+del_0_w_to_s = 13.75e9 # units: Hz
+del_0_s_to_w = 2.5e9 # units: Hz
+h = 6.62607004e-34 # units: m^2*kg/s
+lambda_trans = 606e-9 # units: m
 
 # parameter scan variables
 lens_range = 0.5 # range of values over which we scan the lens. Origin is at l_4k_to_lens_aperture
