@@ -29,7 +29,7 @@ normBMatrix = hf_norm[('Dataset1')]
 
 # mesh spacing length
 l_xy = (r_inner*2/1e3)/(mxy-1)
-l_z = z_length/(mz-1)
+l_z = (z_length/1e3)/(mz-1)
 
 # Generate force field
 gradNormBx, gradNormBy, gradNormBz = np.gradient(normBMatrix, l_xy, l_xy, l_z)

@@ -2,6 +2,7 @@
 # Propagation
 # ----------------------------------------------------------------------------
 from dependencies import *
+from helpers import *
 from init import *
 from vector_field import *
 from propagation import *
@@ -11,33 +12,24 @@ import sys
 propagationFig = plt.figure()
 propagationAx = plt.subplots()
 
-# array of paths that the i-th particle takes (by index) in the z and x directions
-plotZ = [[] for _ in range(int(n))]
-plotX = [[] for _ in range(int(n))]
-
 # initialize variables
 successes = 0
 successful_particles = []
 p, v, a, m_s = generate()
-
-# store positions of the particles in plotZ and plotX
-for index in range(0, int(n) * 3, 3):
-    plotZ[int(index / 3)].append(p[index + 2])
-    plotX[int(index / 3)].append(p[index])
 
 # # change lens distance; comment out these lines when running plot_propagation without testing
 # l_4k_to_lens_aperture = float(sys.argv[1])
 # print('new lens to 4k distance: {}'.format(l_4k_to_lens_aperture))
 
 # propagate
-p, v, a, successes, plotZ, plotX, _ = propagate(p, v, a, successes, successful_particles, l_4k_to_lens_aperture, m_s)
+pos_pp, vel_pp, acc_pp, successes, plotZ, plotX, _ = propagate(p, v, a, successes, successful_particles, l_4k_to_lens_aperture, m_s, plot_prop=plot_prop)
 
 # prune out stray trajectories
 for index in range(0, int(n) * 3, 3):
-    if p[index + 2] >= l_cell_to_4k and ((p[index] ** 2 + p[index + 1] ** 2) ** (1/2)) > 0.01:
+    if pos_pp[index + 2] >= l_cell_to_4k and ((pos_pp[index] ** 2 + pos_pp[index + 1] ** 2) ** (1/2)) > 0.01:
         plotZ[int(index / 3)] = [0.0, 0.0]
         plotX[int(index / 3)] = [0.0, 0.0]
-    if p[index + 2] <= l_cell_to_4k + 0.05:
+    if pos_pp[index + 2] <= l_cell_to_4k + 0.05:
         plotZ[int(index / 3)] = [0.0, 0.0]
         plotX[int(index / 3)] = [0.0, 0.0]
 
@@ -92,10 +84,6 @@ plt.xlabel('z (m)')
 plt.ylabel('x (m)')
 plt.grid(True)
 plt.title('Propagation of {} Particles in the z- and x-Coordinates'.format(int(n)))
-
-# # ylims to show lens
-# plt.axis([0.0, 0.6, -0.02, 0.02])
-# ylims close-up
 plt.axis([0.0, mot_left_edge + 0.1, -0.008, 0.008])
 
 # save figure
