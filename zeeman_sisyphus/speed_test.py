@@ -23,4 +23,3 @@ pos_pp, vel_pp, acc_pp, successes_postrun, successful_particles_postrun = propag
 
 print('Number of successes: {}'.format(successes_postrun))
 print('Successful particle catalog number: {}'.format(successful_particles_postrun))
-
