@@ -34,5 +34,7 @@ def propagate(p, v, a, successes, successful_particles, l_4k_to_lens_aperture, m
                 plotZ[int(index/3)].append(p[index+2])
                 plotX[int(index/3)].append(p[index])
             time += timestep
-    print('Successful Particles: {}'.format(successful_particles)) # testing
-    return p, v, a, successes, plotZ, plotX, successful_particles
+    if plot_prop is not None:
+        return p, v, a, successes, plotZ, plotX, successful_particles
+    else:
+        return p, v, a, successes, successful_particles

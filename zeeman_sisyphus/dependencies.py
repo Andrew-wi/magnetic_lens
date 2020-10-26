@@ -21,7 +21,7 @@ from pathlib import Path
 random.seed(30)
 np.random.seed(30)
 
-n = 1e4
+n = 1e6
 t = 0.0
 sigma_xy = 0.0042
 sigma_vxy = 12.0

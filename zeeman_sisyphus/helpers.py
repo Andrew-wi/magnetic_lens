@@ -32,10 +32,10 @@ def magnet_prop(pos, vel, acc, ms, ind=None):
     if ind==46:
         print([delta_w_to_s, delta_s_to_w, normBMatrix[int(yCoord), int(xCoord), int(zCoord)]])
     # flip sign accordingly
-    if -10e6 < delta_w_to_s < 10e6:
+    if -10e6 < delta_w_to_s < 10e6 and ms == -0.5:
         ms = 0.5
         print('Flipped state to +')
-    elif -10e6 < delta_s_to_w < 10e6:
+    elif -10e6 < delta_s_to_w < 10e6 and ms == 0.5:
         ms = -0.5
         print('Flipped state to -')
     # change acceleration
