@@ -29,8 +29,6 @@ def magnet_prop(pos, vel, acc, ms, ind=None):
     # detuning calculation, w->s and s->w
     delta_w_to_s = 2*np.pi*(-del_0_w_to_s + mu_B*g*ms*np.absolute(normBMatrix[int(yCoord), int(xCoord), int(zCoord)])/h + vel[2]/lambda_trans)
     delta_s_to_w = 2*np.pi*(del_0_s_to_w + mu_B*g*ms*np.absolute(normBMatrix[int(yCoord), int(xCoord), int(zCoord)])/h + vel[2]/lambda_trans)
-    if ind==46:
-        print([delta_w_to_s, delta_s_to_w, normBMatrix[int(yCoord), int(xCoord), int(zCoord)]])
     # flip sign accordingly
     if -10e6 < delta_w_to_s < 10e6 and ms == -0.5:
         ms = 0.5

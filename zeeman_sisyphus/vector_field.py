@@ -19,7 +19,7 @@ print('Generating vector fields...')
 # bzMatrix = np.array([hdulBzMatrix[0].data[i] for i in range(m)])
 # mxMatrixSlice = np.array([hdulMxMatrixSlice[0].data[i] for i in range(m)])
 # myMatrixSlice = np.array([hdulMyMatrixSlice[0].data[i] for i in range(m)])
-hf_norm = h5py.File('b_matrix/normbMatrix_{}.h5'.format(mxy), 'r')
+hf_norm = h5py.File('b_matrix/normbMatrix_{}.h5'.format(mz), 'r')
 normBMatrix = hf_norm[('Dataset1')]
 
 # # bMatrix

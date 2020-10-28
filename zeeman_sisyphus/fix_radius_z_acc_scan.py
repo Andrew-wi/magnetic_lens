@@ -10,9 +10,9 @@ import seaborn as sns
 sns.set_style("darkgrid")
 
 # initialize values
-z_scan = np.linspace(0, 2*R/1e3, 50)
+z_scan = np.linspace(0, z_length/1e3, mz)
 thetas = np.linspace(0, 2*np.pi, 100)
-radius = R / 4 / 1e3
+radius = r_inner/2/1e3
 
 # initialize arrays for storing acceleration
 radial_acc_mean = []
@@ -25,11 +25,14 @@ for z_val in z_scan:
         x = radius * np.cos(theta)
         y = radius * np.sin(theta)
 
-        # do interpolation
-        l = (2*R / 1e3) / (m - 1)
-        xCoord = round((R/1e3 + x) / l)
-        yCoord = round((R/1e3 + y) / l)
-        zCoord = round(z_val / l)
+        # mesh spacing length
+        l_xy = (r_inner*2/1e3)/(mxy-1)
+        l_z = (z_length/1e3)/(mz-1)
+
+        # interpolation
+        xCoord = round((r_inner/1e3 + x)/l_xy)
+        yCoord = round((r_inner/1e3 + y)/l_xy)
+        zCoord = round(z_val/l_z)
 
         # take x, y, z coords and get acc; append to array
         radial_acc_ind.append(np.linalg.norm(force_field[int(yCoord), int(xCoord), int(zCoord)] / mass))

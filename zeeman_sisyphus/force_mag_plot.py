@@ -14,6 +14,8 @@ mesh = range(0, mxy)
 z_pos = 10
 
 for i in mesh:
+    print('coords: {}'.format((i, 0, z_pos)))
+    print(force_field[i, 0, z_pos]/mass)
     force_x.append(force_field[i, 0, z_pos])
 
 # transform to numpy arrays
