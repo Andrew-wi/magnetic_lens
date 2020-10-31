@@ -35,7 +35,9 @@ for z_val in z_scan:
         zCoord = round(z_val/l_z)
 
         # take x, y, z coords and get acc; append to array
-        radial_acc_ind.append(np.linalg.norm(force_field[int(yCoord), int(xCoord), int(zCoord)] / mass))
+        radial_acc_ind.append(np.linalg.norm(force_field[int(xCoord), int(yCoord), int(zCoord)] / mass))
+        # radial_acc_ind.append(gradNormBx[int(xCoord), int(yCoord), int(zCoord)])
+
     # take mean of array and append it to the radial acc array
     radial_acc_mean.append(np.mean(radial_acc_ind))
 
