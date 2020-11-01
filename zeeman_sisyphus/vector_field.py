@@ -32,15 +32,14 @@ l_xy = (r_inner*2/1e3)/(mxy-1)
 l_z = (z_length/1e3)/(mz-1)
 
 # coordinates
-xy_coords = np.linspace(-r_inner/1e3, r_inner/1e3, mxy)
-z_coords = np.linspace(-10/1e3, 1400/1e3, mz)
+# xy_coords = np.linspace(-r_inner/1e3, r_inner/1e3, mxy)
+# z_coords = np.linspace(-10/1e3, 1400/1e3, mz)
 
 # Generate force field
-gradNormBx, gradNormBy, gradNormBz = np.gradient(normBMatrix, xy_coords, xy_coords, z_coords)
+gradNormBx, gradNormBy, gradNormBz = np.gradient(normBMatrix, l_xy, l_xy, l_z)
 # gradNormBx = np.transpose(gradNormBx, (1, 0, 2))
 # gradNormBy = np.transpose(gradNormBy, (1, 0, 2))
 # gradNormBz = np.transpose(gradNormBz, (1, 0, 2))
 
-# force_field = -m_s * g * mu_B * 1/l * np.stack([gradNormBx, gradNormBy, gradNormBz], axis=3)
-force_field = g * mu_B * np.stack([gradNormBx, gradNormBy, gradNormBz], axis=-1).T
-# print(force_field)
+force_field = g * mu_B * np.stack([gradNormBx, gradNormBy, gradNormBz], axis=3)
+# force_field = g * mu_B * np.stack([gradNormBx, gradNormBy, gradNormBz], axis=-1).T
