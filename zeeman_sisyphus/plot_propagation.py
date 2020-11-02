@@ -20,7 +20,7 @@ p_pre = np.zeros((n, 3))
 v_pre = np.zeros((n, 3))
 a_pre = np.zeros((n, 3))
 m_s_pre = np.zeros((n, 3))
-p, v, a, m_s = generate(int(n), p_pre, v_pre, a_pre, m_s_pre)
+p, v, a, m_s = generate(n, p_pre, v_pre, a_pre, m_s_pre)
 
 # # change lens distance; comment out these lines when running plot_propagation without testing
 # l_4k_to_lens_aperture = float(sys.argv[1])
@@ -32,10 +32,10 @@ pos_pp, vel_pp, acc_pp, successes_pp, successful_particles_pp, plotX, plotZ = pr
 
 # prune out stray trajectories
 for index in range(0, int(n) * 3, 3):
-    if pos_pp[index + 2] >= l_cell_to_4k and ((pos_pp[index] ** 2 + pos_pp[index + 1] ** 2) ** (1/2)) > 0.01:
+    if pos_pp[index, 2] >= l_cell_to_4k and ((pos_pp[index, 0] ** 2 + pos_pp[index, 1] ** 2) ** (1/2)) > 0.01:
         plotX[int(index / 3)] = [0.0, 0.0]
         plotZ[int(index / 3)] = [0.0, 0.0]
-    if pos_pp[index + 2] <= l_cell_to_4k + 0.05:
+    if pos_pp[index, 2] <= l_cell_to_4k + 0.05:
         plotX[int(index / 3)] = [0.0, 0.0]
         plotZ[int(index / 3)] = [0.0, 0.0]
 

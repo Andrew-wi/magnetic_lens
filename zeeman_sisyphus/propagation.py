@@ -16,8 +16,8 @@ def propagate(n, p, v, a, successes, successful_particles, l_4k_to_lens_aperture
         velocity = v[index, :]
         acceleration = a[index, :]
         ms = m_s[index, 2]
-        plotX = []
-        plotZ = []
+        plotX = np.zeros(int(n))
+        plotZ = np.zeros(int(n))
 
         while is_not_dead(position) and time<=t_final:
 
