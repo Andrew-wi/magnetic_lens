@@ -5,23 +5,26 @@ from dependencies import *
 from helpers import *
 
 # step through time
-def propagate(n, p, v, a, successes, successful_particles, l_4k_to_lens_aperture, m_s):
+def propagate(n, p, v, a, successes, successful_particles, l_4k_to_lens_aperture, m_s, decel=True):
     print('Propagating...')
+
+    successes = successes
+    successful_particles = successful_particles
 
     for index in range(n):
 
-        timestep = t_final / steps
+        timestep = t_final/steps
         time = 0
         position = p[index, :]
         velocity = v[index, :]
         acceleration = a[index, :]
         ms = m_s[index, 2]
-        plotX = np.zeros(int(n))
-        plotZ = np.zeros(int(n))
+        # plotX = np.zeros(int(n))
+        # plotZ = np.zeros(int(n))
 
         while is_not_dead(position) and time<=t_final:
 
-            if is_in_magnet(position):
+            if is_in_magnet(position) and decel==True:
                 new_acc, new_m_s = magnet_prop(position, velocity, acceleration, ms)
                 m_s[index, 2] = new_m_s
                 a[index, :] = new_acc
@@ -34,9 +37,9 @@ def propagate(n, p, v, a, successes, successful_particles, l_4k_to_lens_aperture
                 p[index, :] += velocity * timestep
 
             if is_in_mot(position, index, successful_particles):
-                successful_particles[int(index/3)] = 1
+                successful_particles[index] = 1
                 successes += 1
 
             time += timestep
 
-    return p, v, a, successes, successful_particles, plotX, plotZ
+    return p, v, a, successes, successful_particles#, plotX, plotZ

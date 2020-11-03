@@ -7,6 +7,10 @@ from dependencies import *
 
 Path('{}'.format(datetime.date.today())).mkdir(parents=True, exist_ok=True)
 
+# set random seed; testing
+random.seed(30)
+np.random.seed(30)
+
 # Generate particles
 def generate(n, p, v, a, m_s):
     print('Generating particles...')

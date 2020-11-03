@@ -17,10 +17,6 @@ import random
 # from mpl_toolkits import mplot3d
 from pathlib import Path
 
-# set random seed; testing
-random.seed(30)
-np.random.seed(30)
-
 n = 1e3
 t = 0.0
 sigma_xy = 0#0.0042
