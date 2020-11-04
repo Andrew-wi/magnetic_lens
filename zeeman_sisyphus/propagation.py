@@ -5,26 +5,35 @@ from dependencies import *
 from helpers import *
 
 # step through time
-def propagate(n, p, v, a, successes, successful_particles, l_4k_to_lens_aperture, m_s, decel=True):
+def propagate(n, p, v, a, successes, successful_particles, l_4k_to_lens_aperture, m_s, decel=True, plot=False):
     print('Propagating...')
 
     successes = successes
     successful_particles = successful_particles
 
+    if plot == True:
+        propagationFig = plt.figure()
+        propagationAx = plt.axes()
+
     for index in range(n):
 
-        timestep = t_final/steps
-        time = 0
+        timestep = t_final / steps
+        time = timestep
         position = p[index, :]
         velocity = v[index, :]
         acceleration = a[index, :]
         ms = m_s[index, 2]
-        # plotX = np.zeros(int(n))
-        # plotZ = np.zeros(int(n))
+        step_count = 0
+        trajectory_z = np.zeros(steps)
+        trajectory_x = np.zeros(steps)
 
-        while is_not_dead(position) and time<=t_final:
+        while is_not_dead(position) and time <= t_final:
 
-            if is_in_magnet(position) and decel==True:
+            if plot == True:
+                trajectory_z[step_count] = position[2]
+                trajectory_x[step_count] = position[0]
+
+            if is_in_magnet(position) and decel == True:
                 new_acc, new_m_s = magnet_prop(position, velocity, acceleration, ms)
                 m_s[index, 2] = new_m_s
                 a[index, :] = new_acc
@@ -40,6 +49,15 @@ def propagate(n, p, v, a, successes, successful_particles, l_4k_to_lens_aperture
                 successful_particles[index] = 1
                 successes += 1
 
+            step_count += 1
             time += timestep
 
-    return p, v, a, successes, successful_particles#, plotX, plotZ
+        if plot == True:
+            trajectory_z = trajectory_z[:step_count]
+            trajectory_x = trajectory_x[:step_count]
+            propagationAx.plot(trajectory_z, trajectory_x, '-r', linewidth=0.5)
+
+    if plot == True:
+        propagationFig, propagationAx = plot_prop(propagationFig, propagationAx)
+
+    return p, v, a, successes, successful_particles

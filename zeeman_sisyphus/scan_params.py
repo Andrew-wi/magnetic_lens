@@ -7,18 +7,18 @@ from vector_field import *
 from propagation import *
 
 # open/write csv file
-with open('{}/lens_variation_{}.csv'.format(datetime.date.today(), datetime.date.today()), 'w+') as file:
+with open('{}/lens_variation_{}_{}.csv'.format(datetime.date.today(), datetime.date.today(), int(n)), 'w+') as file:
     writer = csv.writer(file)
     writer.writerow(['l_cell_to_lens_aperture'] + list(range(trials)))
 
 # set parameters
-add_len = lens_range/scan_points
+add_len = lens_range / scan_points
 
 # evolve system through time
 for scan_pt in range(scan_points):
 
     successes_per_run = []
-    print('lens distance: {}'.format(l_cell_to_4k + l_4k_to_lens_aperture))
+    print('Decelerator distance: {}'.format(l_cell_to_4k + l_4k_to_lens_aperture))
 
     for trl in range(trials):
         print('Scan {}, trial {}'.format(scan_pt, trl))
@@ -34,7 +34,7 @@ for scan_pt in range(scan_points):
         p, v, a, m_s = generate(n, p_pre, v_pre, a_pre, m_s_pre)
 
         # generate and propagate particles
-        pos_pp, vel_pp, acc_pp, successes_pp, successful_particles_pp = propagate(n, p, v, a, successes, successful_particles, l_4k_to_lens_aperture, m_s, decel=True)
+        pos_pp, vel_pp, acc_pp, successes_pp, successful_particles_pp = propagate(n, p, v, a, successes, successful_particles, l_4k_to_lens_aperture, m_s, decel=True, plot=False)
 
         # log successes
         successes_per_run.append(successes_pp)

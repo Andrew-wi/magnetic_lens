@@ -9,26 +9,19 @@ from propagation import *
 
 import sys
 
-propagationFig = plt.figure()
-propagationAx = plt.subplots()
-
 # initialize variables
 n = int(n)
-successes = 0
-successful_particles = np.zeros(n, dtype=bool)
+successes_nl = 0
+successful_particles_nl = np.zeros(n, dtype=bool)
 p_pre = np.zeros((n, 3))
 v_pre = np.zeros((n, 3))
 a_pre = np.zeros((n, 3))
 m_s_pre = np.zeros((n, 3))
 p, v, a, m_s = generate(n, p_pre, v_pre, a_pre, m_s_pre)
 
-# # change lens distance; comment out these lines when running plot_propagation without testing
-# l_4k_to_lens_aperture = float(sys.argv[1])
-# print('new lens to 4k distance: {}'.format(l_4k_to_lens_aperture))
-
-# propagate
-# pos_pp, vel_pp, acc_pp, successes, plotZ, plotX, _ = propagate(int(n), p, v, a, successes, successful_particles, l_4k_to_lens_aperture, m_s, plot_prop=plot_prop)
-pos_pp, vel_pp, acc_pp, successes_pp, successful_particles_pp = propagate(n, p, v, a, successes, successful_particles, l_4k_to_lens_aperture, m_s, decel=True)
+# plot v distribution without zs decel
+pos_nl, vel_nl, acc_nl, successes_nl, successful_particles_nl = \
+    propagate(n, p, v, a, successes_nl, successful_particles_nl, l_4k_to_lens_aperture, m_s, decel=True, plot=True)
 
 # # prune out stray trajectories
 # for index in range(0, int(n)):
