@@ -2,7 +2,6 @@
 # Vector Fields
 # ----------------------------------------------------------------------------
 from dependencies import *
-# from init import *
 
 print('Generating vector fields...')
 
@@ -16,8 +15,8 @@ normBMatrix = hf_norm[('Dataset1')]
 # bMatrix = np.transpose(bMatrix, (1, 0, 2, 3))
 
 # mesh spacing length
-l_xy = (r_inner*2/1e3)/(mxy-1)
-l_z = (z_length/1e3)/(mz-1)
+l_xy = (r_inner * 2 / 1e3) / (mxy - 1)
+l_z = (z_length / 1e3) / (mz - 1)
 
 # coordinates
 # xy_coords = np.linspace(-r_inner/1e3, r_inner/1e3, mxy)
@@ -29,5 +28,4 @@ gradNormBx = np.transpose(gradNormBx, (1, 0, 2))
 gradNormBy = np.transpose(gradNormBy, (1, 0, 2))
 gradNormBz = np.transpose(gradNormBz, (1, 0, 2))
 
-force_field = g * mu_B * np.stack([gradNormBx, gradNormBy, gradNormBz], axis=3)
-# force_field = g * mu_B * np.stack([gradNormBx, gradNormBy, gradNormBz], axis=-1).T
+force_field = -g * mu_B * np.stack([gradNormBx, gradNormBy, gradNormBz], axis=3)

@@ -11,12 +11,12 @@ print('Visualizing fields...')
 # # plt.savefig('{}/b_field_plots_{}/b_field_3D_{}'.format(datetime.date.today(), datetime.date.today(), datetime.date.today()))
 
 # Plot slice of b-field in two dimensions
-bMatrixFigSlice, bMatrixAxSlice = plt.subplots()
-hexagon = [[r_inner * np.cos(angle), r_inner * np.sin(angle)] for angle in np.linspace(0, 2 * np.pi, segs, endpoint=False)]
-hexagon.append(hexagon[0])
-x, y = list(zip(*hexagon))
-bMatrixAxSlice.plot(x, y, 'k')
-bMatrixAxSlice.axis('equal')
+# bMatrixFigSlice, bMatrixAxSlice = plt.subplots()
+# hexagon = [[r_inner * np.cos(angle), r_inner * np.sin(angle)] for angle in np.linspace(0, 2 * np.pi, segs, endpoint=False)]
+# hexagon.append(hexagon[0])
+# x, y = list(zip(*hexagon))
+# bMatrixAxSlice.plot(x, y, 'k')
+# bMatrixAxSlice.axis('equal')
 
 # x2d, y2d = np.meshgrid(np.linspace(-r_inner, r_inner, mxy), np.linspace(-r_inner, r_inner, mxy))
 
@@ -36,18 +36,18 @@ bMatrixAxSlice.axis('equal')
 
 # Plot force field
 force_fieldSlice2DFig, force_fieldSlice2DAx = plt.subplots()
-force_fieldSlice2DAx.plot(x, y, 'k')
+# force_fieldSlice2DAx.plot(x, y, 'k')
 
-x2d, y2d = np.meshgrid(np.linspace(-r_inner, r_inner, mxy), np.linspace(-r_inner, r_inner, mxy))
+selected_points = 11
+
+x2d, y2d = np.meshgrid(np.linspace(-r_inner, r_inner, selected_points), np.linspace(-r_inner, r_inner, selected_points))
 
 # forceX = force_field[:, :, int(mz/2), 0]
 # forceY = force_field[:, :, int(mz/2), 1]
-forceX = force_field[:, :, 18, 0]
-forceY = force_field[:, :, 18, 1]
-
-# # normalize
-# forceX = forceX/np.sqrt(forceX ** 2)
-# forceY = forceY/np.sqrt(forceY ** 2)
+# forceX = force_field[10:41, 10:41, 12, 0]
+# forceY = force_field[10:41, 10:41, 12, 1]
+forceX = force_field[20:31, 20:31, 12, 0]
+forceY = force_field[20:31, 20:31, 12, 1]
 
 force_fieldSlice2DAx.quiver(x2d, y2d, forceX, forceY)
 

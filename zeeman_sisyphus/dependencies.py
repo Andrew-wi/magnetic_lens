@@ -45,7 +45,7 @@ trials = 21 # number of trials at each scan_point
 
 # same as in mathematica code
 mxy = 50 # mesh spacing in xy directions
-mz = 500 # mesh spacing in z direction
+mz = 1000 # mesh spacing in z direction
 r_inner = 3 # inner radius of lens (in mm, as Radia is in mm by default, same as in Mathematica)
 r_outer = 20 # outer radius of lens (mm, as in Radia, same as in Mathematica)
 dz = 8 # thickness of magnet segments along z-axis
