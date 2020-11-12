@@ -26,6 +26,8 @@ def propagate(n, p, v, a, successes, successful_particles, l_4k_to_lens_aperture
         step_count = 0
         trajectory_z = np.zeros(steps)
         trajectory_x = np.zeros(steps)
+        detuning_sign_w2s = 1
+        detuning_sign_s2w = 1
 
         while is_not_dead(position) and time <= t_final:
 
@@ -34,7 +36,10 @@ def propagate(n, p, v, a, successes, successful_particles, l_4k_to_lens_aperture
                 trajectory_x[step_count] = position[0]
 
             if is_in_magnet(position) and decel == True:
-                new_acc, new_m_s = magnet_prop(position, velocity, acceleration, ms)
+                new_acc, new_m_s, det_sign_change_w2s, det_sign_change_s2w = \
+                    magnet_prop(position, velocity, acceleration, ms, detuning_sign_w2s, detuning_sign_s2w, ind=index)
+                detuning_sign_w2s = det_sign_change_w2s
+                detuning_sign_s2w = det_sign_change_s2w
                 m_s[index, 2] = new_m_s
                 a[index, :] = new_acc
                 v[index, :] += new_acc * timestep

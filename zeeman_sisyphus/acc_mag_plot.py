@@ -20,17 +20,22 @@ radial_acc_mean = []
 # loop through radii
 for radius in radii:
     for theta in thetas:
+
         # get x and y values from radius and theta
         x = radius * np.cos(theta)
         y = radius * np.sin(theta)
+
         # mesh spacing length
         l_xy = (r_inner*2/1e3)/(mxy-1)
+
         # interpolation
         xCoord = round((r_inner/1e3 + x) / l_xy)
         yCoord = round((r_inner/1e3 + y) / l_xy)
         zCoord = round(60)
+
         # take x, y, z coords and get acc; append to array
         radial_acc_ind.append(np.linalg.norm(force_field[int(yCoord), int(xCoord), int(zCoord)] / mass))
+
     # take mean of array and append it to the radial acc array
     radial_acc_mean.append(np.mean(radial_acc_ind))
 

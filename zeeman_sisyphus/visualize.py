@@ -38,16 +38,19 @@ print('Visualizing fields...')
 force_fieldSlice2DFig, force_fieldSlice2DAx = plt.subplots()
 # force_fieldSlice2DAx.plot(x, y, 'k')
 
-selected_points = 11
+# forceX = force_field[:, :, 100, 0]
+# forceY = force_field[:, :, 100, 1]
+forceX = force_field[20:30, 20:30, 20, 0]
+forceY = force_field[20:30, 20:30, 20, 1]
+# forceX = force_field[10:40, 10:40, 20, 0]
+# forceY = force_field[10:40, 10:40, 20, 1]
+# forceX = force_field[15:35, 15:35, 20, 0]
+# forceY = force_field[15:35, 15:35, 20, 1]
+
+selected_points = forceX.shape[0]
 
 x2d, y2d = np.meshgrid(np.linspace(-r_inner, r_inner, selected_points), np.linspace(-r_inner, r_inner, selected_points))
 
-# forceX = force_field[:, :, int(mz/2), 0]
-# forceY = force_field[:, :, int(mz/2), 1]
-# forceX = force_field[10:41, 10:41, 12, 0]
-# forceY = force_field[10:41, 10:41, 12, 1]
-forceX = force_field[20:31, 20:31, 12, 0]
-forceY = force_field[20:31, 20:31, 12, 1]
 
 force_fieldSlice2DAx.quiver(x2d, y2d, forceX, forceY)
 
