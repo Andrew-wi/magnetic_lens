@@ -39,18 +39,18 @@ for z_val in z_scan:
     # radial_acc.append(np.linalg.norm(gradNormBx[int(yCoord), int(xCoord), int(zCoord)]))
 
 # plot results
-fig, ax = plt.subplots(figsize = (20, 10))
+fig, ax = plt.subplots(figsize=(20, 10))
 
-sns.lineplot(z_scan, radial_acc, label = 'Z-Axis Sweep', linewidth = 3, color = 'b')
+sns.lineplot(z_scan, radial_acc, label='Z-Axis Sweep', linewidth=3, color='b')
 
 # formatting
-plt.title('Z-Axis Scan of Lens Acceleration Profile at Radius {}'.format(radius), fontsize = 25)
-plt.ylabel(r'Mean Acceleration $\left( \frac{m}{s^2} \right)$', fontsize = 20)
-plt.xlabel(r'z-axis distance ($m$)', fontsize = 20)
-plt.tick_params(axis = 'both', labelsize = 13)
-plt.xlim(left = 0, right = 0.05)
+plt.title('Z-Axis Scan of Lens Acceleration Profile at Radius {}'.format(radius), fontsize=25)
+plt.ylabel(r'Mean Acceleration $\left( \frac{m}{s^2} \right)$', fontsize=20)
+plt.xlabel(r'z-axis distance ($m$)', fontsize=20)
+plt.tick_params(axis='both', labelsize=13)
+plt.xlim(left=0, right=0.05)
 
 # save to file
-Path('{}/acc_mag_plots_{}'.format(datetime.date.today(), datetime.date.today())).mkdir(parents = True, exist_ok = True)
+Path('{}/acc_mag_plots_{}'.format(datetime.date.today(), datetime.date.today())).mkdir(parents=True, exist_ok=True)
 plt.savefig('{}/acc_mag_plots_{}/fix_radius_z_scan_{}'.format(datetime.date.today(), datetime.date.today(), datetime.date.today()))
 

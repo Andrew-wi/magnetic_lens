@@ -27,6 +27,6 @@ gradNormBx, gradNormBy, gradNormBz = np.gradient(normBMatrix, l_xy, l_xy, l_z)
 gradNormBx = np.transpose(gradNormBx, (1, 0, 2))
 gradNormBy = np.transpose(gradNormBy, (1, 0, 2))
 # todo: figure out - sign here attenuating v_z
-gradNormBz = -np.transpose(gradNormBz, (1, 0, 2))
+gradNormBz = np.transpose(gradNormBz, (1, 0, 2))
 
-force_field = -g * mu_B * np.stack([gradNormBx, gradNormBy, gradNormBz], axis=-1)
+force_field = np.stack([gradNormBx, gradNormBy, gradNormBz], axis=-1) # * -g * mu_B
