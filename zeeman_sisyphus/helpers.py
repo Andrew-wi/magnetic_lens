@@ -5,7 +5,8 @@ from dependencies import *
 from vector_field import *
 
 def is_not_dead(pos):
-    if ((pos[0] ** 2 + pos[1] ** 2) ** (1 / 2)) > 0.003:
+    if ((pos[0] ** 2 + pos[1] ** 2) ** (1 / 2)) > 0.003 or \
+        pos[2] > mot_left_edge + mot_side_length:
         return False
     else:
         return True
@@ -32,12 +33,14 @@ def magnet_prop(pos, vel, acc, ms_prev, prev_det_sign_w2s, prev_det_sign_s2w, in
     zCoord = round((pos[2] - (l_cell_to_4k + l_4k_to_lens_aperture - 0.006)) / l_z)
 
     # detuning calculation, w -> s and s -> w
-    delta_w_to_s = 2 * np.pi * (-del_0_w_to_s + mu_B * g * ms * np.absolute(normBMatrix[int(yCoord), int(xCoord), int(zCoord)]) / h + vel[2] / lambda_trans)
-    delta_s_to_w = 2 * np.pi * (del_0_s_to_w + mu_B * g * ms * np.absolute(normBMatrix[int(yCoord), int(xCoord), int(zCoord)]) / h + vel[2] / lambda_trans)
+    delta_w_to_s = 2 * np.pi * (-del_0_w_to_s + mu_B * g * ms * \
+        np.absolute(normBMatrix[int(yCoord), int(xCoord), int(zCoord)]) / h + vel[2] / lambda_trans)
+    delta_s_to_w = 2 * np.pi * (del_0_s_to_w + mu_B * g * ms * \
+        np.absolute(normBMatrix[int(yCoord), int(xCoord), int(zCoord)]) / h + vel[2] / lambda_trans)
 
-    # testing
-    if ind == 9:
-        print([delta_w_to_s, delta_s_to_w])
+    # # testing
+    # if ind == 9:
+    #     print([delta_w_to_s, delta_s_to_w])
 
     # flip signs if conditions met
     current_detuning_sign_w2s, current_detuning_sign_s2w, ms_new = \
@@ -95,7 +98,7 @@ def is_in_mot(pos, i, succ_ptcls):
     if -mot_side_length/2 <= pos[0] <= mot_side_length / 2 and \
         -mot_side_length/2 <= pos[1] <= mot_side_length / 2 and \
         mot_left_edge <= pos[2] <= mot_left_edge + mot_side_length and \
-        int(i / 3) not in succ_ptcls:
+        succ_ptcls[i] == False:
         return True
     else:
         return False
@@ -103,27 +106,46 @@ def is_in_mot(pos, i, succ_ptcls):
 def plot_prop(fig, ax):
 
     # draw MOT region, magnetic lens, lens, 4k aperture, beam shutter
-    motRegion = [[mot_left_edge, mot_side_length / 2], [mot_left_edge + mot_side_length, mot_side_length / 2], \
-        [mot_left_edge + mot_side_length,  -mot_side_length / 2], [mot_left_edge, -mot_side_length / 2]]
+    motRegion = [[mot_left_edge, mot_side_length / 2], \
+                 [mot_left_edge + mot_side_length, mot_side_length / 2], \
+                 [mot_left_edge + mot_side_length,  -mot_side_length / 2], \
+                 [mot_left_edge, -mot_side_length / 2]]
     motRegion.append(motRegion[0])
     xMotRegion, yMotRegion = list(zip(*motRegion))
 
     ax.plot(xMotRegion, yMotRegion, 'k', linewidth=1.0)
 
     # 4k aperture and beam shutter
-    ax.vlines(x=l_cell_to_4k, ymin = -10.0, ymax=-0.005, color='green', linewidth=3)
-    ax.vlines(x=l_cell_to_4k, ymin = 0.005, ymax=10, color='green', linewidth=3)
+    ax.vlines(x=l_cell_to_4k, ymin=-10.0, ymax=-0.005, color='green', linewidth=3)
+    ax.vlines(x=l_cell_to_4k, ymin=0.005, ymax=10, color='green', linewidth=3)
 
     # labels
     ax.set_xlabel('z (m)')
     ax.set_ylabel('x (m)')
     ax.grid(True)
     ax.set_title('Propagation of {} Particles in the z- and x-Coordinates'.format(int(n)))
-    ax.set_xlim(left = 0.0, right = mot_left_edge + 0.1)
-    ax.set_ylim(bottom = -0.008, top = 0.008)
+    ax.set_xlim(left=0.0, right=mot_left_edge + 0.1)
+    ax.set_ylim(bottom=-0.008, top=0.008)
 
     # save figure
-    Path('{}/propagation_plots_{}'.format(datetime.date.today(), datetime.date.today())).mkdir(parents = True, exist_ok = True)
-    fig.savefig('{}/propagation_plots_{}/propagation_{}_particles{}'.format(datetime.date.today(), datetime.date.today(), int(n), datetime.date.today()))
+    Path('{}/propagation_plots_{}'.format(date, date)).mkdir(parents=True, exist_ok=True)
+    fig.savefig('{}/propagation_plots_{}/propagation_{}_particles{}'.format(date, date, int(n), date))
+
+    return (fig, ax)
+
+def plot_spin(fig, ax):
+
+    # labels
+    ax.set_xlabel('z (m)')
+    ax.set_ylabel('spin')
+    ax.grid(True)
+    ax.set_title('Spin Along the z-axis')
+    ax.set_xlim(left=0.0, right=mot_left_edge + 0.1)
+    ax.set_ylim(bottom=-0.7, top=0.7)
+    ax.legend()
+
+    # save figure
+    Path('{}/spin_plots_{}'.format(date, date)).mkdir(parents=True, exist_ok=True)
+    fig.savefig('{}/spin_plots_{}/spin_particles_{}'.format(date, date, date))
 
     return (fig, ax)
