@@ -24,7 +24,7 @@ def generate(n, p, v, a, m_s):
     v[:, 2] = np.random.normal(loc=mu_vz, scale=sigma_vz, size=n)
 
     # acceleration and magnetic spin
-    m_s = np.random.choice([-0.5, 0.5], size=(n,3))
+    m_s = np.random.choice([-0.5, 0.5], size=n)
 
     for index in range(n):
 

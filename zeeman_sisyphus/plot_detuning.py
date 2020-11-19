@@ -1,5 +1,5 @@
 # ----------------------------------------------------------------------------
-# Propagation, Plot
+# Propagation, Plotting Detuning
 # ----------------------------------------------------------------------------
 from dependencies import *
 from helpers import *
@@ -20,9 +20,9 @@ m_s_pre = np.zeros(n)
 p, v, a, m_s = generate(n, p_pre, v_pre, a_pre, m_s_pre)
 
 pos_pp, vel_pp, acc_pp, successes_pp, successful_particles_pp = \
-    propagate(n, p, v, a, successes_pp, successful_particles_pp, l_4k_to_lens_aperture, m_s,\
-        decel=True, plot=True, pruning='to_magnet')
-# pruning options: 'to_mot_region', 'to_magnet'
+    propagate(n, p, v, a, successes_pp, successful_particles_pp, \
+              l_4k_to_lens_aperture, m_s, decel=True, \
+              plot_detuning=True, detuning_tracked_particles=mols_tracking)
 
 print('Successes: {}'.format(successes_pp))
 print('Successful particles: {}'.format(np.where(successful_particles_pp == True)))

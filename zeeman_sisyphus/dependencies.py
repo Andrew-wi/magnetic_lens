@@ -11,13 +11,14 @@ import matplotlib.pyplot as plt
 import matplotlib.path as pltPath
 import math
 import numpy as np
+import pprint
 import random
 
 # from astropy.io import fits
 # from mpl_toolkits import mplot3d
 from pathlib import Path
 
-n = 1e4
+n = 1e3
 t = 0.0
 sigma_xy = 0.0042
 sigma_vxy = 12.0
@@ -34,10 +35,11 @@ steps = 2000 # for fast runs, set this to 200
 mot_left_edge = 1.35
 mot_side_length = 0.01
 del_0_w_to_s = 13.75e9 # units: Hz
-del_0_s_to_w = 2.5e9 # units: Hz
+del_0_s_to_w = -13.75e9#2.5e9 # units: Hz
 h = 6.62607004e-34 # units: m^2*kg/s
 lambda_trans = 606e-9 # units: m
 date = datetime.date.today()
+mols_tracking = [990]
 
 # parameter scan variables
 lens_range = 0.5 # range of values over which we scan the lens. Origin is at l_4k_to_lens_aperture

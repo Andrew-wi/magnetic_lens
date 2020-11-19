@@ -33,14 +33,22 @@ def magnet_prop(pos, vel, acc, ms_prev, prev_det_sign_w2s, prev_det_sign_s2w, in
     zCoord = round((pos[2] - (l_cell_to_4k + l_4k_to_lens_aperture - 0.006)) / l_z)
 
     # detuning calculation, w -> s and s -> w
-    delta_w_to_s = 2 * np.pi * (-del_0_w_to_s + mu_B * g * ms * \
+    # delta_w_to_s = 2 * np.pi * (-del_0_w_to_s + mu_B * g * ms * \
+    #     np.absolute(normBMatrix[int(yCoord), int(xCoord), int(zCoord)]) / h + vel[2] / lambda_trans)
+    # delta_s_to_w = 2 * np.pi * (del_0_s_to_w + mu_B * g * ms * \
+    #     np.absolute(normBMatrix[int(yCoord), int(xCoord), int(zCoord)]) / h + vel[2] / lambda_trans)
+    # removed ms
+    delta_w_to_s = 2 * np.pi * (-del_0_w_to_s + mu_B * g * \
         np.absolute(normBMatrix[int(yCoord), int(xCoord), int(zCoord)]) / h + vel[2] / lambda_trans)
-    delta_s_to_w = 2 * np.pi * (del_0_s_to_w + mu_B * g * ms * \
+    delta_s_to_w = 2 * np.pi * (del_0_s_to_w + mu_B * g * \
         np.absolute(normBMatrix[int(yCoord), int(xCoord), int(zCoord)]) / h + vel[2] / lambda_trans)
 
     # # testing
-    # if ind == 9:
-    #     print([delta_w_to_s, delta_s_to_w])
+    # if ind == 2443:
+    #     print('w->s, s->w: {}'.format([delta_w_to_s, delta_s_to_w]))
+    #     # print('adding factors: {}'.\
+    #     #     format(mu_B * g * ms * np.absolute(normBMatrix[int(yCoord), int(xCoord), int(zCoord)]) / h))
+    #     print('current sign on ms: {}'.format(ms))
 
     # flip signs if conditions met
     current_detuning_sign_w2s, current_detuning_sign_s2w, ms_new = \
@@ -49,7 +57,8 @@ def magnet_prop(pos, vel, acc, ms_prev, prev_det_sign_w2s, prev_det_sign_s2w, in
     # change acceleration
     changed_acceleration = ms_new * force_field[int(yCoord), int(xCoord), int(zCoord)] / mass
     changed_m_s = ms_new
-    return changed_acceleration, changed_m_s, current_detuning_sign_w2s, current_detuning_sign_s2w
+
+    return changed_acceleration, changed_m_s, current_detuning_sign_w2s, current_detuning_sign_s2w, delta_w_to_s, delta_s_to_w
 
 def sign_change(del_w2s, del_s2w, previous_sign_w2s, previous_sign_s2w, ms_current):
 
@@ -58,21 +67,19 @@ def sign_change(del_w2s, del_s2w, previous_sign_w2s, previous_sign_s2w, ms_curre
     sign_change_s2w = previous_sign_s2w
     ms_change = ms_current
 
-    # flip sign accordingly for w -> s
-    if np.sign(del_w2s) != previous_sign_w2s and ms_current == -0.5:
+    # test to flip signs
+    if np.sign(del_s2w) != previous_sign_s2w and ms_current == -0.5:
+        ms_change = 0.5
+        sign_change_s2w *= -1
+    # elif np.sign(del_s2w) != previous_sign_s2w and ms_current == 0.5:
+    #     ms_change = -0.5
+    #     sign_change_s2w *= -1
+    elif np.sign(del_w2s) != previous_sign_w2s and ms_current == -0.5:
         ms_change = 0.5
         sign_change_w2s *= -1
     elif np.sign(del_w2s) != previous_sign_w2s and ms_current == 0.5:
         ms_change = -0.5
         sign_change_w2s *= -1
-
-    # flip sign accordingly for s -> w
-    if np.sign(del_s2w) != previous_sign_s2w and ms_current == -0.5:
-        ms_change = 0.5
-        sign_change_s2w *= -1
-    elif np.sign(del_s2w) != previous_sign_s2w and ms_current == 0.5:
-        ms_change = -0.5
-        sign_change_s2w *= -1
 
     return sign_change_w2s, sign_change_s2w, ms_change
 
@@ -140,12 +147,48 @@ def plot_spin(fig, ax):
     ax.set_ylabel('spin')
     ax.grid(True)
     ax.set_title('Spin Along the z-axis')
-    ax.set_xlim(left=0.0, right=mot_left_edge + 0.1)
+    ax.set_xlim(left=0.125, right=0.250)#mot_left_edge + 0.1)
     ax.set_ylim(bottom=-0.7, top=0.7)
     ax.legend()
 
     # save figure
     Path('{}/spin_plots_{}'.format(date, date)).mkdir(parents=True, exist_ok=True)
     fig.savefig('{}/spin_plots_{}/spin_particles_{}'.format(date, date, date))
+
+    return (fig, ax)
+
+def plot_det(fig, ax):
+
+    # labels
+    ax.set_xlabel('z (m)')
+    ax.set_ylabel('Detuning')
+    ax.grid(True)
+    ax.set_title('Detuning Along the z-axis')
+    # ax.set_xlim(left=0.0, right=mot_left_edge + 0.1)
+    ax.set_xlim(left=0.125, right=0.250)
+    # ax.set_ylim(bottom=-0.7, top=0.7)
+    ax.legend()
+
+    # save figure
+    Path('{}/detuning_plots_{}'.format(date, date)).mkdir(parents=True, exist_ok=True)
+    fig.savefig('{}/detuning_plots_{}/detuning_{}'.format(date, date, date))
+
+    return (fig, ax)
+
+def plot_accel(fig, ax):
+
+    # labels
+    ax.set_xlabel('z (m)')
+    ax.set_ylabel('Acceleration (m/s)')
+    ax.grid(True)
+    ax.set_title('Acceleration Along the z-axis')
+    # ax.set_xlim(left=0.0, right=mot_left_edge + 0.1)
+    ax.set_xlim(left=0.125, right=0.250)
+    # ax.set_ylim(bottom=-0.7, top=0.7)
+    ax.legend()
+
+    # save figure
+    Path('{}/acc_plots_{}'.format(date, date)).mkdir(parents=True, exist_ok=True)
+    fig.savefig('{}/acc_plots_{}/acc_{}'.format(date, date, date))
 
     return (fig, ax)

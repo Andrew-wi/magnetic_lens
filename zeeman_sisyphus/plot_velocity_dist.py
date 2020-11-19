@@ -19,7 +19,7 @@ n = int(n)
 p_pre = np.zeros((n, 3))
 v_pre = np.zeros((n, 3))
 a_pre = np.zeros((n, 3))
-m_s_pre = np.zeros((n, 3))
+m_s_pre = np.zeros(n)
 p, v, a, m_s = generate(n, p_pre, v_pre, a_pre, m_s_pre)
 successes_nl = 0
 successful_particles_nl = np.zeros(n, dtype=bool)
