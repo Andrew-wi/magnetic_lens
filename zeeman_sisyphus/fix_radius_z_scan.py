@@ -34,9 +34,7 @@ for z_val in z_scan:
     zCoord = round(z_val / l_z)
 
     # take mean of array and append it to the radial acc array
-    radial_acc.append(np.linalg.norm(force_field[int(yCoord), int(xCoord), int(zCoord)] / mass))
-    # radial_acc.append(np.linalg.norm(normBMatrix[int(yCoord), int(xCoord), int(zCoord)]))
-    # radial_acc.append(np.linalg.norm(gradNormBx[int(yCoord), int(xCoord), int(zCoord)]))
+    radial_acc.append(force_field[int(yCoord), int(xCoord), int(zCoord)][2] / mass)
 
 # plot results
 fig, ax = plt.subplots(figsize=(20, 10))

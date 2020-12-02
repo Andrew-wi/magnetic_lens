@@ -43,9 +43,11 @@ def propagate(n, p, v, a, successes, successful_particles, l_4k_to_lens_aperture
         trajectory_z = np.zeros(steps)
         trajectory_x = np.zeros(steps)
         spin_tracker = np.zeros((steps, 2))
-        detuning_tracker = np.zeros((steps, 3))
-        detuning_sign_w2s = 1
-        detuning_sign_s2w = 1
+        detuning_tracker = np.zeros((steps, 5))
+        detuning_sign_w2s_pos = 1
+        detuning_sign_w2s_neg = -1
+        detuning_sign_s2w_pos = 1
+        detuning_sign_s2w_neg = -1
         acc_tracker = np.zeros((steps, 4))
 
         while is_not_dead(position) and time <= t_final:
@@ -63,10 +65,16 @@ def propagate(n, p, v, a, successes, successful_particles, l_4k_to_lens_aperture
                 spin_tracker[step_count, 1] = ms
 
             if is_in_magnet(position) and decel == True:
-                new_acc, new_m_s, det_sign_change_w2s, det_sign_change_s2w, detuning_w2s, detuning_s2w = \
-                    magnet_prop(position, velocity, acceleration, ms, detuning_sign_w2s, detuning_sign_s2w, ind=index)
-                detuning_sign_w2s = det_sign_change_w2s
-                detuning_sign_s2w = det_sign_change_s2w
+                new_acc, new_m_s, \
+                    det_sign_change_w2s_pos, det_sign_change_w2s_neg, \
+                    det_sign_change_s2w_pos, det_sign_change_s2w_neg, \
+                    detuning_w2s_pos, detuning_w2s_neg, detuning_s2w_pos, detuning_s2w_neg = \
+                    magnet_prop(position, velocity, acceleration, ms, detuning_sign_w2s_pos, detuning_sign_w2s_neg, \
+                        detuning_sign_s2w_pos, detuning_sign_s2w_neg, ind=index)
+                detuning_sign_w2s_pos = det_sign_change_w2s_pos
+                detuning_sign_w2s_neg = det_sign_change_w2s_neg
+                detuning_sign_s2w_pos = det_sign_change_s2w_pos
+                detuning_sign_s2w_neg = det_sign_change_s2w_neg
 
                 # # testing
                 # if index in spin_tracked_particles:
@@ -77,15 +85,17 @@ def propagate(n, p, v, a, successes, successful_particles, l_4k_to_lens_aperture
                 v[index, :] += new_acc * timestep
                 p[index, :] += velocity * timestep
 
+                if plot_detuning == True and index in detuning_tracked_particles:
+                    detuning_tracker[step_count, 0] = position[2]
+                    detuning_tracker[step_count, 1] = detuning_w2s_pos
+                    detuning_tracker[step_count, 2] = detuning_w2s_neg
+                    detuning_tracker[step_count, 3] = detuning_s2w_pos
+                    detuning_tracker[step_count, 4] = detuning_s2w_neg
+
             else:
                 a[index, :] = 0
                 acceleration = 0
                 p[index, :] += velocity * timestep
-
-            if plot_detuning == True and index in detuning_tracked_particles:
-                detuning_tracker[step_count, 0] = position[2]
-                detuning_tracker[step_count, 1] = detuning_w2s
-                detuning_tracker[step_count, 2] = detuning_s2w
 
             if plot_acc == True and index in plot_acc_particles:
                 acc_tracker[step_count, 0] = position[2]
@@ -129,19 +139,23 @@ def propagate(n, p, v, a, successes, successful_particles, l_4k_to_lens_aperture
 
         if plot_detuning == True and index in detuning_tracked_particles:
 
-            detuning_tracker = detuning_tracker[:step_count, :]
+            detuning_tracker = detuning_tracker[:step_count - 10, :]
             detuning_ax.plot(detuning_tracker[:, 0], detuning_tracker[:, 1], linewidth=1.0,\
-                label='w2s detuning')
+                label='w2s detuning, pos', color='orange')
             detuning_ax.plot(detuning_tracker[:, 0], detuning_tracker[:, 2], linewidth=1.0,\
-                label='s2w detuning')
+                label='w2s detuning, neg', color='blue')
+            detuning_ax.plot(detuning_tracker[:, 0], detuning_tracker[:, 3], linewidth=1.0,\
+                label='s2w detuning, pos', color='green')
+            detuning_ax.plot(detuning_tracker[:, 0], detuning_tracker[:, 4], linewidth=1.0,\
+                label='s2w detuning, neg', color='red')
 
         if plot_acc == True and index in plot_acc_particles:
 
             acc_tracker = acc_tracker[:step_count, :]
-            acc_ax.plot(acc_tracker[:, 0], acc_tracker[:, 1], linewidth=1.0,\
-                label='x component'.format(index))
-            acc_ax.plot(acc_tracker[:, 0], acc_tracker[:, 2], linewidth=1.0,\
-                label='y component'.format(index))
+            # acc_ax.plot(acc_tracker[:, 0], acc_tracker[:, 1], linewidth=1.0,\
+            #     label='x component'.format(index))
+            # acc_ax.plot(acc_tracker[:, 0], acc_tracker[:, 2], linewidth=1.0,\
+            #     label='y component'.format(index))
             acc_ax.plot(acc_tracker[:, 0], acc_tracker[:, 3], linewidth=1.0,\
                 label='z component'.format(index))
 
