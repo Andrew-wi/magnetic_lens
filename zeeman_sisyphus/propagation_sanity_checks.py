@@ -1,11 +1,11 @@
 # ----------------------------------------------------------------------------
-# Propagation
+# Propagation Sanity Checks
 # ----------------------------------------------------------------------------
 from dependencies import *
 from helpers import *
 
 # step through time
-def propagate(n, p, v, a, successes, successful_particles, l_4k_to_lens_aperture,\
+def propagate_sanity(n, p, v, a, successes, successful_particles, l_4k_to_lens_aperture,\
     m_s, decel=True, plot=False, spin_tracking=False, spin_tracked_particles=[], \
     pruning=None, plot_detuning=False, detuning_tracked_particles=[], \
     plot_acc=False, plot_acc_particles=[]):

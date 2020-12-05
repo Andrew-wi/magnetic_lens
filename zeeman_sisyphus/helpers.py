@@ -72,13 +72,13 @@ def sign_change(del_w2s_pos, del_w2s_neg, del_s2w_pos, del_s2w_neg, \
     ms_change = ms_current
 
     # test to flip signs
-    if np.sign(del_w2s_pos) != previous_sign_w2s_pos:
+    if np.sign(del_w2s_pos) != previous_sign_w2s_pos and np.sign(ms_current) == 1:
         ms_change *= -1
-    elif np.sign(del_w2s_neg) != previous_sign_w2s_neg:
+    elif np.sign(del_w2s_neg) != previous_sign_w2s_neg and np.sign(ms_current) == -1:
         ms_change *= -1
-    elif np.sign(del_s2w_pos) != previous_sign_s2w_pos:
+    elif np.sign(del_s2w_pos) != previous_sign_s2w_pos and np.sign(ms_current) == 1:
         ms_change *= -1
-    elif np.sign(del_s2w_neg) != previous_sign_s2w_neg:
+    elif np.sign(del_s2w_neg) != previous_sign_s2w_neg and np.sign(ms_current) == -1:
         ms_change *= -1
 
     # # bootleg spin flipping lol
