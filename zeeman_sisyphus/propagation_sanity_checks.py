@@ -7,13 +7,14 @@ from helpers import *
 # step through time
 def propagate_sanity(n, p, v, a, successes, successful_particles, l_4k_to_lens_aperture,\
     m_s, decel=True, plot=False, spin_tracking=False, spin_tracked_particles=[], \
-    pruning=None, plot_detuning=False, detuning_tracked_particles=[], \
-    plot_acc=False, plot_acc_particles=[]):
+    pruning=None, plot_vel=False, plot_vel_particles=[], \
+    plot_long_dist=False, plot_long_dist_particles=[]):
 
     print('Propagating...')
 
     successes = successes
     successful_particles = successful_particles
+    gate_tracker = np.zeros((len(gate_list), n))
 
     if plot == True:
         propagation_fig = plt.figure()
@@ -23,13 +24,13 @@ def propagate_sanity(n, p, v, a, successes, successful_particles, l_4k_to_lens_a
         spin_tracking_fig = plt.figure()
         spin_tracking_ax = plt.axes()
 
-    if plot_detuning == True:
-        detuning_fig = plt.figure()
-        detuning_ax = plt.axes()
+    if plot_vel == True:
+        vel_fig = plt.figure()
+        vel_ax = plt.axes()
 
-    if plot_acc == True:
-        acc_fig = plt.figure()
-        acc_ax = plt.axes()
+    if plot_long_dist == True:
+        vel_long_fig = plt.figure()
+        vel_long_ax = plt.axes()
 
     for index in range(n):
 
@@ -43,12 +44,12 @@ def propagate_sanity(n, p, v, a, successes, successful_particles, l_4k_to_lens_a
         trajectory_z = np.zeros(steps)
         trajectory_x = np.zeros(steps)
         spin_tracker = np.zeros((steps, 2))
-        detuning_tracker = np.zeros((steps, 5))
         detuning_sign_w2s_pos = 1
         detuning_sign_w2s_neg = -1
         detuning_sign_s2w_pos = 1
         detuning_sign_s2w_neg = -1
-        acc_tracker = np.zeros((steps, 4))
+        vel_tracker = np.zeros((steps, 4))
+        counted = np.zeros(len(gate_list))
 
         while is_not_dead(position) and time <= t_final:
 
@@ -64,13 +65,19 @@ def propagate_sanity(n, p, v, a, successes, successful_particles, l_4k_to_lens_a
                 spin_tracker[step_count, 0] = position[2]
                 spin_tracker[step_count, 1] = ms
 
+            if plot_long_dist == True:
+                for i, gate_pos in enumerate(gate_list):
+                    if is_in_gate(gate_pos, position[2], counted[i]):
+                        counted[i] = 1.0
+                        gate_tracker[i, index] = velocity[2]
+
             if is_in_magnet(position) and decel == True:
                 new_acc, new_m_s, \
                     det_sign_change_w2s_pos, det_sign_change_w2s_neg, \
                     det_sign_change_s2w_pos, det_sign_change_s2w_neg, \
                     detuning_w2s_pos, detuning_w2s_neg, detuning_s2w_pos, detuning_s2w_neg = \
-                    magnet_prop(position, velocity, acceleration, ms, detuning_sign_w2s_pos, detuning_sign_w2s_neg, \
-                        detuning_sign_s2w_pos, detuning_sign_s2w_neg, ind=index)
+                        magnet_prop(position, velocity, acceleration, ms, detuning_sign_w2s_pos, \
+                        detuning_sign_w2s_neg, detuning_sign_s2w_pos, detuning_sign_s2w_neg, ind=index)
                 detuning_sign_w2s_pos = det_sign_change_w2s_pos
                 detuning_sign_w2s_neg = det_sign_change_w2s_neg
                 detuning_sign_s2w_pos = det_sign_change_s2w_pos
@@ -85,23 +92,16 @@ def propagate_sanity(n, p, v, a, successes, successful_particles, l_4k_to_lens_a
                 v[index, :] += new_acc * timestep
                 p[index, :] += velocity * timestep
 
-                if plot_detuning == True and index in detuning_tracked_particles:
-                    detuning_tracker[step_count, 0] = position[2]
-                    detuning_tracker[step_count, 1] = detuning_w2s_pos
-                    detuning_tracker[step_count, 2] = detuning_w2s_neg
-                    detuning_tracker[step_count, 3] = detuning_s2w_pos
-                    detuning_tracker[step_count, 4] = detuning_s2w_neg
-
             else:
                 a[index, :] = 0
                 acceleration = 0
                 p[index, :] += velocity * timestep
 
-            if plot_acc == True and index in plot_acc_particles:
-                acc_tracker[step_count, 0] = position[2]
-                acc_tracker[step_count, 1] = a[index, 0]
-                acc_tracker[step_count, 2] = a[index, 1]
-                acc_tracker[step_count, 3] = a[index, 2]
+            if plot_vel == True and index in plot_vel_particles:
+                vel_tracker[step_count, 0] = position[2]
+                vel_tracker[step_count, 1] = v[index, 0]
+                vel_tracker[step_count, 2] = v[index, 1]
+                vel_tracker[step_count, 3] = v[index, 2]
 
             if is_in_mot(position, index, successful_particles):
                 successful_particles[index] = 1
@@ -132,32 +132,18 @@ def propagate_sanity(n, p, v, a, successes, successful_particles, l_4k_to_lens_a
                 propagation_ax.plot(trajectory_z, trajectory_x, '-r', linewidth=0.5)
 
         if spin_tracking == True and index in spin_tracked_particles:
-
             spin_tracker = spin_tracker[:step_count, :]
-            spin_tracking_ax.plot(spin_tracker[:, 0], spin_tracker[:, 1], linewidth=1.0,\
+            spin_tracking_ax.plot(spin_tracker[:, 0], spin_tracker[:, 1], linewidth=1.0, \
                 label='Molecule {}'.format(index))
 
-        if plot_detuning == True and index in detuning_tracked_particles:
-
-            detuning_tracker = detuning_tracker[:step_count - 100, :]
-            detuning_ax.plot(detuning_tracker[:, 0], detuning_tracker[:, 1], linewidth=1.0,\
-                label='w2s detuning, pos', color='orange')
-            detuning_ax.plot(detuning_tracker[:, 0], detuning_tracker[:, 2], linewidth=1.0,\
-                label='w2s detuning, neg', color='blue')
-            detuning_ax.plot(detuning_tracker[:, 0], detuning_tracker[:, 3], linewidth=1.0,\
-                label='s2w detuning, pos', color='green')
-            detuning_ax.plot(detuning_tracker[:, 0], detuning_tracker[:, 4], linewidth=1.0,\
-                label='s2w detuning, neg', color='red')
-
-        if plot_acc == True and index in plot_acc_particles:
-
-            acc_tracker = acc_tracker[:step_count, :]
-            # acc_ax.plot(acc_tracker[:, 0], acc_tracker[:, 1], linewidth=1.0,\
-            #     label='x component'.format(index))
-            # acc_ax.plot(acc_tracker[:, 0], acc_tracker[:, 2], linewidth=1.0,\
-            #     label='y component'.format(index))
-            acc_ax.plot(acc_tracker[:, 0], acc_tracker[:, 3], linewidth=1.0,\
-                label='z component'.format(index))
+        if plot_vel == True and index in plot_vel_particles:
+            vel_tracker = vel_tracker[:step_count, :]
+            # vel_ax.plot(vel_tracker[:, 0], vel_tracker[:, 1], linewidth=1.0,\
+            #     label='x component')
+            # vel_ax.plot(vel_tracker[:, 0], vel_tracker[:, 2], linewidth=1.0,\
+            #     label='y component')
+            vel_ax.plot(vel_tracker[:, 0], vel_tracker[:, 3], linewidth=1.0, \
+                label='velocity z-component')
 
     if plot == True:
         propagation_fig, propagation_ax = plot_prop(propagation_fig, propagation_ax)
@@ -165,10 +151,17 @@ def propagate_sanity(n, p, v, a, successes, successful_particles, l_4k_to_lens_a
     if spin_tracking == True:
         spin_tracking_fig, spin_tracking_ax = plot_spin(spin_tracking_fig, spin_tracking_ax)
 
-    if plot_detuning == True:
-        detuning_fig, detuning_ax = plot_det(detuning_fig, detuning_ax)
+    if plot_vel == True:
+        vel_fig, vel_ax = plot_vel_fig(vel_fig, vel_ax)
 
-    if plot_acc == True:
-        acc_fig, acc_ax = plot_accel(acc_fig, acc_ax)
+    if plot_long_dist == True:
+        # remove all 0's in the gate_tracker, plot histogram
+        gate_removed_zeros = np.ma.masked_equal(gate_tracker, 0)
+        print(gate_removed_zeros)
+
+        for row in range(len(gate_list)):
+            sns.distplot(gate_removed_zeros[row, :], label='gate: {}'.format(gate_list[row]), ax=vel_long_ax, kde=True)
+
+        vel_long_fig, vel_long_ax = plot_vel_long(vel_long_fig, vel_long_ax)
 
     return p, v, a, successes, successful_particles

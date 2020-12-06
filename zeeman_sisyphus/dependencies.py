@@ -13,12 +13,13 @@ import math
 import numpy as np
 import pprint
 import random
+import seaborn as sns
 
 # from astropy.io import fits
 # from mpl_toolkits import mplot3d
 from pathlib import Path
 
-n = 1e6
+n = 1e4
 t = 0.0
 sigma_xy = 0.0042
 sigma_vxy = 12.0
@@ -39,7 +40,9 @@ del_0_s_to_w = 2.5e9 # units: Hz
 h = 6.62607004e-34 # units: m^2*kg/s
 lambda_trans = 606e-9 # units: m
 date = datetime.date.today()
-mols_tracking = [4012]
+mols_tracking = [3713, 4012, 6747]
+gate_list = [0.25, 0.50, 0.75, 1.0]
+gate_size = 0.01 # units: m
 
 # parameter scan variables
 lens_range = 0.5 # range of values over which we scan the lens. Origin is at l_4k_to_lens_aperture

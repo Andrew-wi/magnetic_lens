@@ -7,9 +7,7 @@ from init import *
 from vector_field import *
 from propagation import *
 
-import seaborn as sns
 import sys
-
 
 propagationFig = plt.figure()
 propagationAx = plt.subplots()

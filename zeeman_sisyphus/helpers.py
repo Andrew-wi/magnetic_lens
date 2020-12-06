@@ -116,6 +116,13 @@ def is_in_mot(pos, i, succ_ptcls):
     else:
         return False
 
+def is_in_gate(gate, z_pos, counted):
+
+    if gate - gate_size / 2 <= z_pos <= gate + gate_size / 2 and counted == False:
+        return True
+    else:
+        return False
+
 def plot_prop(fig, ax):
 
     # draw MOT region, magnetic lens, lens, 4k aperture, beam shutter
@@ -197,5 +204,41 @@ def plot_accel(fig, ax):
     # save figure
     Path('{}/tracking_plots_{}'.format(date, date)).mkdir(parents=True, exist_ok=True)
     fig.savefig('{}/tracking_plots_{}/acc_{}'.format(date, date, date))
+
+    return (fig, ax)
+
+def plot_vel_fig(fig, ax):
+
+    # labels
+    ax.set_xlabel('z (m)')
+    ax.set_ylabel('Velocity (m/s)')
+    ax.grid(True)
+    ax.set_title('Velocity Along the z-axis')
+    # ax.set_xlim(left=0.0, right=mot_left_edge + 0.1)
+    ax.set_xlim(left=0.58, right=0.62)
+    ax.set_ylim(bottom=117, top=120)
+    ax.legend()
+
+    # save figure
+    Path('{}/tracking_plots_{}'.format(date, date)).mkdir(parents=True, exist_ok=True)
+    fig.savefig('{}/tracking_plots_{}/vel_{}'.format(date, date, date))
+
+    return (fig, ax)
+
+def plot_vel_long(fig, ax):
+
+    # labels
+    ax.set_xlabel('v_z (m)')
+    ax.set_ylabel('Number (m/s)')
+    ax.grid(True)
+    ax.set_title('Velocity Distributions At Points Along the z-axis')
+    # ax.set_xlim(left=0.0, right=mot_left_edge + 0.1)
+    # ax.set_xlim(left=0.58, right=0.62)
+    # ax.set_ylim(bottom=117, top=120)
+    ax.legend()
+
+    # save figure
+    Path('{}/tracking_plots_{}'.format(date, date)).mkdir(parents=True, exist_ok=True)
+    fig.savefig('{}/tracking_plots_{}/vel_dist_long_{}'.format(date, date, date))
 
     return (fig, ax)
