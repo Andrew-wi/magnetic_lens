@@ -68,7 +68,7 @@ def propagate_sanity(n, p, v, a, successes, successful_particles, l_4k_to_lens_a
             if plot_long_dist == True:
                 for i, gate_pos in enumerate(gate_list):
                     if is_in_gate(gate_pos, position[2], counted[i]):
-                        counted[i] = 1.0
+                        counted[i] = 1
                         gate_tracker[i, index] = velocity[2]
 
             if is_in_magnet(position) and decel == True:
@@ -155,12 +155,10 @@ def propagate_sanity(n, p, v, a, successes, successful_particles, l_4k_to_lens_a
         vel_fig, vel_ax = plot_vel_fig(vel_fig, vel_ax)
 
     if plot_long_dist == True:
-        # remove all 0's in the gate_tracker, plot histogram
-        gate_removed_zeros = np.ma.masked_equal(gate_tracker, 0)
-        print(gate_removed_zeros)
-
         for row in range(len(gate_list)):
-            sns.distplot(gate_removed_zeros[row, :], label='gate: {}'.format(gate_list[row]), ax=vel_long_ax, kde=True)
+            sns.histplot(gate_tracker[row, :][np.where(gate_tracker[row, :] != 0)], \
+                label='gate: {}'.format(gate_list[row]), ax=vel_long_ax, kde=True, \
+                stat='count', color=np.random.random(3))
 
         vel_long_fig, vel_long_ax = plot_vel_long(vel_long_fig, vel_long_ax)
 

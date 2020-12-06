@@ -118,7 +118,7 @@ def is_in_mot(pos, i, succ_ptcls):
 
 def is_in_gate(gate, z_pos, counted):
 
-    if gate - gate_size / 2 <= z_pos <= gate + gate_size / 2 and counted == False:
+    if gate - gate_size / 2 <= z_pos <= gate + gate_size / 2:# and counted == False:
         return True
     else:
         return False
@@ -136,8 +136,8 @@ def plot_prop(fig, ax):
     ax.plot(xMotRegion, yMotRegion, 'k', linewidth=1.0)
 
     # 4k aperture and beam shutter
-    ax.vlines(x=l_cell_to_4k, ymin=-10.0, ymax=-0.005, color='green', linewidth=3)
-    ax.vlines(x=l_cell_to_4k, ymin=0.005, ymax=10, color='green', linewidth=3)
+    ax.vlines(x=l_cell_to_4k, ymin=-10.0, ymax=-0.003, color='green', linewidth=3)
+    ax.vlines(x=l_cell_to_4k, ymin=0.003, ymax=10, color='green', linewidth=3)
 
     # labels
     ax.set_xlabel('z (m)')
@@ -228,13 +228,13 @@ def plot_vel_fig(fig, ax):
 def plot_vel_long(fig, ax):
 
     # labels
-    ax.set_xlabel('v_z (m)')
-    ax.set_ylabel('Number (m/s)')
+    ax.set_xlabel('v_z (m/s)')
+    ax.set_ylabel('Number')
     ax.grid(True)
     ax.set_title('Velocity Distributions At Points Along the z-axis')
     # ax.set_xlim(left=0.0, right=mot_left_edge + 0.1)
     # ax.set_xlim(left=0.58, right=0.62)
-    # ax.set_ylim(bottom=117, top=120)
+    ax.set_ylim(top=20)
     ax.legend()
 
     # save figure

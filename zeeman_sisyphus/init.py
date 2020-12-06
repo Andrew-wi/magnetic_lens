@@ -16,11 +16,13 @@ def generate(n, p, v, a, m_s):
     print('Generating particles...')
 
     # positions
-    p[:, :2] = np.random.normal(loc=0.0, scale=sigma_xy, size=(n, 2))
+    # p[:, :2] = np.random.normal(loc=0.0, scale=sigma_xy, size=(n, 2))
+    p[:, :2] = np.random.uniform(-unif_xy, unif_xy, size=(n, 2))
     p[:, 2] = np.zeros(n)
 
     # velocities
-    v[:, :2] = np.random.normal(loc=0.0, scale=sigma_vxy, size=(n, 2))
+    # v[:, :2] = np.random.normal(loc=0.0, scale=sigma_vxy, size=(n, 2))
+    v[:, :2] = np.random.uniform(-unif_vxy, unif_vxy, size=(n, 2))
     v[:, 2] = np.random.normal(loc=mu_vz, scale=sigma_vz, size=n)
 
     # acceleration and magnetic spin
