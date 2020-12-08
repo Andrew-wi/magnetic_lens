@@ -8,7 +8,8 @@ from helpers import *
 def propagate_sanity(n, p, v, a, successes, successful_particles, l_4k_to_lens_aperture,\
     m_s, decel=True, plot=False, spin_tracking=False, spin_tracked_particles=[], \
     pruning=None, plot_vel=False, plot_vel_particles=[], \
-    plot_long_dist=False, plot_long_dist_particles=[]):
+    plot_long_dist=False, plot_long_dist_particles=[],
+    scan_s2w=False, scan_s2w_detunings=[], del_0_s2w=del_0_s_to_w):
 
     print('Propagating...')
 
@@ -76,8 +77,9 @@ def propagate_sanity(n, p, v, a, successes, successful_particles, l_4k_to_lens_a
                     det_sign_change_w2s_pos, det_sign_change_w2s_neg, \
                     det_sign_change_s2w_pos, det_sign_change_s2w_neg, \
                     detuning_w2s_pos, detuning_w2s_neg, detuning_s2w_pos, detuning_s2w_neg = \
-                        magnet_prop(position, velocity, acceleration, ms, detuning_sign_w2s_pos, \
-                        detuning_sign_w2s_neg, detuning_sign_s2w_pos, detuning_sign_s2w_neg, ind=index)
+                    magnet_prop(position, velocity, acceleration, ms, detuning_sign_w2s_pos, \
+                    detuning_sign_w2s_neg, detuning_sign_s2w_pos, detuning_sign_s2w_neg, \
+                    del_0_s2w, ind=index)
                 detuning_sign_w2s_pos = det_sign_change_w2s_pos
                 detuning_sign_w2s_neg = det_sign_change_w2s_neg
                 detuning_sign_s2w_pos = det_sign_change_s2w_pos

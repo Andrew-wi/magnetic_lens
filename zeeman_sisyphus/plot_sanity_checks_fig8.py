@@ -1,5 +1,5 @@
 # ----------------------------------------------------------------------------
-# Propagation, Plot Sanity Checks
+# Propagation, Plot Sanity Checks Figure 8
 # ----------------------------------------------------------------------------
 from dependencies import *
 from helpers import *

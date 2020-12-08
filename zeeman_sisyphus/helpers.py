@@ -18,7 +18,8 @@ def is_in_magnet(pos):
     else:
         return False
 
-def magnet_prop(pos, vel, acc, ms_prev, prev_det_sign_w2s_pos, prev_det_sign_w2s_neg, prev_det_sign_s2w_pos, prev_det_sign_s2w_neg, ind=None):
+def magnet_prop(pos, vel, acc, ms_prev, prev_det_sign_w2s_pos, prev_det_sign_w2s_neg, \
+    prev_det_sign_s2w_pos, prev_det_sign_s2w_neg, del_0_s2w, ind=None):
 
     # initialize variables
     ms = ms_prev
@@ -35,16 +36,16 @@ def magnet_prop(pos, vel, acc, ms_prev, prev_det_sign_w2s_pos, prev_det_sign_w2s
     # detuning calculation, w -> s and s -> w
     # delta_w_to_s = 2 * np.pi * (-del_0_w_to_s + mu_B * g * ms * \
     #     np.absolute(normBMatrix[int(yCoord), int(xCoord), int(zCoord)]) / h + vel[2] / lambda_trans)
-    # delta_s_to_w = 2 * np.pi * (del_0_s_to_w + mu_B * g * ms * \
+    # delta_s_to_w = 2 * np.pi * (del_0_s2w + mu_B * g * ms * \
     #     np.absolute(normBMatrix[int(yCoord), int(xCoord), int(zCoord)]) / h + vel[2] / lambda_trans)
     # removed ms
     delta_w_to_s_pos = 2 * np.pi * (-del_0_w_to_s + 1/2 * mu_B * g * \
         np.absolute(normBMatrix[int(yCoord), int(xCoord), int(zCoord)]) / h + vel[2] / lambda_trans)
     delta_w_to_s_neg = 2 * np.pi * (-del_0_w_to_s + -1/2 * mu_B * g * \
         np.absolute(normBMatrix[int(yCoord), int(xCoord), int(zCoord)]) / h + vel[2] / lambda_trans)
-    delta_s_to_w_pos = 2 * np.pi * (del_0_s_to_w + 1/2 * mu_B * g * \
+    delta_s_to_w_pos = 2 * np.pi * (del_0_s2w + 1/2 * mu_B * g * \
         np.absolute(normBMatrix[int(yCoord), int(xCoord), int(zCoord)]) / h + vel[2] / lambda_trans)
-    delta_s_to_w_neg = 2 * np.pi * (del_0_s_to_w + -1/2 * mu_B * g * \
+    delta_s_to_w_neg = 2 * np.pi * (del_0_s2w + -1/2 * mu_B * g * \
         np.absolute(normBMatrix[int(yCoord), int(xCoord), int(zCoord)]) / h + vel[2] / lambda_trans)
 
     # flip signs if conditions met
