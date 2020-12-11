@@ -9,7 +9,12 @@ def propagate_sanity(n, p, v, a, successes, successful_particles, l_4k_to_lens_a
     m_s, decel=True, plot=False, spin_tracking=False, spin_tracked_particles=[], \
     pruning=None, plot_vel=False, plot_vel_particles=[], \
     plot_long_dist=False, plot_long_dist_particles=[],
-    scan_s2w=False, scan_s2w_detunings=[], del_0_s2w=del_0_s_to_w):
+    scan_s2w=False, scan_s2w_detunings=[], \
+    scan_dets=False, del_0_s2w=del_0_s_to_w):
+
+    pos_list=p
+    vel_list=v
+    acc_list=a
 
     print('Propagating...')
 
@@ -37,9 +42,9 @@ def propagate_sanity(n, p, v, a, successes, successful_particles, l_4k_to_lens_a
 
         timestep = t_final / steps
         time = timestep
-        position = p[index, :]
-        velocity = v[index, :]
-        acceleration = a[index, :]
+        position = pos_list[index, :]
+        velocity = vel_list[index, :]
+        acceleration = acc_list[index, :]
         ms = m_s[index]
         step_count = 0
         trajectory_z = np.zeros(steps)
@@ -90,14 +95,14 @@ def propagate_sanity(n, p, v, a, successes, successful_particles, l_4k_to_lens_a
                 #     print(ms)
 
                 ms = new_m_s
-                a[index, :] = new_acc
-                v[index, :] += new_acc * timestep
-                p[index, :] += velocity * timestep
+                acc_list[index, :] = new_acc
+                vel_list[index, :] += new_acc * timestep
+                pos_list[index, :] += velocity * timestep
 
             else:
-                a[index, :] = 0
+                acc_list[index, :] = 0
                 acceleration = 0
-                p[index, :] += velocity * timestep
+                pos_list[index, :] += velocity * timestep
 
             if plot_vel == True and index in plot_vel_particles:
                 vel_tracker[step_count, 0] = position[2]
@@ -164,4 +169,4 @@ def propagate_sanity(n, p, v, a, successes, successful_particles, l_4k_to_lens_a
 
         vel_long_fig, vel_long_ax = plot_vel_long(vel_long_fig, vel_long_ax)
 
-    return p, v, a, successes, successful_particles
+    return (pos_list, vel_list, acc_list, successes, successful_particles)

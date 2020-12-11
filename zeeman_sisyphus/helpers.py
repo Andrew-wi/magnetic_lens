@@ -19,7 +19,7 @@ def is_in_magnet(pos):
         return False
 
 def magnet_prop(pos, vel, acc, ms_prev, prev_det_sign_w2s_pos, prev_det_sign_w2s_neg, \
-    prev_det_sign_s2w_pos, prev_det_sign_s2w_neg, del_0_s2w, ind=None):
+    prev_det_sign_s2w_pos, prev_det_sign_s2w_neg, del_0_s2w=del_0_s_to_w, ind=None):
 
     # initialize variables
     ms = ms_prev
@@ -90,9 +90,9 @@ def sign_change(del_w2s_pos, del_w2s_neg, del_s2w_pos, del_s2w_neg, \
 
     return sign_change_w2s_pos, sign_change_w2s_neg, sign_change_s2w_pos, sign_change_s2w_neg, ms_change
 
-def prop(pos, vel, acc, ms):
-    pass
-    return changed_position
+# def prop(pos, vel, acc, ms):
+#     pass
+#     return changed_position
 
 def plot_prop(positions):
 
@@ -243,3 +243,26 @@ def plot_vel_long(fig, ax):
     fig.savefig('{}/tracking_plots_{}/vel_dist_long_{}'.format(date, date, date))
 
     return (fig, ax)
+
+def plot_vel_dist_scan_det(fig, ax, vels, det, close=None):
+
+    if close == 'close':
+        # labels
+        ax.set_xlabel('v_z (m/s)')
+        ax.set_ylabel('Number')
+        ax.grid(True)
+        ax.set_title('Effect of Strong to Weak Detuning')
+        # ax.set_xlim(left=0.0, right=mot_left_edge + 0.1)
+        # ax.set_xlim(left=0.58, right=0.62)
+        # ax.set_ylim(top=20)
+        ax.legend()
+
+        # save figure
+        Path('{}/tracking_plots_{}'.format(date, date)).mkdir(parents=True, exist_ok=True)
+        fig.savefig('{}/tracking_plots_{}/vel_dist_scan_det_{}'.format(date, date, date))
+
+        return (fig, ax)
+
+    else:
+        sns.histplot(vels, label='detuning (GHz): {}'.format(det / 1e9), ax=ax, kde=True, \
+            stat='count', color=np.random.random(3))
