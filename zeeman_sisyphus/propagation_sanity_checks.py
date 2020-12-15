@@ -5,22 +5,31 @@ from dependencies import *
 from helpers import *
 
 # step through time
-def propagate_sanity(n, p, v, a, successes, successful_particles, l_4k_to_lens_aperture,\
+def propagate_sanity(n, p, v, a, successes_pre, successful_particles_pre, l_4k_to_lens_aperture,\
     m_s, decel=True, plot=False, spin_tracking=False, spin_tracked_particles=[], \
     pruning=None, plot_vel=False, plot_vel_particles=[], \
     plot_long_dist=False, plot_long_dist_particles=[],
     scan_s2w=False, scan_s2w_detunings=[], \
-    scan_dets=False, del_0_s2w=del_0_s_to_w):
-
-    pos_list=p
-    vel_list=v
-    acc_list=a
+    scan_dets=False, del_0_s2w=del_0_s_to_w, deepcopy=True):
 
     print('Propagating...')
 
-    successes = successes
-    successful_particles = successful_particles
-    gate_tracker = np.zeros((len(gate_list), n))
+    if deepcopy == True:
+        # init, allocate new memory for copied variables
+        pos_list=copy.deepcopy(p)
+        vel_list=copy.deepcopy(v)
+        acc_list=copy.deepcopy(a)
+        successes = copy.deepcopy(successes_pre)
+        successful_particles = copy.deepcopy(successful_particles_pre)
+        gate_tracker = np.zeros((len(gate_list), n))
+    else:
+        # init, reference to value
+        pos_list=p
+        vel_list=v
+        acc_list=a
+        successes = successes_pre
+        successful_particles = successful_particles_pre
+        gate_tracker = np.zeros((len(gate_list), n))
 
     if plot == True:
         propagation_fig = plt.figure()

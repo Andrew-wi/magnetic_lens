@@ -5,7 +5,7 @@ from dependencies import *
 from vector_field import *
 
 def is_not_dead(pos):
-    if ((pos[0] ** 2 + pos[1] ** 2) ** (1 / 2)) > 0.003 or \
+    if ((pos[0] ** 2 + pos[1] ** 2) ** (1 / 2)) > r_inner / 1e3 or \
         pos[2] > mot_left_edge + mot_side_length:
         return False
     else:
@@ -264,5 +264,51 @@ def plot_vel_dist_scan_det(fig, ax, vels, det, close=None):
         return (fig, ax)
 
     else:
-        sns.histplot(vels, label='detuning (GHz): {}'.format(det / 1e9), ax=ax, kde=True, \
+        sns.histplot(data=vels, label='detuning (GHz): {}'.format(det / 1e9), ax=ax, kde=True, \
             stat='count', color=np.random.random(3))
+
+def plot_phase_space_acc_reg(fig, ax, vels, pos, det, close=None):
+
+    if close == 'close':
+        # labels
+        ax.set_xlabel('x (m)')
+        ax.set_ylabel('v_x (m/s)')
+        ax.grid(True)
+        ax.set_title('Phase-Space Acceptance at the Detection Region')
+        # ax.set_xlim(left=0.0, right=mot_left_edge + 0.1)
+        # ax.set_xlim(left=0.58, right=0.62)
+        # ax.set_ylim(top=20)
+        ax.legend()
+
+        # save figure
+        Path('{}/tracking_plots_{}'.format(date, date)).mkdir(parents=True, exist_ok=True)
+        fig.savefig('{}/tracking_plots_{}/phase_space_acc_{}'.format(date, date, date))
+
+        return (fig, ax)
+
+    else:
+        sns.scatterplot(x=pos, y=vels, label='detuning (GHz): {}'.format(det / 1e9),\
+            ax=ax, color=np.random.random(3))
+
+def plot_decel_trans_acc(fig, ax, vels, pos, det, close=None):
+
+    if close == 'close':
+        # labels
+        ax.set_xlabel('detuning (GHz)')
+        ax.set_ylabel('1d transverse phase-space acceptance area (mm * m/s)')
+        ax.grid(True)
+        ax.set_title('Phase-Space Acceptance at the Detection Region')
+        # ax.set_xlim(left=0.0, right=mot_left_edge + 0.1)
+        # ax.set_xlim(left=0.58, right=0.62)
+        # ax.set_ylim(top=20)
+        ax.legend()
+
+        # save figure
+        Path('{}/tracking_plots_{}'.format(date, date)).mkdir(parents=True, exist_ok=True)
+        fig.savefig('{}/tracking_plots_{}/det_vs_trans_acc_{}'.format(date, date, date))
+
+        return (fig, ax)
+
+    else:
+        sns.plot(x=pos, y=vels, label='detuning (GHz): {}'.format(det / 1e9),\
+            ax=ax, color=np.random.random(3))

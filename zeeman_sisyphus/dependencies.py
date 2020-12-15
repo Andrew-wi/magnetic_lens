@@ -3,6 +3,7 @@
 # ----------------------------------------------------------------------------
 print('Importing dependencies...')
 
+import copy
 import csv
 import datetime
 import gc
@@ -19,7 +20,7 @@ import seaborn as sns
 # from mpl_toolkits import mplot3d
 from pathlib import Path
 
-n = 1e3
+n = 1e4
 t = 0.0
 sigma_xy = 0.0042
 sigma_vxy = 12.0
@@ -38,7 +39,7 @@ steps = 2000 # for fast runs, set this to 200
 mot_left_edge = 1.3
 mot_side_length = 0.01
 del_0_w_to_s = 13.75e9 # units: Hz
-del_0_s_to_w = 2.5e9 # units: Hz
+del_0_s_to_w = 3.5e9 # units: Hz
 h = 6.62607004e-34 # units: m^2*kg/s
 lambda_trans = 606e-9 # units: m
 date = datetime.date.today()
@@ -53,9 +54,9 @@ trials = 21 # number of trials at each scan_point
 
 # same as in mathematica code
 mxy = 50 # mesh spacing in xy directions
-mz = 1200 # mesh spacing in z direction
-r_inner = 3 # inner radius of lens (in mm, as Radia is in mm by default, same as in Mathematica)
+mz = 1500 # mesh spacing in z direction
+r_inner = 2.5 # inner radius of lens (in mm, as Radia is in mm by default, same as in Mathematica)
 r_outer = 20 # outer radius of lens (mm, as in Radia, same as in Mathematica)
 dz = 8 # thickness of magnet segments along z-axis
-z_length = 1200 # the length along z axis for which b-field is computed
+z_length = 1500 # the length along z axis for which b-field is computed
 segs = 12 # number of segments
