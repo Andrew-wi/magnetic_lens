@@ -115,9 +115,9 @@ def propagate_sanity(n, p, v, a, successes_pre, successful_particles_pre, l_4k_t
 
             if plot_vel == True and index in plot_vel_particles:
                 vel_tracker[step_count, 0] = position[2]
-                vel_tracker[step_count, 1] = v[index, 0]
-                vel_tracker[step_count, 2] = v[index, 1]
-                vel_tracker[step_count, 3] = v[index, 2]
+                vel_tracker[step_count, 1] = vel_list[index, 0]
+                vel_tracker[step_count, 2] = vel_list[index, 1]
+                vel_tracker[step_count, 3] = vel_list[index, 2]
 
             if is_in_mot(position, index, successful_particles):
                 successful_particles[index] = 1

@@ -21,10 +21,10 @@ p, v, a, m_s = generate(n, p_pre, v_pre, a_pre, m_s_pre)
 
 pos_pp, vel_pp, acc_pp, successes_pp, successful_particles_pp = \
     propagate_sanity(n, p, v, a, successes_pp, successful_particles_pp, \
-              l_4k_to_lens_aperture, m_s, decel=True, plot=True, pruning='to_magnet', \
-              plot_vel=True, plot_vel_particles=mols_tracking,
-              spin_tracking=True, spin_tracked_particles=mols_tracking,
-              plot_long_dist=True, plot_long_dist_particles=mols_tracking)
+                     l_4k_to_lens_aperture, m_s, decel=True, plot=False, pruning='to_magnet', \
+                     plot_vel=True, plot_vel_particles=mols_tracking,
+                     spin_tracking=True, spin_tracked_particles=mols_tracking,
+                     plot_long_dist=True, plot_long_dist_particles=mols_tracking)
 
 print('Successes: {}'.format(successes_pp))
 print('Successful particles: {}'.format(np.where(successful_particles_pp == True)))

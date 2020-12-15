@@ -161,10 +161,10 @@ def plot_spin(fig, ax):
     ax.set_ylabel('spin')
     ax.grid(True)
     ax.set_title('Spin Along the z-axis')
-    ax.set_xlim(left=0.14, right=0.25)
+    ax.set_xlim(left=0.09, right=0.20)
     #mot_left_edge + 0.1)
     ax.set_ylim(bottom=-0.7, top=0.7)
-    ax.legend()
+    # ax.legend()
 
     # save figure
     Path('{}/tracking_plots_{}'.format(date, date)).mkdir(parents=True, exist_ok=True)
@@ -198,7 +198,7 @@ def plot_accel(fig, ax):
     ax.grid(True)
     ax.set_title('Acceleration Along the z-axis')
     # ax.set_xlim(left=0.0, right=mot_left_edge + 0.1)
-    ax.set_xlim(left=0.14, right=0.25)
+    ax.set_xlim(left=0.09, right=1.6)
     # ax.set_ylim(bottom=-0.7, top=0.7)
     ax.legend()
 
@@ -215,10 +215,10 @@ def plot_vel_fig(fig, ax):
     ax.set_ylabel('Velocity (m/s)')
     ax.grid(True)
     ax.set_title('Velocity Along the z-axis')
-    # ax.set_xlim(left=0.0, right=mot_left_edge + 0.1)
-    ax.set_xlim(left=0.58, right=0.62)
-    ax.set_ylim(bottom=117, top=120)
-    ax.legend()
+    ax.set_xlim(left=0.0, right=mot_left_edge + 0.1)
+    # ax.set_xlim(left=0.58, right=0.62)
+    # ax.set_ylim(bottom=117, top=120)
+    # ax.legend()
 
     # save figure
     Path('{}/tracking_plots_{}'.format(date, date)).mkdir(parents=True, exist_ok=True)
@@ -235,7 +235,7 @@ def plot_vel_long(fig, ax):
     ax.set_title('Velocity Distributions At Points Along the z-axis')
     # ax.set_xlim(left=0.0, right=mot_left_edge + 0.1)
     # ax.set_xlim(left=0.58, right=0.62)
-    ax.set_ylim(top=20)
+    ax.set_ylim(top=30)
     ax.legend()
 
     # save figure

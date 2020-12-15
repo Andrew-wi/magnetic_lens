@@ -20,31 +20,32 @@ import seaborn as sns
 # from mpl_toolkits import mplot3d
 from pathlib import Path
 
-n = 1e4
+n = 1e7
 t = 0.0
-sigma_xy = 0.0042
-sigma_vxy = 12.0
-unif_xy = 0.0025
-unif_vxy = 7.5
-sigma_vz = 2.5 #39.49 #30.0
-mu_vz = 150.0 #110.0
+sigma_xy = 0.0042 # <-- CaOH
+sigma_vxy = 12.0 # <-- CaOH
+unif_xy = 0.0025 # <-- CaF
+unif_vxy = 7.5 # <-- CaF
+sigma_vz = 30.0 # <-- CaOH #2.5 # <-- CaF, sanity #39.49 # <-- CaF, real
+mu_vz = 110.0 # <-- CaOH #150.0 # <-- CaF
 l_cell_to_4k = 0.1
 l_4k_to_lens_aperture = 0.00 # origin is at l_cell_to_4k. Can be negative to scan behind the 4k
 # l_4k_to_beam_shutter = 0.26
 g = 2.0
 mu_B = 9.274e-24
-mass = 9.81069e-26 # CaF mass in kg #9.48671e-26 # caoh mass # 1.18084e-25 # caoch3 mass
+mass = 9.48671e-26 # <-- CaOH mass (kg) #9.81069e-26 # <-- CaF mass # 1.18084e-25 # <-- caoch3 mass
 t_final = 0.02
 steps = 2000 # for fast runs, set this to 200
-mot_left_edge = 1.3
+mot_left_edge = 1.6
 mot_side_length = 0.01
 del_0_w_to_s = 13.75e9 # units: Hz
-del_0_s_to_w = 3.5e9 # units: Hz
+del_0_s_to_w = 2.5e9 # units: Hz
 h = 6.62607004e-34 # units: m^2*kg/s
 lambda_trans = 606e-9 # units: m
 date = datetime.date.today()
-mols_tracking = [3713, 4012, 6747]
-gate_list = [0, 0.5, 1.0, 1.25]
+mols_tracking = [2353, 2762, 2953, 3160, 3462, 3917, 3941, 4428, 5008, 6283, 6720, \
+    6750, 6779, 7280, 7943, 7996, 8308, 9347]
+gate_list = [0, 0.5, 1.0, 1.5]
 gate_size = 0.01 # units: m
 
 # parameter scan variables
