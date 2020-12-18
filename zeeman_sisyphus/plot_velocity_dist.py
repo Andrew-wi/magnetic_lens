@@ -54,7 +54,8 @@ plt.title('Velocity Distribution of {} Particles, With and Without Decelerator'.
 plt.legend()
 
 # save figure
-Path('{}/velocity_distribution_{}'.format(datetime.date.today(), datetime.date.today())).\
+Path('{}/velocity_distribution_{}'.format(date, date)).\
     mkdir(parents=True, exist_ok=True)
-plt.savefig('{}/velocity_distribution_{}/velocity_distribution_{}_particles{}'.\
-    format(datetime.date.today(), datetime.date.today(), int(n), datetime.date.today()))
+plt.savefig('{}/velocity_distribution_{}/velocity_distribution_{}_particles_{}_{}_{}'.\
+    format(date, date, int(n), str(successes_nl / n).replace('.', ''), \
+    str(successes_pp / n).replace('.', ''), date))
