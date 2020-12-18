@@ -20,14 +20,14 @@ import seaborn as sns
 # from mpl_toolkits import mplot3d
 from pathlib import Path
 
-n = 1e7
+n = 1e5
 t = 0.0
 sigma_xy = 0.0042 # <-- CaOH
-sigma_vxy = 12.0 # <-- CaOH
+sigma_vxy = 12.06 # <-- He3 bg #12.0 # <-- CaOH
 unif_xy = 0.0025 # <-- CaF
 unif_vxy = 7.5 # <-- CaF
 sigma_vz = 30.0 # <-- CaOH #2.5 # <-- CaF, sanity #39.49 # <-- CaF, real
-mu_vz = 110.0 # <-- CaOH #150.0 # <-- CaF
+mu_vz = 70.0 #<-- He3 bg #110.0 # <-- CaOH 150.0 # <-- CaF
 l_cell_to_4k = 0.1
 l_4k_to_lens_aperture = 0.00 # origin is at l_cell_to_4k. Can be negative to scan behind the 4k
 # l_4k_to_beam_shutter = 0.26
