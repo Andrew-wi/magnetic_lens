@@ -20,24 +20,24 @@ import seaborn as sns
 # from mpl_toolkits import mplot3d
 from pathlib import Path
 
-n = 1e8
+n = 1e6
 t = 0.0
 sigma_xy = 0.0042 # <-- CaOH, He3
-sigma_vxy = 12.06 # <-- He3 bg #12.0 # <-- CaOH
+sigma_vxy = 12.0 # <-- CaOH #12.06 # <-- He3 bg 
 unif_xy = 0.0025 # <-- CaF
 unif_vxy = 7.5 # <-- CaF
-sigma_vz = 30.0 # <-- CaOH #2.5 # <-- CaF, sanity #39.49 # <-- CaF, real
-mu_vz = 70.0 # <-- He3 bg #110.0 # <-- CaOH 150.0 # <-- CaF
+sigma_vz = 30.0 # <-- CaOH #39.49 # <-- CaF, real #2.5 # <-- CaF, sanity 
+mu_vz = 110.0 # <-- CaOH #70.0 # <-- CaOH, He3 bg #150.0 # <-- CaF  
 l_cell_to_4k = 0.075 # <-- CaOH #0.1 #<-- CaF
-l_4k_to_lens_aperture = 0.15 #<--CaOh #
+l_4k_to_lens_aperture = 0.075 #<--CaOh # 0.0 # <-- CaF
 # l_4k_to_beam_shutter = 0.26
 g = 2.0
 mu_B = 9.274e-24
 mass = 9.48671e-26 # <-- CaOH mass (kg) #9.81069e-26 # <-- CaF mass # 1.18084e-25 # <-- caoch3 mass
 t_final = 0.02
 steps = 2000 # for fast runs, set this to 200
-mot_left_edge = 1.6
-mot_side_length = 0.01
+mot_left_edge = 1.65 # <-- CaOH #1.3 # <-- CaF
+mot_side_length = 0.01 # <-- CaOH #0.005 # <-- CaF
 del_0_w_to_s = 13.75e9 # units: Hz
 del_0_s_to_w = 2.5e9 # units: Hz
 h = 6.62607004e-34 # units: m^2*kg/s
