@@ -8,7 +8,7 @@ from helpers import *
 def propagate(n, p, v, a, successes, successful_particles, l_4k_to_lens_aperture,\
     m_s, decel=True, plot=False, spin_tracking=False, spin_tracked_particles=[], \
     pruning=None, plot_detuning=False, detuning_tracked_particles=[], \
-    plot_acc=False, plot_acc_particles=[]):
+    plot_acc=False, plot_acc_particles=[], visual=False):
 
     print('Propagating...')
 
@@ -32,6 +32,9 @@ def propagate(n, p, v, a, successes, successful_particles, l_4k_to_lens_aperture
         acc_ax = plt.axes()
 
     for index in range(n):
+
+        if visual == True:
+            print('Particle # {}'.format(index))
 
         timestep = t_final / steps
         time = timestep
