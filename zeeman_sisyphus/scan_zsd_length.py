@@ -49,7 +49,7 @@ for i, del_s2w in enumerate(del_0_s2w_list):
         print('Number of molecules in desired velocity class: {}'.format(desired_molecules))
 
         # save to dataframe
-        desired_populations_df.append()
+        # desired_populations_df.append()
 
 #         plot_scan_len_det(fig9a_fig, fig9a_ax, vel_z, del_s2w)
 
