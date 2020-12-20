@@ -313,3 +313,18 @@ def plot_decel_trans_acc(fig, ax, vels, pos, det, close=None):
     else:
         sns.plot(x=pos, y=vels, label='detuning (GHz): {}'.format(det / 1e9),\
             ax=ax, color=np.random.random(3))
+
+def plot_param_scan_heatmap(fig, ax, df):
+
+    sns.heatmap(df, annot=True, ax=ax)
+
+    # labels
+    # ax.set_xlabel('del_s2w')
+    # ax.set_ylabel('z_length')
+    ax.set_title('Optimization for Detuning and Slower Length')
+
+    # save figure
+    Path('{}/param_scans_{}'.format(date, date)).mkdir(parents=True, exist_ok=True)
+    fig.savefig('{}/param_scans_{}/param_scans_det_slowerlength_{}_mols_{}'.format(date, date, int(n), date))
+
+    return (fig, ax)

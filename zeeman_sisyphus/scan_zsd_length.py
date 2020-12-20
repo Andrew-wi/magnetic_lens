@@ -9,6 +9,8 @@ from propagation import *
 
 import pandas as pd
 
+start_time = datetime.datetime.now()
+
 # init
 scan_fig = plt.figure()
 scan_ax = plt.axes()
@@ -23,7 +25,7 @@ p, v, a, m_s = generate(n, p_pre, v_pre, a_pre, m_s_pre)
 del_0_s2w_list = np.array([0.5e9, 1.5e9, 2.5e9, 3.5e9, 4.5e9, 5.5e9]) # units: Hz
 z_lens_list = np.array([250, 500, 750, 1000, 1250, 1500]) # units: mm
 desired_vel_class_vz = 50 # units: m/s
-desired_populations_df = pd.DataFrame(columns=['del_s2w', 'z_len', 'desired_population'])
+desired_populations_dict_list = []
 
 # initial population run
 pos_pp, vel_pp, acc_pp, successes_pp, successful_particles_pp = \
@@ -48,9 +50,16 @@ for i, del_s2w in enumerate(del_0_s2w_list):
         desired_molecules = (vel_pp[successful_particles_pp, 2] < desired_vel_class_vz).sum()
         print('Number of molecules in desired velocity class: {}'.format(desired_molecules))
 
-        # save to dataframe
-        # desired_populations_df.append()
+        # save results to new dict, add to dict list
+        results_dict = {'del_s2w': del_s2w / 1e9, 'z_len': z_len, 'desired_vel_class': desired_molecules}
+        desired_populations_dict_list.append(results_dict)
 
-#         plot_scan_len_det(fig9a_fig, fig9a_ax, vel_z, del_s2w)
+# dataframe
+desired_pop_df = pd.DataFrame(desired_populations_dict_list)
+Path('{}/param_scans_{}'.format(date, date)).mkdir(parents=True, exist_ok=True)
+desired_pop_df.to_csv('{}/param_scans_{}/param_scans_{}.csv'.format(date, date, date))
 
-# plot_scan_len_det(fig9a_fig, fig9a_ax, vel_x, del_s2w, close='close')
+pivoted_df = desired_pop_df.pivot(index='del_s2w', columns='z_len', values='desired_vel_class')
+plot_param_scan_heatmap(scan_fig, scan_ax, pivoted_df)
+
+print('Elapsed Time: {}'.format(datetime.datetime.now() - start_time))
