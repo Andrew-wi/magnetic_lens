@@ -23,11 +23,11 @@ from pathlib import Path
 n = 1e6
 t = 0.0
 sigma_xy = 0.0042 # <-- CaOH, He3
-sigma_vxy = 12.0 # <-- CaOH #12.06 # <-- He3 bg 
+sigma_vxy = 12.0 # <-- CaOH #12.06 # <-- He3 bg
 unif_xy = 0.0025 # <-- CaF
 unif_vxy = 7.5 # <-- CaF
-sigma_vz = 30.0 # <-- CaOH #39.49 # <-- CaF, real #2.5 # <-- CaF, sanity 
-mu_vz = 110.0 # <-- CaOH #70.0 # <-- CaOH, He3 bg #150.0 # <-- CaF  
+sigma_vz = 30.0 # <-- CaOH #39.49 # <-- CaF, real #2.5 # <-- CaF, sanity
+mu_vz = 110.0 # <-- CaOH #70.0 # <-- CaOH, He3 bg #150.0 # <-- CaF
 l_cell_to_4k = 0.075 # <-- CaOH #0.1 #<-- CaF
 l_4k_to_lens_aperture = 0.075 #<--CaOh # 0.0 # <-- CaF
 # l_4k_to_beam_shutter = 0.26
@@ -43,8 +43,7 @@ del_0_s_to_w = 2.5e9 # units: Hz
 h = 6.62607004e-34 # units: m^2*kg/s
 lambda_trans = 606e-9 # units: m
 date = datetime.date.today()
-mols_tracking = [2353, 2762, 2953, 3160, 3462, 3917, 3941, 4428, 5008, 6283, 6720, \
-    6750, 6779, 7280, 7943, 7996, 8308, 9347]
+mols_tracking = [1387, 81490]
 gate_list = [0, 0.5, 1.0, 1.5]
 gate_size = 0.01 # units: m
 

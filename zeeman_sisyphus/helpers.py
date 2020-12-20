@@ -11,22 +11,23 @@ def is_not_dead(pos):
     else:
         return True
 
-def is_in_magnet(pos):
+def is_in_magnet(pos, zsd_length=z_length):
     if l_cell_to_4k + l_4k_to_lens_aperture <= pos[2] \
-        <= l_cell_to_4k + l_4k_to_lens_aperture + z_length / 1e3:
+        <= l_cell_to_4k + l_4k_to_lens_aperture + zsd_length / 1e3:
         return True
     else:
         return False
 
 def magnet_prop(pos, vel, acc, ms_prev, prev_det_sign_w2s_pos, prev_det_sign_w2s_neg, \
-    prev_det_sign_s2w_pos, prev_det_sign_s2w_neg, del_0_s2w=del_0_s_to_w, ind=None):
+    prev_det_sign_s2w_pos, prev_det_sign_s2w_neg, del_0_s2w=del_0_s_to_w, \
+    zsd_length=z_length, ind=None):
 
     # initialize variables
     ms = ms_prev
 
     # mesh spacing length
     l_xy = (r_inner * 2 / 1e3) / (mxy - 1)
-    l_z = (z_length / 1e3) / (mz - 1)
+    l_z = (zsd_length / 1e3) / (mz - 1)
 
     # coordinates for interpolation
     xCoord = round((r_inner / 1e3 + pos[0]) / l_xy)

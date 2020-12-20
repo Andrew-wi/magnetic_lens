@@ -10,7 +10,7 @@ def propagate_sanity(n, p, v, a, successes_pre, successful_particles_pre, l_4k_t
     pruning=None, plot_vel=False, plot_vel_particles=[], \
     plot_long_dist=False, plot_long_dist_particles=[],
     scan_s2w=False, scan_s2w_detunings=[], \
-    scan_dets=False, del_0_s2w=del_0_s_to_w, deepcopy=True):
+    scan_dets=False, del_0_s2w=del_0_s_to_w, deepcopy=True, visual=False):
 
     print('Propagating...')
 
@@ -48,6 +48,9 @@ def propagate_sanity(n, p, v, a, successes_pre, successful_particles_pre, l_4k_t
         vel_long_ax = plt.axes()
 
     for index in range(n):
+
+        if visual == True:
+            print('Particle # {}'.format(index))
 
         timestep = t_final / steps
         time = timestep

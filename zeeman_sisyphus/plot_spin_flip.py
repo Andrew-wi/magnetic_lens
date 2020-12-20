@@ -5,7 +5,7 @@ from dependencies import *
 from helpers import *
 from init import *
 from vector_field import *
-from propagation import *
+from propagation_properties import *
 
 import sys
 
@@ -20,7 +20,7 @@ m_s_pre = np.zeros(n)
 p, v, a, m_s = generate(n, p_pre, v_pre, a_pre, m_s_pre)
 
 pos_pp, vel_pp, acc_pp, successes_pp, successful_particles_pp = \
-    propagate(n, p, v, a, successes_pp, successful_particles_pp, \
+    propagate_properties(n, p, v, a, successes_pp, successful_particles_pp, \
               l_4k_to_lens_aperture, m_s, decel=True, \
               spin_tracking=True, spin_tracked_particles=mols_tracking)
 
