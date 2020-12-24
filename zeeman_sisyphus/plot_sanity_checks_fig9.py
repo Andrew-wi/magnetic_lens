@@ -26,6 +26,7 @@ a_pre = np.zeros((n, 3))
 m_s_pre = np.zeros(n)
 p, v, a, m_s = generate(n, p_pre, v_pre, a_pre, m_s_pre)
 del_0_s2w_list = [0.5e9, 1.5e9, 2.5e9, 3.5e9, 4.5e9, 5.5e9]
+start_time = datetime.datetime.now()
 
 for del_s2w in del_0_s2w_list:
 
@@ -35,7 +36,7 @@ for del_s2w in del_0_s2w_list:
         plot_vel=False, plot_vel_particles=mols_tracking, \
         spin_tracking=False, spin_tracked_particles=mols_tracking, \
         plot_long_dist=False, plot_long_dist_particles=mols_tracking, \
-        scan_dets=True, del_0_s2w=del_s2w)
+        scan_dets=True, del_0_s2w=del_s2w, visual=False)
 
     print('Successes: {}'.format(successes_pp))
     print('Successful particles: {}'.format(np.where(successful_particles_pp == True)))
@@ -49,6 +50,10 @@ for del_s2w in del_0_s2w_list:
     plot_phase_space_acc_reg(fig9b_fig, fig9b_ax, vel_x, pos_x, del_s2w)
     # plot_decel_trans_acc(fig9c_fig, fig9c_ax, vel_x, pos_x, del_s2w)
 
+    print(f'Elapsed time so far: {datetime.datetime.now() - start_time}')
+
 plot_vel_dist_scan_det(fig9a_fig, fig9a_ax, vel_x, del_s2w, close='close')
 plot_phase_space_acc_reg(fig9b_fig, fig9b_ax, vel_x, pos_x, del_s2w, close='close')
 # plot_decel_trans_acc(fig9c_fig, fig9c_ax, vel_x, pos_x, del_s2w, close='close')
+
+print(f'Total elapsed time: {datetime.datetime.now() - start_time}')
