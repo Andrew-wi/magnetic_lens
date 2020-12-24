@@ -266,7 +266,7 @@ def plot_vel_dist_scan_det(fig, ax, vels, det, close=None):
 
     else:
         sns.histplot(data=vels, label='detuning (GHz): {}'.format(det / 1e9), ax=ax, kde=True, \
-            stat='count', color=np.random.random(3))
+            stat='count', color=np.random.random(3), bins=15)
 
 def plot_phase_space_acc_reg(fig, ax, vels, pos, det, close=None):
 
