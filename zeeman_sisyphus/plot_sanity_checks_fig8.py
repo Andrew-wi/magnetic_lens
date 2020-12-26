@@ -10,6 +10,8 @@ from propagation_sanity_checks import *
 import sys
 
 # initialize variables
+start_time_fig_8 = datetime.datetime.now()
+print(f'Starting time: {start_time_fig_8}')
 n = int(n)
 successes_pp = 0
 successful_particles_pp = np.zeros(n, dtype=bool)
@@ -28,3 +30,4 @@ pos_pp, vel_pp, acc_pp, successes_pp, successful_particles_pp = \
 
 print('Successes: {}'.format(successes_pp))
 print('Successful particles: {}'.format(np.where(successful_particles_pp == True)))
+print(f'Total elapsed time: {datetime.datetime.now() - start_time_fig_8}')

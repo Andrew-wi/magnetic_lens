@@ -10,6 +10,8 @@ from propagation_sanity_checks import *
 import sys
 
 # init
+start_time = datetime.datetime.now()
+print(f'Start time: {start_time}')
 fig9a_fig = plt.figure()
 fig9a_ax = plt.axes()
 fig9b_fig = plt.figure()
@@ -26,7 +28,6 @@ a_pre = np.zeros((n, 3))
 m_s_pre = np.zeros(n)
 p, v, a, m_s = generate(n, p_pre, v_pre, a_pre, m_s_pre)
 del_0_s2w_list = [0.5e9, 1.5e9, 2.5e9, 3.5e9, 4.5e9, 5.5e9]
-start_time = datetime.datetime.now()
 
 for del_s2w in del_0_s2w_list:
 

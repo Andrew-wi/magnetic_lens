@@ -236,7 +236,7 @@ def plot_vel_long(fig, ax):
     ax.set_title('Velocity Distributions At Points Along the z-axis')
     # ax.set_xlim(left=0.0, right=mot_left_edge + 0.1)
     # ax.set_xlim(left=0.58, right=0.62)
-    ax.set_ylim(top=30)
+    ax.set_ylim(top=200)
     ax.legend()
 
     # save figure
