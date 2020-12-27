@@ -241,7 +241,7 @@ def plot_vel_long(fig, ax):
 
     # save figure
     Path('{}/tracking_plots_{}'.format(date, date)).mkdir(parents=True, exist_ok=True)
-    fig.savefig('{}/tracking_plots_{}/vel_dist_long_{}'.format(date, date, date))
+    fig.savefig(f'{date}/tracking_plots_{date}/vel_dist_long_{int(n)}_mols_{date}')
 
     return (fig, ax)
 
