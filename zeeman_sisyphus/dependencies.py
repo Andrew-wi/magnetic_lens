@@ -20,7 +20,7 @@ import seaborn as sns
 # from mpl_toolkits import mplot3d
 from pathlib import Path
 
-n = 1e7
+n = 1e8
 t = 0.0
 sigma_xy = 0.0042 # <-- CaOH, He3
 sigma_vxy = 12.06 # <-- He3 bg #12.0 # <-- CaOH
