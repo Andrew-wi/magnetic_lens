@@ -27,7 +27,7 @@ successful_particles_with_decel = np.zeros(n, dtype=bool)
 # plot v distribution without zs decel
 pos_nl, vel_nl, acc_nl, successes_no_decel, successful_particles_no_decel = \
     propagate(n, p, v, a, successes_no_decel, successful_particles_no_decel, \
-    	l_4k_to_lens_aperture, m_s, decel=False, deepcopy=True, visual=True)
+    	l_4k_to_lens_aperture, m_s, decel=False, deepcopy=True, visual=False)
 print('Success rate for no decelerator: {}'.format(successes_no_decel / n))
 sns.histplot(data=vel_nl[successful_particles_no_decel, 2], label='No Decelerator', stat='count', \
     kde=True, color=np.random.random(3))
@@ -35,7 +35,7 @@ sns.histplot(data=vel_nl[successful_particles_no_decel, 2], label='No Decelerato
 # plot distribution with decel
 pos_pp, vel_pp, acc_pp, sucesses_with_decel, successful_particles_with_decel = \
     propagate(n, p, v, a, sucesses_with_decel, successful_particles_with_decel, \
-    	l_4k_to_lens_aperture, m_s, decel=True, deepcopy=True, visual=True)
+    	l_4k_to_lens_aperture, m_s, decel=True, deepcopy=True, visual=False)
 print('Success rate for decelerator: {}'.format(sucesses_with_decel / n))
 sns.histplot(data=vel_pp[successful_particles_with_decel, 2], label='With Decelerator', stat='count', \
     kde=True, color=np.random.random(3))
