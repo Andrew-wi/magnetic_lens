@@ -223,7 +223,7 @@ def plot_vel_fig(fig, ax):
 
     # save figure
     Path('{}/tracking_plots_{}'.format(date, date)).mkdir(parents=True, exist_ok=True)
-    fig.savefig('{}/tracking_plots_{}/vel_{}'.format(date, date, date))
+    fig.savefig(f'{date}/tracking_plots_{date}/vel_{date}_{mol_run}')
 
     return (fig, ax)
 
@@ -241,7 +241,7 @@ def plot_vel_long(fig, ax):
 
     # save figure
     Path('{}/tracking_plots_{}'.format(date, date)).mkdir(parents=True, exist_ok=True)
-    fig.savefig(f'{date}/tracking_plots_{date}/vel_dist_long_{int(n)}_mols_{date}')
+    fig.savefig(f'{date}/tracking_plots_{date}/vel_dist_long_{int(n)}_mols_{date}_{mol_run}')
 
     return (fig, ax)
 
@@ -260,7 +260,7 @@ def plot_vel_dist_scan_det(fig, ax, vels, det, close=None):
 
         # save figure
         Path('{}/tracking_plots_{}'.format(date, date)).mkdir(parents=True, exist_ok=True)
-        fig.savefig(f'{date}/tracking_plots_{date}/vel_dist_scan_det_{int(n)}_mols_{date}')
+        fig.savefig(f'{date}/tracking_plots_{date}/vel_dist_scan_det_{int(n)}_mols_{date}_{mol_run}')
 
         return (fig, ax)
 
@@ -283,7 +283,7 @@ def plot_phase_space_acc_reg(fig, ax, vels, pos, det, close=None):
 
         # save figure
         Path('{}/tracking_plots_{}'.format(date, date)).mkdir(parents=True, exist_ok=True)
-        fig.savefig('{}/tracking_plots_{}/phase_space_acc_{}'.format(date, date, date))
+        fig.savefig(f'{date}/tracking_plots_{date}/phase_space_acc_{int(n)}_mols_{mol_run}_{date}')
 
         return (fig, ax)
 
@@ -291,28 +291,28 @@ def plot_phase_space_acc_reg(fig, ax, vels, pos, det, close=None):
         sns.scatterplot(x=pos, y=vels, label='detuning (GHz): {}'.format(det / 1e9),\
             ax=ax, color=np.random.random(3))
 
-def plot_decel_trans_acc(fig, ax, vels, pos, det, close=None):
+# def plot_decel_trans_acc(fig, ax, vels, pos, det, close=None):
 
-    if close == 'close':
-        # labels
-        ax.set_xlabel('detuning (GHz)')
-        ax.set_ylabel('1d transverse phase-space acceptance area (mm * m/s)')
-        ax.grid(True)
-        ax.set_title('Phase-Space Acceptance at the Detection Region')
-        # ax.set_xlim(left=0.0, right=mot_left_edge + 0.1)
-        # ax.set_xlim(left=0.58, right=0.62)
-        # ax.set_ylim(top=20)
-        ax.legend()
+#     if close == 'close':
+#         # labels
+#         ax.set_xlabel('detuning (GHz)')
+#         ax.set_ylabel('1d transverse phase-space acceptance area (mm * m/s)')
+#         ax.grid(True)
+#         ax.set_title('Phase-Space Acceptance at the Detection Region')
+#         # ax.set_xlim(left=0.0, right=mot_left_edge + 0.1)
+#         # ax.set_xlim(left=0.58, right=0.62)
+#         # ax.set_ylim(top=20)
+#         ax.legend()
 
-        # save figure
-        Path('{}/tracking_plots_{}'.format(date, date)).mkdir(parents=True, exist_ok=True)
-        fig.savefig('{}/tracking_plots_{}/det_vs_trans_acc_{}'.format(date, date, date))
+#         # save figure
+#         Path('{}/tracking_plots_{}'.format(date, date)).mkdir(parents=True, exist_ok=True)
+#         fig.savefig('{}/tracking_plots_{}/det_vs_trans_acc_{}'.format(date, date, date))
 
-        return (fig, ax)
+#         return (fig, ax)
 
-    else:
-        sns.plot(x=pos, y=vels, label='detuning (GHz): {}'.format(det / 1e9),\
-            ax=ax, color=np.random.random(3))
+#     else:
+#         sns.plot(x=pos, y=vels, label='detuning (GHz): {}'.format(det / 1e9),\
+#             ax=ax, color=np.random.random(3))
 
 def plot_param_scan_heatmap(fig, ax, df):
 
@@ -325,6 +325,6 @@ def plot_param_scan_heatmap(fig, ax, df):
 
     # save figure
     Path('{}/param_scans_{}'.format(date, date)).mkdir(parents=True, exist_ok=True)
-    fig.savefig('{}/param_scans_{}/param_scans_det_slowerlength_{}_mols_{}'.format(date, date, int(n), date))
+    fig.savefig(f'{date}/param_scans_{date}/param_scans_det_slowerlength_{int(n)}_mols_{date}')
 
     return (fig, ax)

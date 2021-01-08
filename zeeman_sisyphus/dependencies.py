@@ -22,12 +22,13 @@ from pathlib import Path
 
 n = 1e7
 t = 0.0
+mol_run = 'CaOH_no_sel' #'CaF_no_sel' #'CaF_velclass_sel' #'CaOH_velclass_sel'
 sigma_xy = 0.0042 # <-- CaOH, He3
 sigma_vxy = 12.0 # <-- CaOH #12.06 # <-- He3 bg
 unif_xy = 0.0025 # <-- CaF
 unif_vxy = 7.5 # <-- CaF
-sigma_vz = 30.0 # <-- CaOH #19.0 # <-- CaOH, He3 bg #2.5 # <-- CaF/CaOH, sanity #39.49 # <-- CaF, real
-mu_vz = 110.0 # <-- CaOH #70.0 # <-- CaOH, He3 bg #150.0 # <-- CaF
+sigma_vz = 30.0 # <-- CaOH #2.5 # <-- CaF/CaOH, sanity #39.49 # <-- CaF, real #19.0 # <-- CaOH, He3 bg
+mu_vz = 110.0 # <-- CaOH #150.0 # <-- CaF #70.0 # <-- CaOH, He3 bg
 l_cell_to_4k = 0.075 # <-- CaOH #0.1 #<-- CaF
 l_4k_to_lens_aperture = 0.075 # <-- CaOH #0.0 # <-- CaF
 # l_4k_to_beam_shutter = 0.26
