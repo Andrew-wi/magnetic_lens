@@ -47,7 +47,7 @@ for del_s2w in del_0_s2w_list:
     pos_x = pos_pp[successful_particles_pp, 0]
 
     # fig 9
-    plot_vel_dist_scan_det(fig9a_fig, fig9a_ax, vel_z, del_s2w)
+    plot_vel_dist_scan_det(fig9a_fig, fig9a_ax, vel_z, del_s2w, successes=successes_pp)
     plot_phase_space_acc_reg(fig9b_fig, fig9b_ax, vel_x, pos_x, del_s2w)
     # plot_decel_trans_acc(fig9c_fig, fig9c_ax, vel_x, pos_x, del_s2w)
 

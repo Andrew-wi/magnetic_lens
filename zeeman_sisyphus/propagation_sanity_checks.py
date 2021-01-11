@@ -176,7 +176,8 @@ def propagate_sanity(n, p, v, a, successes_pre, successful_particles_pre, l_4k_t
     if plot_long_dist == True:
         for row in range(len(gate_list)):
             sns.histplot(gate_tracker[row, :][np.where(gate_tracker[row, :] != 0)], \
-                label='gate: {}'.format(gate_list[row]), ax=vel_long_ax, kde=True, \
+                label=f'gate = {gate_list[row]}, successes = {successes}', \
+                ax=vel_long_ax, kde=True, \
                 stat='count', color=np.random.random(3), binwidth=2)
 
         vel_long_fig, vel_long_ax = plot_vel_long(vel_long_fig, vel_long_ax)
