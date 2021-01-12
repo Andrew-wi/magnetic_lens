@@ -54,8 +54,8 @@ plt.legend()
 # save figure
 Path('{}/velocity_distribution_{}'.format(date, date)).\
     mkdir(parents=True, exist_ok=True)
-plt.savefig('{}/velocity_distribution_{}/velocity_distribution_{}_particles_{}_{}_{}'.\
+plt.savefig('{}/velocity_distribution_{}/velocity_distribution_{}_particles_{}_{}_{}_{}'.\
     format(date, date, int(n), str(successes_no_decel / n).replace('.', 'p'), \
-    str(sucesses_with_decel / n).replace('.', 'p'), date))
+    str(sucesses_with_decel / n).replace('.', 'p'), date, mol_run))
 
 print(f'Total elapsed time: {datetime.datetime.now() - starting_time_plot_vel}')
