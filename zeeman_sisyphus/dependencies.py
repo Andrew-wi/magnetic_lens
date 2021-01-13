@@ -22,12 +22,12 @@ from pathlib import Path
 
 n = 1e6
 t = 0.0
-mol_run = 'CaF_nosel_veldist' #'CaOH_no_sel' #'CaF_no_sel' #'CaOH_velclass_sel'
+mol_run = 'CaF_fig8_velsel' #'CaOH_no_sel' #'CaF_no_sel' #'CaOH_velclass_sel'
 sigma_xy = 0.0042 # <-- CaOH, He3
 sigma_vxy = 12.06 # <-- He3 bg #12.0 # <-- CaOH
 unif_xy = 0.0025 # <-- CaF
 unif_vxy = 7.5 # <-- CaF
-sigma_vz = 39.49 # <-- CaF, real #30.0 # <-- CaOH #2.5 # <-- CaF/CaOH, sanity #19.0 # <-- CaOH, He3 bg
+sigma_vz = 2.5 # <-- CaF/CaOH, sanity #39.49 # <-- CaF, real #30.0 # <-- CaOH #19.0 # <-- CaOH, He3 bg
 mu_vz = 150.0 # <-- CaF #110.0 # <-- CaOH #70.0 # <-- CaOH, He3 bg
 l_cell_to_4k = 0.1 #<-- CaF #0.075 # <-- CaOH
 l_4k_to_lens_aperture = 0.0 # <-- CaF #0.075 # <-- CaOH

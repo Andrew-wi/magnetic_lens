@@ -91,10 +91,6 @@ def sign_change(del_w2s_pos, del_w2s_neg, del_s2w_pos, del_s2w_neg, \
 
     return sign_change_w2s_pos, sign_change_w2s_neg, sign_change_s2w_pos, sign_change_s2w_neg, ms_change
 
-# def prop(pos, vel, acc, ms):
-#     pass
-#     return changed_position
-
 def plot_prop(positions):
 
     # initialize plotting variables
@@ -120,7 +116,7 @@ def is_in_mot(pos, i, succ_ptcls):
 
 def is_in_gate(gate, z_pos, counted):
 
-    if gate - gate_size / 2 <= z_pos <= gate + gate_size / 2:# and counted == False:
+    if gate - gate_size / 2 <= z_pos <= gate + gate_size / 2 and counted == 0:
         return True
     else:
         return False

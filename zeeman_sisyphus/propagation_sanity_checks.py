@@ -22,6 +22,7 @@ def propagate_sanity(n, p, v, a, successes_pre, successful_particles_pre, l_4k_t
         successes = copy.deepcopy(successes_pre)
         successful_particles = copy.deepcopy(successful_particles_pre)
         gate_tracker = np.zeros((len(gate_list), n))
+        counted = np.zeros((len(gate_list), int(n)))
     else:
         # init, reference to value
         pos_list=p
@@ -30,6 +31,7 @@ def propagate_sanity(n, p, v, a, successes_pre, successful_particles_pre, l_4k_t
         successes = successes_pre
         successful_particles = successful_particles_pre
         gate_tracker = np.zeros((len(gate_list), n))
+        counted = np.zeros((len(gate_list), int(n)))
 
     if plot == True:
         propagation_fig = plt.figure()
@@ -67,7 +69,6 @@ def propagate_sanity(n, p, v, a, successes_pre, successful_particles_pre, l_4k_t
         detuning_sign_s2w_pos = 1
         detuning_sign_s2w_neg = -1
         vel_tracker = np.zeros((steps, 4))
-        counted = np.zeros(len(gate_list))
 
         while is_not_dead(position) and time <= t_final:
 
@@ -85,8 +86,8 @@ def propagate_sanity(n, p, v, a, successes_pre, successful_particles_pre, l_4k_t
 
             if plot_long_dist == True:
                 for i, gate_pos in enumerate(gate_list):
-                    if is_in_gate(gate_pos, position[2], counted[i]):
-                        counted[i] = 1
+                    if is_in_gate(gate_pos, position[2], counted[i, index]):
+                        counted[i, index] = 1
                         gate_tracker[i, index] = velocity[2]
 
             if is_in_magnet(position) and decel == True:
@@ -176,7 +177,7 @@ def propagate_sanity(n, p, v, a, successes_pre, successful_particles_pre, l_4k_t
     if plot_long_dist == True:
         for row in range(len(gate_list)):
             sns.histplot(gate_tracker[row, :][np.where(gate_tracker[row, :] != 0)], \
-                label=f'gate = {gate_list[row]}, successes = {successes}', \
+                label=f'gate = {gate_list[row]}, successes = {int(np.sum(counted[row]))}', \
                 ax=vel_long_ax, kde=True, \
                 stat='count', color=np.random.random(3), binwidth=2)
 
