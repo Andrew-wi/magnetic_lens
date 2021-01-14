@@ -15,6 +15,7 @@ propagationAx = plt.subplots()
 # initialize variables
 starting_time_plot_vel = datetime.datetime.now()
 print(f'Starting time: {starting_time_plot_vel}')
+Path(f'./{date}/data_{date}').mkdir(parents=True, exist_ok=True)
 n = int(n)
 p_pre = np.zeros((n, 3))
 v_pre = np.zeros((n, 3))
@@ -58,4 +59,11 @@ plt.savefig('{}/velocity_distribution_{}/velocity_distribution_{}_particles_{}_{
     format(date, date, int(n), str(successes_no_decel / n).replace('.', 'p'), \
     str(sucesses_with_decel / n).replace('.', 'p'), date, mol_run))
 
+with open(f'./{date}/data_{date}/run_data_{date}.csv', 'a+') as data_file:
+	str_no_decel = ','.join(map(str, np.where(successful_particles_no_decel == True)[0]))
+	str_with_decel = ','.join(map(str, np.where(successful_particles_with_decel == True)[0]))
+	data_file.write(f'{str(datetime.datetime.now())},{mol_run},')
+	data_file.write(f'successes_no_decel={successes_no_decel},successful_particles_no_decel=,{str_no_decel if len(str_no_decel) > 0 else 0}\n')
+	data_file.write(f'{str(datetime.datetime.now())},{mol_run},')
+	data_file.write(f'successes_with_decel={sucesses_with_decel},successful_particles_with_decel=,{str_with_decel if len(str_with_decel) > 0 else 0}\n')
 print(f'Total elapsed time: {datetime.datetime.now() - starting_time_plot_vel}')

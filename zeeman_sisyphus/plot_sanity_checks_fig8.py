@@ -28,6 +28,11 @@ pos_pp, vel_pp, acc_pp, successes_pp, successful_particles_pp = \
                      spin_tracking=False, spin_tracked_particles=mols_tracking,
                      plot_long_dist=True, plot_long_dist_particles=mols_tracking)
 
+with open(f'./{date}/data_{date}/run_data_{date}.csv', 'a+') as data_file:
+    data_file.write(f'{str(datetime.datetime.now())},{mol_run},')
+    str_succ = ','.join(map(str, np.where(successful_particles_pp == True)[0]))
+    data_file.write(f'successes_pp={successes_pp},succ_mols_pp=,{str_succ if len(str_succ) > 0 else 0}\n')
+
 print('Successes: {}'.format(successes_pp))
 print('Successful particles: {}'.format(np.where(successful_particles_pp == True)))
 print(f'Total elapsed time: {datetime.datetime.now() - start_time_fig_8}')

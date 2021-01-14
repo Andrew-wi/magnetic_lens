@@ -14,6 +14,9 @@ def propagate_sanity(n, p, v, a, successes_pre, successful_particles_pre, l_4k_t
 
     print('Propagating...')
 
+    # save data
+    Path(f'./{date}/data_{date}').mkdir(parents=True, exist_ok=True)
+
     if deepcopy == True:
         # init, allocate new memory for copied variables
         pos_list=copy.deepcopy(p)
@@ -176,10 +179,15 @@ def propagate_sanity(n, p, v, a, successes_pre, successful_particles_pre, l_4k_t
 
     if plot_long_dist == True:
         for row in range(len(gate_list)):
+
             sns.histplot(gate_tracker[row, :][np.where(gate_tracker[row, :] != 0)], \
                 label=f'gate = {gate_list[row]}, successes = {int(np.sum(counted[row]))}', \
                 ax=vel_long_ax, kde=True, \
                 stat='count', color=np.random.random(3), binwidth=2)
+
+            with open(f'./{date}/data_{date}/run_data_{date}.csv', 'a+') as data_file:
+                data_file.write(f'{str(datetime.datetime.now())},{mol_run},gate={gate_list[row]},')
+                data_file.write(f'successes={int(np.sum(counted[row]))}\n')
 
         vel_long_fig, vel_long_ax = plot_vel_long(vel_long_fig, vel_long_ax)
 

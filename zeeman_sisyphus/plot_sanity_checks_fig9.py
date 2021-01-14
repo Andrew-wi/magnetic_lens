@@ -19,6 +19,7 @@ fig9b_ax = plt.axes()
 # fig9c_fig = plt.figure()
 # fig9c_ax = plt.axes()
 # initialize variables
+Path(f'./{date}/data_{date}').mkdir(parents=True, exist_ok=True)
 n = int(n)
 successes_pre = 0
 successful_particles_pre = np.zeros(n, dtype=bool)
@@ -50,6 +51,11 @@ for del_s2w in del_0_s2w_list:
     plot_vel_dist_scan_det(fig9a_fig, fig9a_ax, vel_z, del_s2w, successes=successes_pp)
     plot_phase_space_acc_reg(fig9b_fig, fig9b_ax, vel_x, pos_x, del_s2w)
     # plot_decel_trans_acc(fig9c_fig, fig9c_ax, vel_x, pos_x, del_s2w)
+
+    with open(f'./{date}/data_{date}/run_data_{date}.csv', 'a+') as data_file:
+        data_file.write(f'{str(datetime.datetime.now())},{mol_run},del_s2w_GHz={del_s2w / 1e9},')
+        str_success = ','.join(map(str, np.where(successful_particles_pp == True)[0]))
+        data_file.write(f'successes_pp={successes_pp},succ_mols_pp=,{str_success if len(str_success) > 0 else 0}\n')
 
     print(f'Elapsed time so far: {datetime.datetime.now() - start_time}')
 
