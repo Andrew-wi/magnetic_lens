@@ -34,7 +34,9 @@ for scan_pt in range(scan_points):
         p, v, a, m_s = generate(n, p_pre, v_pre, a_pre, m_s_pre)
 
         # generate and propagate particles
-        pos_pp, vel_pp, acc_pp, successes_pp, successful_particles_pp = propagate(n, p, v, a, successes, successful_particles, l_4k_to_lens_aperture, m_s, decel=True, plot=False)
+        pos_pp, vel_pp, acc_pp, successes_pp, successful_particles_pp = \
+            propagate(n, p, v, a, successes, successful_particles, \
+                      l_4k_to_lens_aperture, m_s, decel=True)
 
         # log successes
         successes_per_run.append(successes_pp)

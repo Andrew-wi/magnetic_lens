@@ -22,7 +22,7 @@ from pathlib import Path
 
 n = 1e3
 t = 0.0
-mol_run = 'CaF_testing'
+mol_run = 'CaF_testing_paramscam'
 # sigma_xy = 0.0042 # <-- CaOH, He3 bg
 # sigma_vxy = 12.06 # <-- CaOH, He3 bg
 #sigma_vxy = 12.0 # <-- CaOH, regparams

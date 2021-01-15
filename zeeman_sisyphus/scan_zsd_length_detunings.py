@@ -9,7 +9,8 @@ from propagation import *
 
 import pandas as pd
 
-start_time = datetime.datetime.now()
+start_time_scan_len_dets = datetime.datetime.now()
+print(f'Start time: {start_time_scan_len_dets}')
 
 # init
 scan_fig = plt.figure()
@@ -54,6 +55,8 @@ for i, del_s2w in enumerate(del_0_s2w_list):
         results_dict = {'del_s2w': del_s2w / 1e9, 'z_len': z_len, 'desired_vel_class': desired_molecules}
         desired_populations_dict_list.append(results_dict)
 
+        print(f'Elapsed time so far: {datetime.datetime.now() - start_time_scan_len_dets}')
+
 # dataframe
 desired_pop_df = pd.DataFrame(desired_populations_dict_list)
 Path('{}/param_scans_{}'.format(date, date)).mkdir(parents=True, exist_ok=True)
@@ -62,4 +65,4 @@ desired_pop_df.to_csv('{}/param_scans_{}/param_scans_{}.csv'.format(date, date, 
 pivoted_df = desired_pop_df.pivot(index='del_s2w', columns='z_len', values='desired_vel_class')
 plot_param_scan_heatmap(scan_fig, scan_ax, pivoted_df)
 
-print('Elapsed Time: {}'.format(datetime.datetime.now() - start_time))
+print('Total elapsed time: {}'.format(datetime.datetime.now() - start_time_scan_len_dets))
