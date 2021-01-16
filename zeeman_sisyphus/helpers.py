@@ -4,9 +4,9 @@
 from dependencies import *
 from vector_field import *
 
-def is_not_dead(pos):
+def is_not_dead(pos, mot_start=mot_left_edge):
     if ((pos[0] ** 2 + pos[1] ** 2) ** (1 / 2)) > r_inner / 1e3 or \
-        pos[2] > mot_left_edge + mot_side_length:
+        pos[2] > mot_start + mot_side_length:
         return False
     else:
         return True
@@ -64,7 +64,8 @@ def magnet_prop(pos, vel, acc, ms_prev, prev_det_sign_w2s_pos, prev_det_sign_w2s
            delta_w_to_s_pos, delta_w_to_s_neg, delta_s_to_w_pos, delta_s_to_w_neg
 
 def sign_change(del_w2s_pos, del_w2s_neg, del_s2w_pos, del_s2w_neg, \
-    previous_sign_w2s_pos, previous_sign_w2s_neg, previous_sign_s2w_pos, previous_sign_s2w_neg, ms_current):
+    previous_sign_w2s_pos, previous_sign_w2s_neg, previous_sign_s2w_pos, \
+    previous_sign_s2w_neg, ms_current):
 
     # initialize variables
     sign_change_w2s_pos = np.sign(del_w2s_pos)
@@ -104,11 +105,11 @@ def plot_prop(positions):
 
     return pl_z, pl_x
 
-def is_in_mot(pos, i, succ_ptcls):
+def is_in_mot(pos, i, succ_ptcls, mot_start=mot_left_edge):
 
     if -mot_side_length/2 <= pos[0] <= mot_side_length / 2 and \
         -mot_side_length/2 <= pos[1] <= mot_side_length / 2 and \
-        mot_left_edge <= pos[2] <= mot_left_edge + mot_side_length and \
+        mot_start <= pos[2] <= mot_start + mot_side_length and \
         succ_ptcls[i] == False:
         return True
     else:
@@ -310,17 +311,17 @@ def plot_phase_space_acc_reg(fig, ax, vels, pos, det, close=None):
 #         sns.plot(x=pos, y=vels, label='detuning (GHz): {}'.format(det / 1e9),\
 #             ax=ax, color=np.random.random(3))
 
-def plot_param_scan_heatmap(fig, ax, df):
+def plot_param_scan_heatmap(fig, ax, df, path):
 
     sns.heatmap(df, annot=True, ax=ax)
 
     # labels
     # ax.set_xlabel('del_s2w')
     # ax.set_ylabel('z_length')
-    ax.set_title('Optimization for Detuning and Slower Length')
+    ax.set_title(f'Detuning and Slower Length Optimization, {path}')
 
     # save figure
     Path('{}/param_scans_{}'.format(date, date)).mkdir(parents=True, exist_ok=True)
-    fig.savefig(f'{date}/param_scans_{date}/param_scans_det_slowerlength_{int(n)}_mols_{date}')
+    fig.savefig(f'{date}/param_scans_{date}/{mol_run}_param_scans_det_zlen_{int(n)}_mols_{date}_{path}')
 
     return (fig, ax)

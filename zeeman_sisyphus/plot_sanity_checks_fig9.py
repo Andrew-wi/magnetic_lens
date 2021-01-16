@@ -12,6 +12,7 @@ import sys
 # init
 start_time = datetime.datetime.now()
 print(f'Start time: {start_time}')
+print(f'Run: {mol_run}')
 fig9a_fig = plt.figure()
 fig9a_ax = plt.axes()
 fig9b_fig = plt.figure()

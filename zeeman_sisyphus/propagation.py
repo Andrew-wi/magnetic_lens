@@ -5,12 +5,15 @@ from dependencies import *
 from helpers import *
 
 def propagate(n, p, v, a, successes_pre, successful_particles_pre, l_4k_to_lens_aperture,\
-    m_s, decel=True, deepcopy=True, visual=False, del_0_s2w=del_0_s_to_w, zsd_length=z_length):
+    m_s, decel=True, deepcopy=True, visual=False, del_0_s2w=del_0_s_to_w, \
+    zsd_length=z_length, mot_start=mot_left_edge):
 
     print('Propagating...')
 
+    mot_starting_point = mot_start
+
     if deepcopy == True:
-        # init, allocate new memory for copied variables
+        # init, allocate new memory for copied variables (don't change original, passed-in values)
         pos_list=copy.deepcopy(p)
         vel_list=copy.deepcopy(v)
         acc_list=copy.deepcopy(a)
@@ -44,7 +47,7 @@ def propagate(n, p, v, a, successes_pre, successful_particles_pre, l_4k_to_lens_
         detuning_sign_s2w_neg = -1
         vel_tracker = np.zeros((steps, 4))
 
-        while is_not_dead(position) and time <= t_final:
+        while is_not_dead(position, mot_start=mot_starting_point) and time <= t_final:
 
             if is_in_magnet(position, zsd_length) and decel == True:
                 new_acc, new_m_s, \
@@ -69,7 +72,7 @@ def propagate(n, p, v, a, successes_pre, successful_particles_pre, l_4k_to_lens_
                 acceleration = 0
                 pos_list[index, :] += velocity * timestep
 
-            if is_in_mot(position, index, successful_particles):
+            if is_in_mot(position, index, successful_particles, mot_start=mot_starting_point):
                 successful_particles[index] = 1
                 successes += 1
 

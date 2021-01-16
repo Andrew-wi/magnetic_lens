@@ -12,6 +12,7 @@ import sys
 # initialize variables
 start_time_fig_8 = datetime.datetime.now()
 print(f'Starting time: {start_time_fig_8}')
+print(f'Run: {mol_run}')
 n = int(n)
 successes_pp = 0
 successful_particles_pp = np.zeros(n, dtype=bool)

@@ -15,6 +15,7 @@ propagationAx = plt.subplots()
 # initialize variables
 starting_time_plot_vel = datetime.datetime.now()
 print(f'Starting time: {starting_time_plot_vel}')
+print(f'Run: {mol_run}')
 Path(f'./{date}/data_{date}').mkdir(parents=True, exist_ok=True)
 n = int(n)
 p_pre = np.zeros((n, 3))
