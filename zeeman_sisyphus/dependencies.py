@@ -21,8 +21,8 @@ import seaborn as sns
 from pathlib import Path
 
 t = 0.0
-n = 1e5 # < -- CaOH/CaF number of molecules
-mol_run = 'CaOH_param_scan_det_zsdlen_1'
+n = 3e6 # < -- CaOH/CaF number of molecules
+mol_run = 'CaOH_param_scan_det_zsdlen_2'
 sigma_xy = 0.0042 # <-- CaOH
 # sigma_vxy = 12.06 # <-- CaOH, He3 bg
 sigma_vxy = 12.0 # <-- CaOH, regparams

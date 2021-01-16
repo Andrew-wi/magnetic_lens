@@ -25,6 +25,10 @@ scan_fig_enhancement_number_successes_1m = plt.figure(figsize=(10*1.62, 10))
 scan_ax_enhancement_number_successes_1m = plt.axes()
 scan_fig_enhancement_desired_molecules_1m = plt.figure(figsize=(10*1.62, 10))
 scan_ax_enhancement_desired_molecules_1m = plt.axes()
+scan_fig_mean_velocity = plt.figure(figsize=(10*1.62, 10))
+scan_ax_mean_velocity = plt.axes()
+scan_fig_mean_velocity_reduction = plt.figure(figsize=(10*1.62, 10))
+scan_ax_mean_velocity_reduction = plt.axes()
 n = int(n)
 # successes_pre = 0
 # successful_particles_pre = np.zeros(n, dtype=bool)
@@ -54,21 +58,25 @@ for i, z_len in enumerate(z_lens_list):
     no_decel_results_dict = {
         'z_len': z_len,
         'successes_pp_no_decel': successes_pp_no_decel,
-        'successes_pp_no_decel_desired': successes_pp_no_decel_desired
+        'successes_pp_no_decel_desired': successes_pp_no_decel_desired,
+        'mean_velocity': np.mean(vel_pp_no_decel[successful_mols_pp_no_decel, 2])
     }
     initial_nodecel_list.append(no_decel_results_dict)
 
     succ_pp = initial_nodecel_list[i]['successes_pp_no_decel']
     succ_pp_desired = initial_nodecel_list[i]['successes_pp_no_decel_desired']
+    mean_vel = initial_nodecel_list[i]['mean_velocity']
     print(f'Successes, no decel, z_len = {z_lens_list[i] / 1e3}: {succ_pp}')
     print(f'Successful particles, no decel, desired velocity class, z_len = ' + \
           f'{z_lens_list[i] / 1e3}: {succ_pp_desired}')
+    print(f'Mean successful particle velocity: {mean_vel}')
 
     print(f'Elapsed time so far: {datetime.datetime.now() - start_time_scan_len_dets}')
 
 # change if 1m is no longer at index 3 in z_lens_list
 successes_pp_no_decel_1m = initial_nodecel_list[3]['successes_pp_no_decel']
 successes_pp_no_decel_desired_1m = initial_nodecel_list[3]['successes_pp_no_decel_desired']
+mean_velocity_1m = initial_nodecel_list[3]['mean_velocity']
 
 for i, del_s2w in enumerate(del_0_s2w_list):
 
@@ -84,14 +92,12 @@ for i, del_s2w in enumerate(del_0_s2w_list):
             visual=False, mot_start=mot_region_distance)
 
         desired_molecules = (vel_pp[successful_mols_pp, 2] < desired_vel_class_vz).sum()
-        enhancement_number_successes = successes_pp / successes_pp_no_decel \
-            if successes_pp_no_decel != 0 else 1111111111
-        enhancement_desired_molecules = desired_molecules / successes_pp_no_decel_desired \
-            if successes_pp_no_decel_desired != 0 else 1111111111
-        enhancement_number_successes_1m = successes_pp / successes_pp_no_decel_1m \
-            if successes_pp_no_decel_1m != 0 else 1111111111
-        enhancement_desired_molecules_1m = desired_molecules / successes_pp_no_decel_desired_1m \
-            if successes_pp_no_decel_desired_1m != 0 else 1111111111
+        enhancement_number_successes = successes_pp / np.float64(successes_pp_no_decel)
+        enhancement_desired_molecules = desired_molecules / np.float64(successes_pp_no_decel_desired)
+        enhancement_number_successes_1m = successes_pp / np.float64(successes_pp_no_decel_1m)
+        enhancement_desired_molecules_1m = desired_molecules / np.float64(successes_pp_no_decel_desired_1m)
+        mean_velocity = np.mean(vel_pp[successful_mols_pp, 2])
+        mean_velocity_reduction = mean_velocity / mean_velocity_1m
 
         print(f'Successes, del2w = {del_s2w / 1e9} and z_len = {z_len / 1e3}: {successes_pp}')
         print(f'Successful particles, del2w = {del_s2w / 1e9} and z_len = {z_len / 1e3}: ' + \
@@ -102,6 +108,8 @@ for i, del_s2w in enumerate(del_0_s2w_list):
         print(f'Enhancement, desired velocity class: {enhancement_desired_molecules}')
         print(f'Enhancement from 1m, successes: {enhancement_number_successes_1m}')
         print(f'Enhancement from 1m, desired velocity class: {enhancement_desired_molecules_1m}')
+        print(f'Mean velocity: {mean_velocity}')
+        print(f'Mean velocity reduction from 1m no decel: {mean_velocity_reduction}')
 
         # save results to new dict, add to dict list
         results_dict = {
@@ -110,9 +118,11 @@ for i, del_s2w in enumerate(del_0_s2w_list):
             'absolute_number': successes_pp,
             'desired_vel_class': desired_molecules,
             'enhancement_successes': enhancement_number_successes,
-            'enhancement_desired_molecules': enhancement_desired_molecules
+            'enhancement_desired_molecules': enhancement_desired_molecules,
             'enhancement_number_successes_1m': enhancement_number_successes_1m,
-            'enhancement_desired_molecules_1m': enhancement_desired_molecules_1m
+            'enhancement_desired_molecules_1m': enhancement_desired_molecules_1m,
+            'mean_velocity': mean_velocity,
+            'mean_velocity_reduction': mean_velocity_reduction
         }
         results_dict_list.append(results_dict)
 
@@ -136,6 +146,10 @@ pivoted_df_enhancement_number_successes_1m = results_df.pivot(index='del_s2w', c
     values='enhancement_number_successes_1m')
 pivoted_df_enhancement_desired_molecules_1m = results_df.pivot(index='del_s2w', columns='z_len', \
     values='enhancement_desired_molecules_1m')
+pivoted_df_mean_velocity = results_df.pivot(index='del_s2w', columns='z_len', \
+    values='mean_velocity')
+pivoted_df_mean_velocity_reduction = results_df.pivot(index='del_s2w', columns='z_len', \
+    values='mean_velocity_reduction')
 
 # plot
 plot_param_scan_heatmap(scan_fig_absolute_number, scan_ax_absolute_number, \
@@ -152,5 +166,9 @@ plot_param_scan_heatmap(scan_fig_enhancement_number_successes_1m, \
 plot_param_scan_heatmap(scan_fig_enhancement_desired_molecules_1m, \
     scan_ax_enhancement_desired_molecules_1m, \
     pivoted_df_enhancement_desired_molecules_1m, path='enhancement_desired_molecules_1m')
+plot_param_scan_heatmap(scan_fig_mean_velocity, scan_ax_mean_velocity, \
+    pivoted_df_mean_velocity, path='mean_velocity')
+plot_param_scan_heatmap(scan_fig_mean_velocity_reduction, scan_ax_mean_velocity_reduction, \
+    pivoted_df_mean_velocity_reduction, path='mean_velocity_reduction')
 
 print('Total elapsed time: {}'.format(datetime.datetime.now() - start_time_scan_len_dets))
