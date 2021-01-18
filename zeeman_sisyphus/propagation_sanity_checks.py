@@ -37,19 +37,19 @@ def propagate_sanity(n, p, v, a, successes_pre, successful_particles_pre, l_4k_t
         counted = np.zeros((len(gate_list), int(n)))
 
     if plot == True:
-        propagation_fig = plt.figure()
+        propagation_fig = plt.figure(figsize=(12*1.62, 12))
         propagation_ax = plt.axes()
 
     if spin_tracking == True:
-        spin_tracking_fig = plt.figure()
+        spin_tracking_fig = plt.figure(figsize=(12*1.62, 12))
         spin_tracking_ax = plt.axes()
 
     if plot_vel == True:
-        vel_fig = plt.figure()
+        vel_fig = plt.figure(figsize=(12*1.62, 12))
         vel_ax = plt.axes()
 
     if plot_long_dist == True:
-        vel_long_fig = plt.figure()
+        vel_long_fig = plt.figure(figsize=(12*1.62, 12))
         vel_long_ax = plt.axes()
 
     for index in range(n):

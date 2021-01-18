@@ -194,7 +194,7 @@ def plot_accel(fig, ax):
     ax.set_xlabel('z (m)')
     ax.set_ylabel('Acceleration (m/s)')
     ax.grid(True)
-    ax.set_title('Acceleration Along the z-axis')
+    ax.set_title(f'Acceleration Along the z-axis, {mol_run}, {int(n)} mols')
     # ax.set_xlim(left=0.0, right=mot_left_edge + 0.1)
     ax.set_xlim(left=0.09, right=1.6)
     # ax.set_ylim(bottom=-0.7, top=0.7)
@@ -212,7 +212,7 @@ def plot_vel_fig(fig, ax):
     ax.set_xlabel('z (m)')
     ax.set_ylabel('Velocity (m/s)')
     ax.grid(True)
-    ax.set_title('Velocity Along the z-axis')
+    ax.set_title(f'Velocity Along the z-axis, {mol_run}, {int(n)} mols')
     ax.set_xlim(left=0.0, right=mot_left_edge + 0.1)
     # ax.set_xlim(left=0.58, right=0.62)
     # ax.set_ylim(bottom=117, top=120)
@@ -220,7 +220,7 @@ def plot_vel_fig(fig, ax):
 
     # save figure
     Path('{}/tracking_plots_{}'.format(date, date)).mkdir(parents=True, exist_ok=True)
-    fig.savefig(f'{date}/tracking_plots_{date}/vel_{date}_{mol_run}')
+    fig.savefig(f'{date}/tracking_plots_{date}/{mol_run}_vel_{date}')
 
     return (fig, ax)
 
@@ -230,7 +230,7 @@ def plot_vel_long(fig, ax):
     ax.set_xlabel('v_z (m/s)')
     ax.set_ylabel('Number')
     ax.grid(True)
-    ax.set_title('Velocity Distributions At Points Along the z-axis')
+    ax.set_title(f'Velocity Distributions At Points Along the z-axis, {mol_run}, {int(n)} mols')
     # ax.set_xlim(left=0.0, right=mot_left_edge + 0.1)
     # ax.set_xlim(left=0.58, right=0.62)
     ax.set_ylim(top=200)
@@ -238,7 +238,7 @@ def plot_vel_long(fig, ax):
 
     # save figure
     Path('{}/tracking_plots_{}'.format(date, date)).mkdir(parents=True, exist_ok=True)
-    fig.savefig(f'{date}/tracking_plots_{date}/vel_dist_long_{int(n)}_mols_{date}_{mol_run}')
+    fig.savefig(f'{date}/tracking_plots_{date}/{mol_run}_vel_dist_long_{int(n)}_mols_{date}')
 
     return (fig, ax)
 
@@ -249,7 +249,7 @@ def plot_vel_dist_scan_det(fig, ax, vels, det, close=None, successes='n/a'):
         ax.set_xlabel('v_z (m/s)')
         ax.set_ylabel('Number')
         ax.grid(True)
-        ax.set_title('Effect of Strong to Weak Detuning')
+        ax.set_title(f'Effect of Strong to Weak Detuning, {mol_run}, {int(n)} mols')
         # ax.set_xlim(left=0.0, right=mot_left_edge + 0.1)
         # ax.set_xlim(left=0.58, right=0.62)
         # ax.set_ylim(top=20)
@@ -257,7 +257,7 @@ def plot_vel_dist_scan_det(fig, ax, vels, det, close=None, successes='n/a'):
 
         # save figure
         Path('{}/tracking_plots_{}'.format(date, date)).mkdir(parents=True, exist_ok=True)
-        fig.savefig(f'{date}/tracking_plots_{date}/vel_dist_scan_det_{int(n)}_mols_{date}_{mol_run}')
+        fig.savefig(f'{date}/tracking_plots_{date}/{mol_run}_vel_dist_scan_det_{int(n)}_mols_{date}')
 
         return (fig, ax)
 
@@ -272,7 +272,7 @@ def plot_phase_space_acc_reg(fig, ax, vels, pos, det, close=None):
         ax.set_xlabel('x (m)')
         ax.set_ylabel('v_x (m/s)')
         ax.grid(True)
-        ax.set_title('Phase-Space Acceptance at the Detection Region')
+        ax.set_title(f'Phase-Space Acceptance at the Detection Region, {mol_run}, {int(n)} mols')
         # ax.set_xlim(left=0.0, right=mot_left_edge + 0.1)
         # ax.set_xlim(left=0.58, right=0.62)
         # ax.set_ylim(top=20)
@@ -280,7 +280,7 @@ def plot_phase_space_acc_reg(fig, ax, vels, pos, det, close=None):
 
         # save figure
         Path('{}/tracking_plots_{}'.format(date, date)).mkdir(parents=True, exist_ok=True)
-        fig.savefig(f'{date}/tracking_plots_{date}/phase_space_acc_{int(n)}_mols_{mol_run}_{date}')
+        fig.savefig(f'{date}/tracking_plots_{date}/{mol_run}_phase_space_acc_{int(n)}_mols_{date}')
 
         return (fig, ax)
 
@@ -318,7 +318,7 @@ def plot_param_scan_heatmap(fig, ax, df, path):
     # labels
     # ax.set_xlabel('del_s2w')
     # ax.set_ylabel('z_length')
-    ax.set_title(f'Detuning and Slower Length Optimization, {path}')
+    ax.set_title(f'Detuning and Slower Length Optimization, {path}, {mol_run}, {int(n)} mols')
 
     # save figure
     Path('{}/param_scans_{}'.format(date, date)).mkdir(parents=True, exist_ok=True)

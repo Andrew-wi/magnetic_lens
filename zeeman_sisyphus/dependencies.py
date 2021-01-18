@@ -22,19 +22,19 @@ from pathlib import Path
 
 t = 0.0
 n = 3e6 # < -- CaOH/CaF number of molecules
-mol_run = 'CaOH_param_scan_det_zsdlen_2'
+mol_run = 'fig8_CaOH_170velsel'
 sigma_xy = 0.0042 # <-- CaOH
 # sigma_vxy = 12.06 # <-- CaOH, He3 bg
 sigma_vxy = 12.0 # <-- CaOH, regparams
 # unif_xy = 0.0025 # <-- CaF
 # unif_vxy = 7.5 # <-- CaF
-# sigma_vz = 2.5 # <-- CaF/CaOH, velocity class selection
+sigma_vz = 2.5 # <-- CaF/CaOH, velocity class selection
 #sigma_vz = 39.49 # <-- CaF, real 
-sigma_vz = 30.0 # <-- CaOH, regparams
+# sigma_vz = 30.0 # <-- CaOH, regparams
 #sigma_vz = 19.0 # <-- CaOH, He3 bg
-mu_vz = 110.0 # <-- CaOH, regparams
+# mu_vz = 110.0 # <-- CaOH, regparams
 #mu_vz = 70.0 # <-- CaOH, He3 bg
-# mu_vz = 90.0 # <-- CaOH, velocity class selection
+mu_vz = 170.0 # <-- CaOH, velocity class selection
 # mu_vz = 150.0 # <-- CaF
 # l_cell_to_4k = 0.1 #<-- CaF 
 l_cell_to_4k = 0.075 # <-- CaOH
