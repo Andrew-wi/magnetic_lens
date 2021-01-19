@@ -13,25 +13,26 @@ start_time_scan_len_dets = datetime.datetime.now()
 print(f'Start time: {start_time_scan_len_dets}')
 
 # init
-scan_fig_absolute_number = plt.figure(figsize=(10*1.62, 10))
+fig_height = 9
+scan_fig_absolute_number = plt.figure(figsize=(fig_height*1.62, fig_height))
 scan_ax_absolute_number = plt.axes()
-scan_fig_desired_vel_class = plt.figure(figsize=(10*1.62, 10))
+scan_fig_desired_vel_class = plt.figure(figsize=(fig_height*1.62, fig_height))
 scan_ax_desired_vel_class = plt.axes()
-scan_fig_enhancement = plt.figure(figsize=(10*1.62, 10))
+scan_fig_enhancement = plt.figure(figsize=(fig_height*1.62, fig_height))
 scan_ax_enhancement = plt.axes()
-scan_fig_enhancement_desired_molecules = plt.figure(figsize=(10*1.62, 10))
+scan_fig_enhancement_desired_molecules = plt.figure(figsize=(fig_height*1.62, fig_height))
 scan_ax_enhancement_desired_molecules = plt.axes()
-scan_fig_enhancement_number_successes_1m = plt.figure(figsize=(10*1.62, 10))
+scan_fig_enhancement_number_successes_1m = plt.figure(figsize=(fig_height*1.62, fig_height))
 scan_ax_enhancement_number_successes_1m = plt.axes()
-scan_fig_enhancement_desired_molecules_1m = plt.figure(figsize=(10*1.62, 10))
+scan_fig_enhancement_desired_molecules_1m = plt.figure(figsize=(fig_height*1.62, fig_height))
 scan_ax_enhancement_desired_molecules_1m = plt.axes()
-scan_fig_enhancement_number_successes_p15m = plt.figure(figsize=(10*1.62, 10))
+scan_fig_enhancement_number_successes_p15m = plt.figure(figsize=(fig_height*1.62, fig_height))
 scan_ax_enhancement_number_successes_p15m = plt.axes()
-scan_fig_enhancement_desired_molecules_p15m = plt.figure(figsize=(10*1.62, 10))
+scan_fig_enhancement_desired_molecules_p15m = plt.figure(figsize=(fig_height*1.62, fig_height))
 scan_ax_enhancement_desired_molecules_p15m = plt.axes()
-scan_fig_mean_velocity = plt.figure(figsize=(10*1.62, 10))
+scan_fig_mean_velocity = plt.figure(figsize=(fig_height*1.62, fig_height))
 scan_ax_mean_velocity = plt.axes()
-scan_fig_mean_velocity_reduction = plt.figure(figsize=(10*1.62, 10))
+scan_fig_mean_velocity_reduction = plt.figure(figsize=(fig_height*1.62, fig_height))
 scan_ax_mean_velocity_reduction = plt.axes()
 n = int(n)
 # successes_pre = 0
@@ -82,6 +83,14 @@ successes_pp_no_decel_1m = initial_nodecel_list[3]['successes_pp_no_decel']
 successes_pp_no_decel_desired_1m = initial_nodecel_list[3]['successes_pp_no_decel_desired']
 mean_velocity_1m = initial_nodecel_list[3]['mean_velocity']
 
+# calculate number of successes with no decel at 0.15 m
+mot_region_distance_p15m = l_cell_to_4k + l_4k_to_lens_aperture
+_, vel_pp_no_decel_p15m, _, successes_pp_no_decel_p15m, successful_mols_pp_no_decel_p15m = \
+    propagate(n, p, v, a, 0, np.zeros(n, dtype=bool), l_4k_to_lens_aperture, m_s, \
+              decel=False, visual=False, mot_start=mot_region_distance_p15m)
+successes_pp_no_decel_desired_p15m = (vel_pp_no_decel_p15m[successful_mols_pp_no_decel_p15m, 2] < \
+    desired_vel_class_vz).sum()
+
 for i, del_s2w in enumerate(del_0_s2w_list):
 
     for j, z_len in enumerate(z_lens_list):
@@ -100,6 +109,8 @@ for i, del_s2w in enumerate(del_0_s2w_list):
         enhancement_desired_molecules = desired_molecules / np.float64(successes_pp_no_decel_desired)
         enhancement_number_successes_1m = successes_pp / np.float64(successes_pp_no_decel_1m)
         enhancement_desired_molecules_1m = desired_molecules / np.float64(successes_pp_no_decel_desired_1m)
+        enhancement_number_successes_p15m = successes_pp / np.float64(successes_pp_no_decel_p15m)
+        enhancement_desired_molecules_p15m = desired_molecules / np.float64(successes_pp_no_decel_desired_p15m)
         mean_velocity = np.mean(vel_pp[successful_mols_pp, 2])
         mean_velocity_reduction = mean_velocity / mean_velocity_1m
 
@@ -112,6 +123,8 @@ for i, del_s2w in enumerate(del_0_s2w_list):
         print(f'Enhancement, desired velocity class: {enhancement_desired_molecules}')
         print(f'Enhancement from 1m, successes: {enhancement_number_successes_1m}')
         print(f'Enhancement from 1m, desired velocity class: {enhancement_desired_molecules_1m}')
+        print(f'Enhancement from 0.15m, successes: {enhancement_number_successes_p15m}')
+        print(f'Enhancement from 0.15m, desired velocity class: {enhancement_desired_molecules_p15m}')
         print(f'Mean velocity: {mean_velocity}')
         print(f'Mean velocity reduction from 1m no decel: {mean_velocity_reduction}')
 
@@ -125,6 +138,8 @@ for i, del_s2w in enumerate(del_0_s2w_list):
             'enhancement_desired_molecules': enhancement_desired_molecules,
             'enhancement_number_successes_1m': enhancement_number_successes_1m,
             'enhancement_desired_molecules_1m': enhancement_desired_molecules_1m,
+            'enhancement_number_successes_p15m': enhancement_number_successes_p15m,
+            'enhancement_desired_molecules_p15m': enhancement_desired_molecules_p15m,
             'mean_velocity': mean_velocity,
             'mean_velocity_reduction': mean_velocity_reduction
         }
@@ -150,6 +165,10 @@ pivoted_df_enhancement_number_successes_1m = results_df.pivot(index='del_s2w', c
     values='enhancement_number_successes_1m')
 pivoted_df_enhancement_desired_molecules_1m = results_df.pivot(index='del_s2w', columns='z_len', \
     values='enhancement_desired_molecules_1m')
+pivoted_df_enhancement_number_successes_p15m = results_df.pivot(index='del_s2w', columns='z_len', \
+    values='enhancement_number_successes_p15m')
+pivoted_df_enhancement_desired_molecules_p15m = results_df.pivot(index='del_s2w', columns='z_len', \
+    values='enhancement_desired_molecules_p15m')
 pivoted_df_mean_velocity = results_df.pivot(index='del_s2w', columns='z_len', \
     values='mean_velocity')
 pivoted_df_mean_velocity_reduction = results_df.pivot(index='del_s2w', columns='z_len', \
@@ -170,6 +189,12 @@ plot_param_scan_heatmap(scan_fig_enhancement_number_successes_1m, \
 plot_param_scan_heatmap(scan_fig_enhancement_desired_molecules_1m, \
     scan_ax_enhancement_desired_molecules_1m, \
     pivoted_df_enhancement_desired_molecules_1m, path='enhancement_desired_molecules_1m')
+plot_param_scan_heatmap(scan_fig_enhancement_number_successes_p15m, \
+    scan_ax_enhancement_number_successes_p15m, \
+    pivoted_df_enhancement_number_successes_p15m, path='enhancement_number_successes_p15m')
+plot_param_scan_heatmap(scan_fig_enhancement_desired_molecules_p15m, \
+    scan_ax_enhancement_desired_molecules_p15m, \
+    pivoted_df_enhancement_desired_molecules_p15m, path='enhancement_desired_molecules_p15m')
 plot_param_scan_heatmap(scan_fig_mean_velocity, scan_ax_mean_velocity, \
     pivoted_df_mean_velocity, path='mean_velocity')
 plot_param_scan_heatmap(scan_fig_mean_velocity_reduction, scan_ax_mean_velocity_reduction, \

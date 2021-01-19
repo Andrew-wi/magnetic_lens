@@ -50,7 +50,7 @@ for del_s2w in del_0_s2w_list:
 
     # fig 9
     plot_vel_dist_scan_det(fig9a_fig, fig9a_ax, vel_z, del_s2w, successes=successes_pp)
-    plot_phase_space_acc_reg(fig9b_fig, fig9b_ax, vel_x, pos_x, del_s2w)
+    # plot_phase_space_acc_reg(fig9b_fig, fig9b_ax, vel_x, pos_x, del_s2w)
     # plot_decel_trans_acc(fig9c_fig, fig9c_ax, vel_x, pos_x, del_s2w)
 
     with open(f'./{date}/data_{date}/run_data_{date}.csv', 'a+') as data_file:
@@ -61,7 +61,7 @@ for del_s2w in del_0_s2w_list:
     print(f'Elapsed time so far: {datetime.datetime.now() - start_time}')
 
 plot_vel_dist_scan_det(fig9a_fig, fig9a_ax, vel_x, del_s2w, close='close')
-plot_phase_space_acc_reg(fig9b_fig, fig9b_ax, vel_x, pos_x, del_s2w, close='close')
+# plot_phase_space_acc_reg(fig9b_fig, fig9b_ax, vel_x, pos_x, del_s2w, close='close')
 # plot_decel_trans_acc(fig9c_fig, fig9c_ax, vel_x, pos_x, del_s2w, close='close')
 
 print(f'Total elapsed time: {datetime.datetime.now() - start_time}')
