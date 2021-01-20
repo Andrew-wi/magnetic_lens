@@ -313,7 +313,7 @@ def plot_phase_space_acc_reg(fig, ax, vels, pos, det, close=None):
 
 def plot_param_scan_heatmap(fig, ax, df, path):
 
-    sns.heatmap(df, annot=True, ax=ax)
+    sns.heatmap(df, annot=True, ax=ax, cmap='mako')
 
     # labels
     # ax.set_xlabel('del_s2w')

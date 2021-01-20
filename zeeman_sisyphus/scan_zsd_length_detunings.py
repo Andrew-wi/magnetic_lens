@@ -151,9 +151,9 @@ for i, del_s2w in enumerate(del_0_s2w_list):
         with open(f'./{date}/param_scans_{date}/param_scans_velocity_{date}_{mol_run}.txt', 'a+') \
             as data_file:
 
-            data_file.write(f'{vel_pp}\n')
             data_file.write(f'{successes_pp}\n')
-            data.file.write(f'{successful_mols_pp}\n')
+            data_file.write(f'{list(np.where(successful_mols_pp))[0]}\n')
+            data_file.write(f'{list(vel_pp[successful_mols_pp])}\n')
 
 # dataframe
 results_df = pd.DataFrame(results_dict_list)
