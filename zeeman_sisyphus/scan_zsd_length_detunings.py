@@ -37,6 +37,7 @@ scan_ax_mean_velocity_reduction = plt.axes()
 n = int(n)
 # successes_pre = 0
 # successful_particles_pre = np.zeros(n, dtype=bool)
+Path(f'./{date}/param_scans_{date}').mkdir(parents=True, exist_ok=True)
 p_pre = np.zeros((n, 3))
 v_pre = np.zeros((n, 3))
 a_pre = np.zeros((n, 3))
@@ -44,7 +45,7 @@ m_s_pre = np.zeros(n)
 p, v, a, m_s = generate(n, p_pre, v_pre, a_pre, m_s_pre)
 del_0_s2w_list = np.array([0.5e9, 1.5e9, 2.5e9, 3.5e9, 4.5e9, 5.5e9, 6.5e9]) # units: Hz
 z_lens_list = np.array([250, 500, 750, 1000, 1250, 1500]) # units: mm
-desired_vel_class_vz = 50 # units: m/s
+desired_vel_class_vz = 15 # units: m/s
 results_dict_list = []
 initial_nodecel_list = []
 
@@ -147,9 +148,15 @@ for i, del_s2w in enumerate(del_0_s2w_list):
 
         print(f'Elapsed time so far: {datetime.datetime.now() - start_time_scan_len_dets}')
 
+        with open(f'./{date}/param_scans_{date}/param_scans_velocity_{date}_{mol_run}.txt', 'a+') \
+            as data_file:
+
+            data_file.write(f'{vel_pp}\n')
+            data_file.write(f'{successes_pp}\n')
+            data.file.write(f'{successful_mols_pp}\n')
+
 # dataframe
 results_df = pd.DataFrame(results_dict_list)
-Path('{}/param_scans_{}'.format(date, date)).mkdir(parents=True, exist_ok=True)
 results_df.to_csv('{}/param_scans_{}/param_scans_{}.csv'.format(date, date, date))
 
 # pivot
