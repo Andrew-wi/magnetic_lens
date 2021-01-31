@@ -45,7 +45,6 @@ m_s_pre = np.zeros(n)
 p, v, a, m_s = generate(n, p_pre, v_pre, a_pre, m_s_pre)
 del_0_s2w_list = np.array([0.5e9, 1.5e9, 2.5e9, 3.5e9, 4.5e9, 5.5e9, 6.5e9]) # units: Hz
 z_lens_list = np.array([250, 500, 750, 1000, 1250, 1500]) # units: mm
-desired_vel_class_vz = 15 # units: m/s
 results_dict_list = []
 initial_nodecel_list = []
 
@@ -96,7 +95,7 @@ for i, del_s2w in enumerate(del_0_s2w_list):
 
     for j, z_len in enumerate(z_lens_list):
 
-        mot_region_distance = l_cell_to_4k + l_4k_to_lens_aperture + z_len / 1e3
+        mot_region_distance = l_cell_to_4k + l_4k_to_lens_aperture + z_len / 1e3 + 0.1
         successes_pp_no_decel = initial_nodecel_list[j]['successes_pp_no_decel']
         successes_pp_no_decel_desired = initial_nodecel_list[j]['successes_pp_no_decel_desired']
 
@@ -116,8 +115,8 @@ for i, del_s2w in enumerate(del_0_s2w_list):
         mean_velocity_reduction = mean_velocity / mean_velocity_1m
 
         print(f'Successes, del2w = {del_s2w / 1e9} and z_len = {z_len / 1e3}: {successes_pp}')
-        print(f'Successful particles, del2w = {del_s2w / 1e9} and z_len = {z_len / 1e3}: ' + \
-              f'{np.where(successful_mols_pp == True)}')
+        # print(f'Successful particles, del2w = {del_s2w / 1e9} and z_len = {z_len / 1e3}: ' + \
+        #       f'{np.where(successful_mols_pp == True)}')
         print(f'Number of molecules in MOT region: {successes_pp}')
         print(f'Number of molecules in desired velocity class: {desired_molecules}')
         print(f'Enhancement, successes: {enhancement_number_successes}')
