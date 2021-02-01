@@ -242,7 +242,7 @@ def plot_vel_long(fig, ax):
 
     return (fig, ax)
 
-def plot_vel_dist_scan_det(fig, ax, vels, det, close=None, successes='n/a'):
+def plot_vel_dist_scan_det(fig, ax, vels, det, index, close=None, successes='n/a'):
 
     if close == 'close':
         # labels
@@ -263,7 +263,7 @@ def plot_vel_dist_scan_det(fig, ax, vels, det, close=None, successes='n/a'):
 
     else:
         sns.histplot(data=vels, label=f'detuning (GHz) = {det / 1e9}, successes = {successes}', \
-            ax=ax, kde=True, stat='count', color=np.random.random(3), binwidth=1)
+            ax=ax, kde=True, stat='count', color=colors[index], binwidth=1)
 
 def plot_phase_space_acc_reg(fig, ax, vels, pos, det, close=None):
 
