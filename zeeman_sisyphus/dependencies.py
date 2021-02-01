@@ -22,7 +22,7 @@ from pathlib import Path
 
 t = 0.0
 n = 1e6 # < -- CaOH/CaF number of molecules
-mol_run = 'CaOH_optimal_fig8'
+mol_run = 'CaOH_optimal_fig9_velsel2'
 desired_vel_class_vz = 30 # units: m/s
 sigma_xy = 0.0042 # <-- CaOH
 # sigma_vxy = 12.06 # <-- CaOH, He3 bg
@@ -35,7 +35,7 @@ sigma_vz = 2.5 # <-- CaF/CaOH, velocity class selection
 # sigma_vz = 19.0 # <-- CaOH, He3 bg
 # mu_vz = 110.0 # <-- CaOH, regparams
 #mu_vz = 70.0 # <-- CaOH, He3 bg
-mu_vz = 110.0 # <-- CaOH, velocity class selection
+mu_vz = 170.0 # <-- CaOH, velocity class selection
 # mu_vz = 150.0 # <-- CaF
 # l_cell_to_4k = 0.1 #<-- CaF 
 l_cell_to_4k = 0.075 # <-- CaOH
@@ -61,8 +61,10 @@ h = 6.62607004e-34 # units: m^2*kg/s
 lambda_trans = 606e-9 # units: m
 date = datetime.date.today()
 mols_tracking = [1387, 81490]
-gate_list = [0.15, 0.65, 1.15, 1.65] # <-- CaOH
+# gate_list = [0.15, 0.65, 1.15, 1.65] # <-- CaOH
+gate_list = [0.15, 0.40, 0.65, 0.90, 1.15] # <-- CaOH
 # gate_list = [0.10, 0.60, 1.10, 1.60] # <-- CaF, Figure 8
+colors = ['red', 'green', 'blue', 'purple', 'orange', 'maroon', 'skyblue', 'peru']
 gate_size = 0.01 # units: m
 
 # parameter scan variables
