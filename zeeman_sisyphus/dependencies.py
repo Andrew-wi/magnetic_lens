@@ -21,8 +21,8 @@ import seaborn as sns
 from pathlib import Path
 
 t = 0.0
-n = 1e7 # < -- CaOH/CaF number of molecules
-mol_run = 'CaOH_optimal_fig8_velsel'
+n = 1e6 # < -- CaOH/CaF number of molecules
+mol_run = 'CaOH_optimal_fig8'
 desired_vel_class_vz = 30 # units: m/s
 sigma_xy = 0.0042 # <-- CaOH
 # sigma_vxy = 12.06 # <-- CaOH, He3 bg
@@ -51,7 +51,7 @@ t_final = 0.02
 steps = 2000 # for fast runs, set this to 200
 # mot_left_edge = 1.3 # <-- CaF, Figure 9 
 mot_left_edge = 1.15 # <-- CaOH, optimal
-# mot_left_edge = 1.62 # <-- CaOH, full length
+# mot_left_edge = 1.65 # <-- CaOH, full length
 #mot_left_edge = 1.6 # <-- CaF, Figure 8
 # mot_side_length = 0.005 # <-- CaF 
 mot_side_length = 0.01 # <-- CaOH
