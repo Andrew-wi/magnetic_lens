@@ -21,8 +21,8 @@ import seaborn as sns
 from pathlib import Path
 
 t = 0.0
-n = 1e7 # < -- CaOH/CaF number of molecules
-mol_run = 'CaOH_scan2d_des30'
+n = 1e2 # < -- CaOH/CaF number of molecules
+mol_run = 'CaOH_test_prop_noaperture'
 desired_vel_class_vz = 30 # units: m/s
 sigma_xy = 0.0042 # <-- CaOH
 # sigma_vxy = 12.06 # <-- CaOH, He3 bg
@@ -49,10 +49,11 @@ mass = 9.48671e-26 # <-- CaOH mass (kg)
 #mass = 1.18084e-25 # <-- caoch3 mass
 t_final = 0.02
 steps = 2000 # for fast runs, set this to 200
-# mot_left_edge = 1.3 # <-- CaF, Figure 9 
+# mot_left_edge = 1.3 # <-- CaF, Figure 9
 # mot_left_edge = 1.15 # <-- CaOH, optimal
-mot_left_edge = 1.65 # <-- CaOH, full length
-#mot_left_edge = 1.6 # <-- CaF, Figure 8
+# mot_left_edge = 1.65 # <-- CaOH, full length
+# mot_left_edge = 1.6 # <-- CaF, Figure 8
+mot_left_edge = 0.4 # <-- CaOH, superconducting magnets
 # mot_side_length = 0.005 # <-- CaF 
 mot_side_length = 0.01 # <-- CaOH
 del_0_w_to_s = 13.75e9 # units: Hz
@@ -66,6 +67,8 @@ gate_list = [0.15, 0.40, 0.65, 0.90, 1.15] # <-- CaOH
 # gate_list = [0.10, 0.60, 1.10, 1.60] # <-- CaF, Figure 8
 colors = ['red', 'green', 'blue', 'purple', 'orange', 'maroon', 'skyblue', 'peru']
 gate_size = 0.01 # units: m
+l_xy = 0.0001818182 # mesh spacing length, as in file_read_testing.ipynb
+l_z = 0.0007518999999999998 # mesh spacing length
 
 # parameter scan variables
 lens_range = 0.5 # range of values over which we scan the lens. Origin is at l_4k_to_lens_aperture
@@ -73,10 +76,10 @@ scan_points = 9 # number of points to scan
 trials = 21 # number of trials at each scan_point
 
 # same as in mathematica code
-mxy = 50 # mesh spacing in xy directions
-mz = 1500 # mesh spacing in z direction
-r_inner = 2.5 # inner radius of lens (in mm, as Radia is in mm by default, same as in Mathematica)
-r_outer = 20 # outer radius of lens (mm, as in Radia, same as in Mathematica)
+mxy = 200 # mesh grid density in xy directions
+mz = 400 # mesh grid density in z direction
+r_inner = 18 # inner radius of lens (in mm, as Radia is in mm by default, same as in Mathematica)
+r_outer = 18 # outer radius of lens (mm, as in Radia, same as in Mathematica)
 dz = 8 # thickness of magnet segments along z-axis
-z_length = 1500 # the length along z axis for which b-field is computed
+z_length = 300 # the length along z axis for which b-field is computed
 segs = 12 # number of segments

@@ -14,10 +14,6 @@ normBMatrix = hf_norm[('Dataset1')]
 # bMatrix = np.array([hdulBMatrix[0].data[i] for i in range(m)])
 # bMatrix = np.transpose(bMatrix, (1, 0, 2, 3))
 
-# mesh spacing length
-l_xy = (r_inner * 2 / 1e3) / (mxy - 1)
-l_z = (z_length / 1e3) / (mz - 1)
-
 # coordinates
 # xy_coords = np.linspace(-r_inner/1e3, r_inner/1e3, mxy)
 # z_coords = np.linspace(-10/1e3, z_length/1e3, mz)

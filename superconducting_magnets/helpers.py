@@ -25,14 +25,13 @@ def magnet_prop(pos, vel, acc, ms_prev, prev_det_sign_w2s_pos, prev_det_sign_w2s
     # initialize variables
     ms = ms_prev
 
-    # mesh spacing length
-    l_xy = (r_inner * 2 / 1e3) / (mxy - 1)
-    l_z = (zsd_length / 1e3) / (mz - 1)
-
     # coordinates for interpolation
     xCoord = round((r_inner / 1e3 + pos[0]) / l_xy)
     yCoord = round((r_inner / 1e3 + pos[1]) / l_xy)
     zCoord = round((pos[2] - (l_cell_to_4k + l_4k_to_lens_aperture)) / l_z)
+    # print((pos[0] ** 2 + pos[1] ** 2) ** (1 / 2))
+    # print(pos[0], pos[1], pos[2])
+    # print(xCoord, yCoord, zCoord)
 
     # detuning calculation, w -> s and s -> w
     # delta_w_to_s = 2 * np.pi * (-del_0_w_to_s + mu_B * g * ms * \
@@ -142,13 +141,13 @@ def plot_prop(fig, ax):
     ax.set_xlabel('z (m)')
     ax.set_ylabel('x (m)')
     ax.grid(True)
-    ax.set_title('Propagation of {} Particles in the z- and x-Coordinates'.format(int(n)))
+    ax.set_title(f'Propagation of {int(n)} Particles in the z- and x-Coordinates')
     ax.set_xlim(left=0.0, right=mot_left_edge + 0.1)
-    ax.set_ylim(bottom=-0.008, top=0.008)
+    ax.set_ylim(bottom=-0.020, top=0.020)
 
     # save figure
-    Path('{}/propagation_plots_{}'.format(date, date)).mkdir(parents=True, exist_ok=True)
-    fig.savefig('{}/propagation_plots_{}/propagation_{}_particles{}'.format(date, date, int(n), date))
+    Path(f'{date}/propagation_plots_{date}').mkdir(parents=True, exist_ok=True)
+    fig.savefig(f'{date}/propagation_plots_{date}/propagation_{mol_run}_{int(n)}_particles_{date}')
 
     return (fig, ax)
 

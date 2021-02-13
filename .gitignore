@@ -1,3 +1,5 @@
 # ignore .fits files #
 ######################
 *.fits
+# ignore .h5 files
+superconducting_magnets/b_matrix/*.h5
