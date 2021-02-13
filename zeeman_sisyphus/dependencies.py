@@ -22,8 +22,8 @@ from pathlib import Path
 
 t = 0.0
 n = 1e7 # < -- CaOH/CaF number of molecules
-mol_run = 'CaOH_scan2d_des30'
-desired_vel_class_vz = 30 # units: m/s
+mol_run = 'CaOH_scan2d_des35'
+desired_vel_class_vz = 35 # units: m/s
 sigma_xy = 0.0042 # <-- CaOH
 # sigma_vxy = 12.06 # <-- CaOH, He3 bg
 sigma_vxy = 12.0 # <-- CaOH, regparams
