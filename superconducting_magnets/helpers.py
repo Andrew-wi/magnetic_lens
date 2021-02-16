@@ -195,7 +195,7 @@ def plot_accel(fig, ax):
     ax.grid(True)
     ax.set_title(f'Acceleration Along the z-axis, {mol_run}, {int(n)} mols')
     # ax.set_xlim(left=0.0, right=mot_left_edge + 0.1)
-    ax.set_xlim(left=0.09, right=1.6)
+    ax.set_xlim(left=0.09, right=mot_left_edge)
     # ax.set_ylim(bottom=-0.7, top=0.7)
     ax.legend()
 
