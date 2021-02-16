@@ -21,8 +21,8 @@ import seaborn as sns
 from pathlib import Path
 
 t = 0.0
-n = 1e2 # < -- CaOH/CaF number of molecules
-mol_run = 'CaOH_test_prop_noaperture'
+n = 1e5 # < -- CaOH/CaF number of molecules
+mol_run = 'CaOH_test_fig8'
 desired_vel_class_vz = 30 # units: m/s
 sigma_xy = 0.0042 # <-- CaOH
 # sigma_vxy = 12.06 # <-- CaOH, He3 bg
@@ -41,6 +41,7 @@ mu_vz = 110.0 # <-- CaOH, velocity class selection
 l_cell_to_4k = 0.075 # <-- CaOH
 # l_4k_to_lens_aperture = 0.0 # <-- CaF
 l_4k_to_lens_aperture = 0.075 # <-- CaOH
+r_lens_aperture = 0.005
 # l_4k_to_beam_shutter = 0.26
 g = 2.0
 mu_B = 9.274e-24

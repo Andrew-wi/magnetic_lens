@@ -18,6 +18,29 @@ def is_in_magnet(pos, zsd_length=z_length):
     else:
         return False
 
+def is_in_beam_aperture(pos):
+    if l_cell_to_4k < pos[2] and ((pos[0] ** 2 + pos[1] ** 2) ** (1 / 2)) > r_lens_aperture:
+        return False
+    else:
+        return True
+
+def is_in_mot(pos, i, succ_ptcls, mot_start=mot_left_edge):
+
+    if -mot_side_length/2 <= pos[0] <= mot_side_length / 2 and \
+        -mot_side_length/2 <= pos[1] <= mot_side_length / 2 and \
+        mot_start <= pos[2] <= mot_start + mot_side_length and \
+        succ_ptcls[i] == False:
+        return True
+    else:
+        return False
+
+def is_in_gate(gate, z_pos, counted):
+
+    if gate - gate_size / 2 <= z_pos <= gate + gate_size / 2 and counted == 0:
+        return True
+    else:
+        return False
+
 def magnet_prop(pos, vel, acc, ms_prev, prev_det_sign_w2s_pos, prev_det_sign_w2s_neg, \
     prev_det_sign_s2w_pos, prev_det_sign_s2w_neg, del_0_s2w=del_0_s_to_w, \
     zsd_length=z_length, ind=None):
@@ -29,9 +52,6 @@ def magnet_prop(pos, vel, acc, ms_prev, prev_det_sign_w2s_pos, prev_det_sign_w2s
     xCoord = round((r_inner / 1e3 + pos[0]) / l_xy)
     yCoord = round((r_inner / 1e3 + pos[1]) / l_xy)
     zCoord = round((pos[2] - (l_cell_to_4k + l_4k_to_lens_aperture)) / l_z)
-    # print((pos[0] ** 2 + pos[1] ** 2) ** (1 / 2))
-    # print(pos[0], pos[1], pos[2])
-    # print(xCoord, yCoord, zCoord)
 
     # detuning calculation, w -> s and s -> w
     # delta_w_to_s = 2 * np.pi * (-del_0_w_to_s + mu_B * g * ms * \
@@ -103,23 +123,6 @@ def plot_prop(positions):
         pl_x[int(i / 3)].append(positions[i])
 
     return pl_z, pl_x
-
-def is_in_mot(pos, i, succ_ptcls, mot_start=mot_left_edge):
-
-    if -mot_side_length/2 <= pos[0] <= mot_side_length / 2 and \
-        -mot_side_length/2 <= pos[1] <= mot_side_length / 2 and \
-        mot_start <= pos[2] <= mot_start + mot_side_length and \
-        succ_ptcls[i] == False:
-        return True
-    else:
-        return False
-
-def is_in_gate(gate, z_pos, counted):
-
-    if gate - gate_size / 2 <= z_pos <= gate + gate_size / 2 and counted == 0:
-        return True
-    else:
-        return False
 
 def plot_prop(fig, ax):
 

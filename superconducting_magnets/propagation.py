@@ -49,7 +49,7 @@ def propagate(n, p, v, a, successes_pre, successful_particles_pre, l_4k_to_lens_
 
         while is_not_dead(position, mot_start=mot_starting_point) and time <= t_final:
 
-            if is_in_magnet(position, zsd_length) and decel == True:
+            if is_in_magnet(position, zsd_length) and is_in_beam_aperture(position) and decel == True:
                 new_acc, new_m_s, \
                     det_sign_change_w2s_pos, det_sign_change_w2s_neg, \
                     det_sign_change_s2w_pos, det_sign_change_s2w_neg, \
