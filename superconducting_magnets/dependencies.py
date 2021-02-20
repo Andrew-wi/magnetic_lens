@@ -70,6 +70,7 @@ colors = ['red', 'green', 'blue', 'purple', 'orange', 'maroon', 'skyblue', 'peru
 gate_size = 0.01 # units: m
 l_xy = 0.0001818182 # mesh spacing length, as in file_read_testing.ipynb
 l_z = 0.0007518999999999998 # mesh spacing length
+b_field_maxes = [150, 250]
 
 # parameter scan variables
 lens_range = 0.5 # range of values over which we scan the lens. Origin is at l_4k_to_lens_aperture

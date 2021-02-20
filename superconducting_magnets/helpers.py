@@ -41,75 +41,27 @@ def is_in_gate(gate, z_pos, counted):
     else:
         return False
 
-def magnet_prop(pos, vel, acc, ms_prev, prev_det_sign_w2s_pos, prev_det_sign_w2s_neg, \
-    prev_det_sign_s2w_pos, prev_det_sign_s2w_neg, del_0_s2w=del_0_s_to_w, \
-    zsd_length=z_length, ind=None):
-
-    # initialize variables
-    ms = ms_prev
+def magnet_prop(pos, vel, acc, ms_prev, zsd_length=z_length, ind=None):
 
     # coordinates for interpolation
     xCoord = round((r_inner / 1e3 + pos[0]) / l_xy)
     yCoord = round((r_inner / 1e3 + pos[1]) / l_xy)
     zCoord = round((pos[2] - (l_cell_to_4k + l_4k_to_lens_aperture)) / l_z)
-
-    # detuning calculation, w -> s and s -> w
-    # delta_w_to_s = 2 * np.pi * (-del_0_w_to_s + mu_B * g * ms * \
-    #     np.absolute(normBMatrix[int(yCoord), int(xCoord), int(zCoord)]) / h + vel[2] / lambda_trans)
-    # delta_s_to_w = 2 * np.pi * (del_0_s2w + mu_B * g * ms * \
-    #     np.absolute(normBMatrix[int(yCoord), int(xCoord), int(zCoord)]) / h + vel[2] / lambda_trans)
-    # removed ms
-    delta_w_to_s_pos = 2 * np.pi * (-del_0_w_to_s + 1/2 * mu_B * g * \
-        np.absolute(normBMatrix[int(yCoord), int(xCoord), int(zCoord)]) / h + vel[2] / lambda_trans)
-    delta_w_to_s_neg = 2 * np.pi * (-del_0_w_to_s + -1/2 * mu_B * g * \
-        np.absolute(normBMatrix[int(yCoord), int(xCoord), int(zCoord)]) / h + vel[2] / lambda_trans)
-    delta_s_to_w_pos = 2 * np.pi * (del_0_s2w + 1/2 * mu_B * g * \
-        np.absolute(normBMatrix[int(yCoord), int(xCoord), int(zCoord)]) / h + vel[2] / lambda_trans)
-    delta_s_to_w_neg = 2 * np.pi * (del_0_s2w + -1/2 * mu_B * g * \
-        np.absolute(normBMatrix[int(yCoord), int(xCoord), int(zCoord)]) / h + vel[2] / lambda_trans)
+    coords = (xCoord, yCoord, zCoord)
 
     # flip signs if conditions met
-    current_detuning_sign_w2s_pos, current_detuning_sign_w2s_neg, \
-        current_detuning_sign_s2w_pos, current_detuning_sign_s2w_neg, ms_new = \
-        sign_change(delta_w_to_s_pos, delta_w_to_s_neg, delta_s_to_w_pos, delta_s_to_w_neg, \
-            prev_det_sign_w2s_pos, prev_det_sign_w2s_neg, prev_det_sign_s2w_pos, prev_det_sign_s2w_neg, ms)
+    ms_new = sign_change(coords, ms_prev)
 
     # change acceleration
     changed_acceleration = ms_new * force_field[int(yCoord), int(xCoord), int(zCoord)] / mass
 
-    return changed_acceleration, ms_new, \
-           current_detuning_sign_w2s_pos, current_detuning_sign_w2s_neg, \
-           current_detuning_sign_s2w_pos, current_detuning_sign_s2w_neg, \
-           delta_w_to_s_pos, delta_w_to_s_neg, delta_s_to_w_pos, delta_s_to_w_neg
+    return changed_acceleration, ms_new
 
-def sign_change(del_w2s_pos, del_w2s_neg, del_s2w_pos, del_s2w_neg, \
-    previous_sign_w2s_pos, previous_sign_w2s_neg, previous_sign_s2w_pos, \
-    previous_sign_s2w_neg, ms_current):
+def sign_change(coords, ms_prev):
 
-    # initialize variables
-    sign_change_w2s_pos = np.sign(del_w2s_pos)
-    sign_change_w2s_neg = np.sign(del_w2s_neg)
-    sign_change_s2w_pos = np.sign(del_s2w_pos)
-    sign_change_s2w_neg = np.sign(del_s2w_neg)
-    ms_change = ms_current
+    ms_change = ms_prev * -1 if coords[2] in b_field_maxes else ms_prev
 
-    # test to flip signs
-    if np.sign(del_w2s_pos) != previous_sign_w2s_pos and np.sign(ms_current) == 1:
-        ms_change *= -1
-    elif np.sign(del_w2s_neg) != previous_sign_w2s_neg and np.sign(ms_current) == -1:
-        ms_change *= -1
-    elif np.sign(del_s2w_pos) != previous_sign_s2w_pos and np.sign(ms_current) == 1:
-        ms_change *= -1
-    elif np.sign(del_s2w_neg) != previous_sign_s2w_neg and np.sign(ms_current) == -1:
-        ms_change *= -1
-
-    # # bootleg spin flipping lol
-    # if del_w2s > 2.8e11 and ms_current == 0.5:
-    #     ms_change = -0.5
-    # elif del_s2w > -0.3e11 and ms_current == -0.5:
-    #     ms_change = 0.5
-
-    return sign_change_w2s_pos, sign_change_w2s_neg, sign_change_s2w_pos, sign_change_s2w_neg, ms_change
+    return ms_change
 
 def plot_prop(positions):
 
