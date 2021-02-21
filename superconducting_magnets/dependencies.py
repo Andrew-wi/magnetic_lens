@@ -21,41 +21,31 @@ import seaborn as sns
 from pathlib import Path
 
 t = 0.0
-n = 1e3 # < -- CaOH/CaF number of molecules
-mol_run = 'CaOH_prop_test'
+n = 1e6 # < -- CaOH/CaF number of molecules
+mol_run = 'CaOH_testing'
 desired_vel_class_vz = 30 # units: m/s
 sigma_xy = 0.0042 # <-- CaOH
 # sigma_vxy = 12.06 # <-- CaOH, He3 bg
 sigma_vxy = 12.0 # <-- CaOH, regparams
-# unif_xy = 0.0025 # <-- CaF
-# unif_vxy = 7.5 # <-- CaF
 # sigma_vz = 2.5 # <-- CaF/CaOH, velocity class selection
-# sigma_vz = 39.49 # <-- CaF, real 
 sigma_vz = 30.0 # <-- CaOH, regparams
 # sigma_vz = 19.0 # <-- CaOH, He3 bg
 # mu_vz = 110.0 # <-- CaOH, regparams
 #mu_vz = 70.0 # <-- CaOH, He3 bg
 mu_vz = 110.0 # <-- CaOH, velocity class selection
-# mu_vz = 150.0 # <-- CaF
-# l_cell_to_4k = 0.1 #<-- CaF 
 l_cell_to_4k = 0.075 # <-- CaOH
-# l_4k_to_lens_aperture = 0.0 # <-- CaF
 l_4k_to_lens_aperture = 0.075 # <-- CaOH
 r_4k_aperture = 0.005
 # l_4k_to_beam_shutter = 0.26
 g = 2.0
 mu_B = 9.274e-24
-# mass = 9.81069e-26 # <-- CaF mass 
 mass = 9.48671e-26 # <-- CaOH mass (kg) 
 #mass = 1.18084e-25 # <-- caoch3 mass
 t_final = 0.02
 steps = 2000 # for fast runs, set this to 200
-# mot_left_edge = 1.3 # <-- CaF, Figure 9
 # mot_left_edge = 1.15 # <-- CaOH, optimal
 # mot_left_edge = 1.65 # <-- CaOH, full length
-# mot_left_edge = 1.6 # <-- CaF, Figure 8
 mot_left_edge = 0.5 # <-- CaOH, superconducting magnets
-# mot_side_length = 0.005 # <-- CaF 
 mot_side_length = 0.01 # <-- CaOH
 del_0_w_to_s = 13.75e9 # units: Hz
 del_0_s_to_w = 2.5e9 #2.5e9 # units: Hz
@@ -64,18 +54,12 @@ lambda_trans = 606e-9 # units: m
 date = datetime.date.today()
 mols_tracking = [61, 485, 534, 887]
 # gate_list = [0.15, 0.65, 1.15, 1.65] # <-- CaOH
-gate_list = [0.15, 0.40, 0.65, 0.90, 1.15] # <-- CaOH
-# gate_list = [0.10, 0.60, 1.10, 1.60] # <-- CaF, Figure 8
+gate_list = np.linspace(0.15, 0.50, 4) # <-- CaOH
 colors = ['red', 'green', 'blue', 'purple', 'orange', 'maroon', 'skyblue', 'peru']
 gate_size = 0.01 # units: m
 l_xy = 0.0001818182 # mesh spacing length, as in file_read_testing.ipynb
 l_z = 0.0007518999999999998 # mesh spacing length
 b_field_maxes = [153, 200, 246]
-# b_field_maxes = np.array([
-# 	[149, 150, 151, 152, 153, 154, 155, 156, 157], 
-# 	[196, 197, 198, 199, 200, 201, 202, 203, 204], 
-# 	[240, 241, 242, 243, 244, 245, 246, 247, 248]
-# ])
 
 # parameter scan variables
 lens_range = 0.5 # range of values over which we scan the lens. Origin is at l_4k_to_lens_aperture

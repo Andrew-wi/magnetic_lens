@@ -19,18 +19,18 @@ def propagate_sanity(n, p, v, a, successes_pre, successful_particles_pre, l_4k_t
 
     if deepcopy == True:
         # init, allocate new memory for copied variables
-        pos_list=copy.deepcopy(p)
-        vel_list=copy.deepcopy(v)
-        acc_list=copy.deepcopy(a)
+        pos_list = copy.deepcopy(p)
+        vel_list = copy.deepcopy(v)
+        acc_list = copy.deepcopy(a)
         successes = copy.deepcopy(successes_pre)
         successful_particles = copy.deepcopy(successful_particles_pre)
         gate_tracker = np.zeros((len(gate_list), n))
         counted = np.zeros((len(gate_list), int(n)))
     else:
         # init, reference to value
-        pos_list=p
-        vel_list=v
-        acc_list=a
+        pos_list = p
+        vel_list = v
+        acc_list = a
         successes = successes_pre
         successful_particles = successful_particles_pre
         gate_tracker = np.zeros((len(gate_list), n))
@@ -59,66 +59,46 @@ def propagate_sanity(n, p, v, a, successes_pre, successful_particles_pre, l_4k_t
 
         timestep = t_final / steps
         time = timestep
-        position = pos_list[index, :]
-        velocity = vel_list[index, :]
-        acceleration = acc_list[index, :]
-        ms = m_s[index]
         step_count = 0
         trajectory_z = np.zeros(steps)
         trajectory_x = np.zeros(steps)
         spin_tracker = np.zeros((steps, 2))
         vel_tracker = np.zeros((steps, 4))
 
-        while is_not_dead(position) and time <= t_final:
+        while is_not_dead(pos_list[index, :]) and time <= t_final:
 
             if plot == True:
-                trajectory_z[step_count] = position[2]
-                trajectory_x[step_count] = position[0]
+                trajectory_z[step_count] = pos_list[index, 2]
+                trajectory_x[step_count] = pos_list[index, 0]
 
             if spin_tracking == True and index in spin_tracked_particles:
-                spin_tracker[step_count, 0] = position[2]
-                spin_tracker[step_count, 1] = ms
+                spin_tracker[step_count, 0] = pos_list[index, 2]
+                spin_tracker[step_count, 1] = m_s[index]
 
             if plot_long_dist == True:
                 for i, gate_pos in enumerate(gate_list):
-                    if is_in_gate(gate_pos, position[2], counted[i, index]):
+                    if is_in_gate(gate_pos, pos_list[index, 2], counted[i, index]):
                         counted[i, index] = 1
-                        gate_tracker[i, index] = velocity[2]
+                        gate_tracker[i, index] = vel_list[index, 2]
 
-            if is_in_magnet(position) and decel == True:
-                new_acc, new_m_s, \
-                    det_sign_change_w2s_pos, det_sign_change_w2s_neg, \
-                    det_sign_change_s2w_pos, det_sign_change_s2w_neg, \
-                    detuning_w2s_pos, detuning_w2s_neg, detuning_s2w_pos, detuning_s2w_neg = \
-                    magnet_prop(position, velocity, acceleration, ms, detuning_sign_w2s_pos, \
-                    detuning_sign_w2s_neg, detuning_sign_s2w_pos, detuning_sign_s2w_neg, \
-                    del_0_s2w, ind=index)
-                detuning_sign_w2s_pos = det_sign_change_w2s_pos
-                detuning_sign_w2s_neg = det_sign_change_w2s_neg
-                detuning_sign_s2w_pos = det_sign_change_s2w_pos
-                detuning_sign_s2w_neg = det_sign_change_s2w_neg
-
-                # # testing
-                # if index in spin_tracked_particles:
-                #     print(ms)
-
-                ms = new_m_s
+            if is_in_magnet(pos_list[index, :]) and decel == True:
+                new_acc, m_s[index] = magnet_prop(pos_list[index, :], vel_list[index, :], acc_list[index, :], m_s[index], ind=index)
                 acc_list[index, :] = new_acc
                 vel_list[index, :] += new_acc * timestep
-                pos_list[index, :] += velocity * timestep
+                pos_list[index, :] += vel_list[index, :] * timestep
 
             else:
                 acc_list[index, :] = 0
-                acceleration = 0
-                pos_list[index, :] += velocity * timestep
+                acc_list[index, :] = 0
+                pos_list[index, :] += vel_list[index, :] * timestep
 
             if plot_vel == True and index in plot_vel_particles:
-                vel_tracker[step_count, 0] = position[2]
+                vel_tracker[step_count, 0] = pos_list[index, 2]
                 vel_tracker[step_count, 1] = vel_list[index, 0]
                 vel_tracker[step_count, 2] = vel_list[index, 1]
                 vel_tracker[step_count, 3] = vel_list[index, 2]
 
-            if is_in_mot(position, index, successful_particles):
+            if is_in_mot(pos_list[index, :], index, successful_particles):
                 successful_particles[index] = 1
                 successes += 1
 
@@ -136,7 +116,7 @@ def propagate_sanity(n, p, v, a, successes_pre, successful_particles_pre, l_4k_t
                     continue
 
             elif pruning == 'to_magnet':
-                if position[2] > l_cell_to_4k + l_4k_to_lens_aperture:
+                if pos_list[index, 2] > l_cell_to_4k + l_4k_to_lens_aperture:
                     trajectory_z = trajectory_z[:step_count]
                     trajectory_x = trajectory_x[:step_count]
                     propagation_ax.plot(trajectory_z, trajectory_x, '-r', linewidth=0.5)
@@ -158,7 +138,7 @@ def propagate_sanity(n, p, v, a, successes_pre, successful_particles_pre, l_4k_t
             # vel_ax.plot(vel_tracker[:, 0], vel_tracker[:, 2], linewidth=1.0,\
             #     label='y component')
             vel_ax.plot(vel_tracker[:, 0], vel_tracker[:, 3], linewidth=1.0, \
-                label='velocity z-component')
+                label='vel_list[index, :] z-component')
 
     if plot == True:
         propagation_fig, propagation_ax = plot_prop(propagation_fig, propagation_ax)
