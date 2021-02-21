@@ -6,7 +6,8 @@ from vector_field import *
 
 def is_not_dead(pos, mot_start=mot_left_edge):
     if ((pos[0] ** 2 + pos[1] ** 2) ** (1 / 2)) > r_inner / 1e3 or \
-        pos[2] > mot_start + mot_side_length:
+        pos[2] > mot_start + mot_side_length or \
+        (pos[2] < l_cell_to_4k and ((pos[0] ** 2 + pos[1] ** 2) ** (1 / 2)) > r_4k_aperture):
         return False
     else:
         return True
@@ -17,12 +18,6 @@ def is_in_magnet(pos, zsd_length=z_length):
         return True
     else:
         return False
-
-def is_in_beam_aperture(pos):
-    if l_cell_to_4k < pos[2] and ((pos[0] ** 2 + pos[1] ** 2) ** (1 / 2)) > r_lens_aperture:
-        return False
-    else:
-        return True
 
 def is_in_mot(pos, i, succ_ptcls, mot_start=mot_left_edge):
 
@@ -89,8 +84,8 @@ def plot_prop(fig, ax):
     ax.plot(xMotRegion, yMotRegion, 'k', linewidth=1.0)
 
     # 4k aperture and beam shutter
-    ax.vlines(x=l_cell_to_4k, ymin=-10.0, ymax=-0.003, color='green', linewidth=3)
-    ax.vlines(x=l_cell_to_4k, ymin=0.003, ymax=10, color='green', linewidth=3)
+    ax.vlines(x=l_cell_to_4k, ymin=-10.0, ymax=-r_4k_aperture, color='green', linewidth=3)
+    ax.vlines(x=l_cell_to_4k, ymin=r_4k_aperture, ymax=10, color='green', linewidth=3)
 
     # labels
     ax.set_xlabel('z (m)')
@@ -113,7 +108,7 @@ def plot_spin(fig, ax):
     ax.set_ylabel('spin')
     ax.grid(True)
     ax.set_title('Spin Along the z-axis')
-    ax.set_xlim(left=0.09, right=0.20)
+    ax.set_xlim(left=0.09, right=mot_left_edge)
     #mot_left_edge + 0.1)
     ax.set_ylim(bottom=-0.7, top=0.7)
     # ax.legend()
@@ -124,23 +119,23 @@ def plot_spin(fig, ax):
 
     return (fig, ax)
 
-def plot_det(fig, ax):
+# def plot_det(fig, ax):
 
-    # labels
-    ax.set_xlabel('z (m)')
-    ax.set_ylabel('Detuning')
-    ax.grid(True)
-    ax.set_title('Detuning Along the z-axis')
-    # ax.set_xlim(left=0.0, right=mot_left_edge + 0.1)
-    ax.set_xlim(left=0.14, right=0.25)
-    # ax.set_ylim(bottom=-0.7, top=0.7)
-    ax.legend()
+#     # labels
+#     ax.set_xlabel('z (m)')
+#     ax.set_ylabel('Detuning')
+#     ax.grid(True)
+#     ax.set_title('Detuning Along the z-axis')
+#     # ax.set_xlim(left=0.0, right=mot_left_edge + 0.1)
+#     ax.set_xlim(left=0.14, right=0.25)
+#     # ax.set_ylim(bottom=-0.7, top=0.7)
+#     ax.legend()
 
-    # save figure
-    Path('{}/tracking_plots_{}'.format(date, date)).mkdir(parents=True, exist_ok=True)
-    fig.savefig('{}/tracking_plots_{}/detuning_{}'.format(date, date, date))
+#     # save figure
+#     Path('{}/tracking_plots_{}'.format(date, date)).mkdir(parents=True, exist_ok=True)
+#     fig.savefig('{}/tracking_plots_{}/detuning_{}'.format(date, date, date))
 
-    return (fig, ax)
+#     return (fig, ax)
 
 def plot_accel(fig, ax):
 
@@ -217,7 +212,7 @@ def plot_vel_dist_scan_det(fig, ax, vels, det, index, close=None, successes='n/a
 
     else:
         sns.histplot(data=vels, label=f'detuning (GHz) = {det / 1e9}, successes = {successes}', \
-            ax=ax, kde=True, stat='count', color=colors[index], binwidth=1)
+            ax=ax, kde=True, stat='count', color=colors[index], binwidth=1, binrange=(0, 215))
 
 def plot_phase_space_acc_reg(fig, ax, vels, pos, det, close=None):
 

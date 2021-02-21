@@ -25,8 +25,10 @@ m_s_pre = np.zeros(n)
 p, v, a, m_s = generate(n, p_pre, v_pre, a_pre, m_s_pre)
 successes_no_decel = 0
 successful_particles_no_decel = np.zeros(n, dtype=bool)
-sucesses_with_decel = 0
+successes_with_decel = 0
 successful_particles_with_decel = np.zeros(n, dtype=bool)
+bin_width = 5
+bin_range = (0, 230)
 
 # plot v distribution without zs decel
 pos_nl, vel_nl, acc_nl, successes_no_decel, successful_particles_no_decel = \
@@ -34,17 +36,19 @@ pos_nl, vel_nl, acc_nl, successes_no_decel, successful_particles_no_decel = \
     	l_4k_to_lens_aperture, m_s, decel=False, deepcopy=True, visual=False)
 print(f'Success rate for no decelerator: {successes_no_decel / n}')
 sns.histplot(data=vel_nl[successful_particles_no_decel, 2], \
-	label=f'No Decelerator = {successes_no_decel}', stat='count', \
-    kde=True, color=np.random.random(3), binwidth=2)
+	label=f'No Decelerator = {successes_no_decel}, yield  = {n / successes_no_decel}', stat='count', \
+    kde=True, color=np.random.random(3), binwidth=bin_width, binrange=bin_range)
+
+print(f'Elapsed time so far: {datetime.datetime.now() - starting_time_plot_vel}')
 
 # plot distribution with decel
-pos_pp, vel_pp, acc_pp, sucesses_with_decel, successful_particles_with_decel = \
-    propagate(n, p, v, a, sucesses_with_decel, successful_particles_with_decel, \
+pos_pp, vel_pp, acc_pp, successes_with_decel, successful_particles_with_decel = \
+    propagate(n, p, v, a, successes_with_decel, successful_particles_with_decel, \
     	l_4k_to_lens_aperture, m_s, decel=True, deepcopy=True, visual=False)
-print(f'Success rate for decelerator: {sucesses_with_decel / n}')
+print(f'Success rate for decelerator: {successes_with_decel / n}')
 sns.histplot(data=vel_pp[successful_particles_with_decel, 2], \
-	label=f'With Decelerator = {sucesses_with_decel}', stat='count', \
-    kde=True, color=np.random.random(3), binwidth=2)
+	label=f'With Decelerator = {successes_with_decel}, yield  = {n / successes_with_decel}', stat='count', \
+    kde=True, color=np.random.random(3), binwidth=bin_width, binrange=bin_range)
 
 # labels
 plt.xlabel('v_z (m)')
@@ -58,7 +62,7 @@ Path('{}/velocity_distribution_{}'.format(date, date)).\
     mkdir(parents=True, exist_ok=True)
 plt.savefig('{}/velocity_distribution_{}/velocity_distribution_{}_particles_{}_{}_{}_{}'.\
     format(date, date, int(n), str(successes_no_decel / n).replace('.', 'p'), \
-    str(sucesses_with_decel / n).replace('.', 'p'), date, mol_run))
+    str(successes_with_decel / n).replace('.', 'p'), date, mol_run))
 
 with open(f'./{date}/data_{date}/run_data_{date}.csv', 'a+') as data_file:
 	str_no_decel = ','.join(map(str, np.where(successful_particles_no_decel == True)[0]))
@@ -66,5 +70,5 @@ with open(f'./{date}/data_{date}/run_data_{date}.csv', 'a+') as data_file:
 	data_file.write(f'{str(datetime.datetime.now())},{mol_run},')
 	data_file.write(f'successes_no_decel={successes_no_decel},successful_particles_no_decel=,{str_no_decel if len(str_no_decel) > 0 else 0}\n')
 	data_file.write(f'{str(datetime.datetime.now())},{mol_run},')
-	data_file.write(f'successes_with_decel={sucesses_with_decel},successful_particles_with_decel=,{str_with_decel if len(str_with_decel) > 0 else 0}\n')
+	data_file.write(f'successes_with_decel={successes_with_decel},successful_particles_with_decel=,{str_with_decel if len(str_with_decel) > 0 else 0}\n')
 print(f'Total elapsed time: {datetime.datetime.now() - starting_time_plot_vel}')
