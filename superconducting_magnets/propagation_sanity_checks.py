@@ -67,17 +67,9 @@ def propagate_sanity(n, p, v, a, successes_pre, successful_particles_pre, l_4k_t
         trajectory_z = np.zeros(steps)
         trajectory_x = np.zeros(steps)
         spin_tracker = np.zeros((steps, 2))
-        detuning_sign_w2s_pos = 1
-        detuning_sign_w2s_neg = -1
-        detuning_sign_s2w_pos = 1
-        detuning_sign_s2w_neg = -1
         vel_tracker = np.zeros((steps, 4))
 
         while is_not_dead(position) and time <= t_final:
-
-            # # testing
-            # if index in spin_tracked_particles:
-            #     print(time, position[2])
 
             if plot == True:
                 trajectory_z[step_count] = position[2]

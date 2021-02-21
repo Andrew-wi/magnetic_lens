@@ -36,7 +36,7 @@ pos_nl, vel_nl, acc_nl, successes_no_decel, successful_particles_no_decel = \
     	l_4k_to_lens_aperture, m_s, decel=False, deepcopy=True, visual=False)
 print(f'Success rate for no decelerator: {successes_no_decel / n}')
 sns.histplot(data=vel_nl[successful_particles_no_decel, 2], \
-	label=f'No Decelerator = {successes_no_decel}, yield  = {n / successes_no_decel}', stat='count', \
+	label=f'No Decelerator = {successes_no_decel}, yield  = {successes_no_decel / n}', stat='count', \
     kde=True, color=np.random.random(3), binwidth=bin_width, binrange=bin_range)
 
 print(f'Elapsed time so far: {datetime.datetime.now() - starting_time_plot_vel}')
@@ -47,7 +47,7 @@ pos_pp, vel_pp, acc_pp, successes_with_decel, successful_particles_with_decel = 
     	l_4k_to_lens_aperture, m_s, decel=True, deepcopy=True, visual=False)
 print(f'Success rate for decelerator: {successes_with_decel / n}')
 sns.histplot(data=vel_pp[successful_particles_with_decel, 2], \
-	label=f'With Decelerator = {successes_with_decel}, yield  = {n / successes_with_decel}', stat='count', \
+	label=f'With Decelerator = {successes_with_decel}, yield  = {successes_with_decel / n}', stat='count', \
     kde=True, color=np.random.random(3), binwidth=bin_width, binrange=bin_range)
 
 # labels

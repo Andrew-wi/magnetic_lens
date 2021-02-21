@@ -21,7 +21,7 @@ import seaborn as sns
 from pathlib import Path
 
 t = 0.0
-n = 1e6 # < -- CaOH/CaF number of molecules
+n = 1e3 # < -- CaOH/CaF number of molecules
 mol_run = 'CaOH_prop_test'
 desired_vel_class_vz = 30 # units: m/s
 sigma_xy = 0.0042 # <-- CaOH
@@ -62,7 +62,7 @@ del_0_s_to_w = 2.5e9 #2.5e9 # units: Hz
 h = 6.62607004e-34 # units: m^2*kg/s
 lambda_trans = 606e-9 # units: m
 date = datetime.date.today()
-mols_tracking = [485]
+mols_tracking = [61, 485, 534, 887]
 # gate_list = [0.15, 0.65, 1.15, 1.65] # <-- CaOH
 gate_list = [0.15, 0.40, 0.65, 0.90, 1.15] # <-- CaOH
 # gate_list = [0.10, 0.60, 1.10, 1.60] # <-- CaF, Figure 8
@@ -71,6 +71,11 @@ gate_size = 0.01 # units: m
 l_xy = 0.0001818182 # mesh spacing length, as in file_read_testing.ipynb
 l_z = 0.0007518999999999998 # mesh spacing length
 b_field_maxes = [153, 200, 246]
+# b_field_maxes = np.array([
+# 	[149, 150, 151, 152, 153, 154, 155, 156, 157], 
+# 	[196, 197, 198, 199, 200, 201, 202, 203, 204], 
+# 	[240, 241, 242, 243, 244, 245, 246, 247, 248]
+# ])
 
 # parameter scan variables
 lens_range = 0.5 # range of values over which we scan the lens. Origin is at l_4k_to_lens_aperture

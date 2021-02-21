@@ -35,12 +35,12 @@ def propagate(n, p, v, a, successes_pre, successful_particles_pre, l_4k_to_lens_
         time = timestep
         step_count = 0
         vel_tracker = np.zeros((steps, 4))
-        flipped = (False, False, False)
+        flipped = [False, False, False]
 
         while is_not_dead(pos_list[index, :], mot_start=mot_start) and time <= t_final:
 
             if is_in_magnet(pos_list[index, :], zsd_length) and decel == True:
-                new_acc, m_s[index] = magnet_prop(pos_list[index, :], vel_list[index, :], acc_list[index, :], m_s[index], ind=index)
+                new_acc, m_s[index], flipped = magnet_prop(pos_list[index, :], vel_list[index, :], acc_list[index, :], m_s[index], ind=index, flip_check=flipped)
                 acc_list[index, :] = new_acc
                 vel_list[index, :] += new_acc * timestep
                 pos_list[index, :] += vel_list[index, :] * timestep

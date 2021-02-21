@@ -36,6 +36,7 @@ def propagate_properties(n, p, v, a, successes, successful_particles, l_4k_to_le
         trajectory_x = np.zeros(steps)
         spin_tracker = np.zeros((steps, 2))
         acc_tracker = np.zeros((steps, 4))
+        flipped = [False, False, False]
 
         while is_not_dead(p[index, :]) and time <= t_final:
 
@@ -48,7 +49,7 @@ def propagate_properties(n, p, v, a, successes, successful_particles, l_4k_to_le
                 spin_tracker[step_count, 1] = m_s[index]
 
             if is_in_magnet(p[index, :]) and decel == True:
-                new_acc, m_s[index] = magnet_prop(p[index, :], v[index, :], a[index, :], m_s[index], ind=index)
+                new_acc, m_s[index], flipped = magnet_prop(p[index, :], v[index, :], a[index, :], m_s[index], ind=index, flip_check=flipped)
                 a[index, :] = new_acc
                 v[index, :] += new_acc * timestep
                 p[index, :] += v[index, :] * timestep
@@ -96,7 +97,7 @@ def propagate_properties(n, p, v, a, successes, successful_particles, l_4k_to_le
 
             spin_tracker = spin_tracker[:step_count, :]
             spin_tracking_ax.plot(spin_tracker[:, 0], spin_tracker[:, 1], linewidth=1.0,\
-                label='Molecule {}'.format(index))
+                label=f'mol: {index}')
 
         if plot_acc == True and index in plot_acc_particles:
 
@@ -106,7 +107,7 @@ def propagate_properties(n, p, v, a, successes, successful_particles, l_4k_to_le
             # acc_ax.plot(acc_tracker[:, 0], acc_tracker[:, 2], linewidth=1.0,\
             #     label='y component'.format(index))
             acc_ax.plot(acc_tracker[:, 0], acc_tracker[:, 3], linewidth=1.0,\
-                label='z component'.format(index))
+                label=f'mol: {index}')
 
     if plot == True:
         propagation_fig, propagation_ax = plot_prop(propagation_fig, propagation_ax)

@@ -36,7 +36,7 @@ def is_in_gate(gate, z_pos, counted):
     else:
         return False
 
-def magnet_prop(pos, vel, acc, ms_prev, zsd_length=z_length, ind=None):
+def magnet_prop(pos, vel, acc, ms_prev, zsd_length=z_length, ind=None, flip_check=[True, True, True]):
 
     # coordinates for interpolation
     xCoord = round((r_inner / 1e3 + pos[0]) / l_xy)
@@ -45,18 +45,27 @@ def magnet_prop(pos, vel, acc, ms_prev, zsd_length=z_length, ind=None):
     coords = (xCoord, yCoord, zCoord)
 
     # flip signs if conditions met
-    ms_new = sign_change(coords, ms_prev)
+    ms_new, flip_check = sign_change(coords, ms_prev, flip_check)
 
     # change acceleration
     changed_acceleration = ms_new * force_field[int(yCoord), int(xCoord), int(zCoord)] / mass
 
-    return changed_acceleration, ms_new
+    return changed_acceleration, ms_new, flip_check
 
-def sign_change(coords, ms_prev):
+def sign_change(coords, ms_prev, flip_check):
+
+    # try:
+    #     if coords[2] in b_field_maxes and flip_check[np.where(b_field_maxes == coords[2])[0][0]] == False:
+    #         ms_change = ms_prev  * -1
+    #         flip_check[np.where(b_field_maxes == coords[2])[0][0]] == True
+    #     else:
+    #         ms_change = ms_prev
+    # except:
+    #     ms_change == ms_prev
 
     ms_change = ms_prev * -1 if coords[2] in b_field_maxes else ms_prev
 
-    return ms_change
+    return ms_change, flip_check
 
 def plot_prop(positions):
 
@@ -111,7 +120,7 @@ def plot_spin(fig, ax):
     ax.set_xlim(left=0.09, right=mot_left_edge)
     #mot_left_edge + 0.1)
     ax.set_ylim(bottom=-0.7, top=0.7)
-    # ax.legend()
+    ax.legend()
 
     # save figure
     Path('{}/tracking_plots_{}'.format(date, date)).mkdir(parents=True, exist_ok=True)
