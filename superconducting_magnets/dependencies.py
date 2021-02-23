@@ -21,8 +21,8 @@ import seaborn as sns
 from pathlib import Path
 
 t = 0.0
-n = 1e6 # < -- CaOH/CaF number of molecules
-mol_run = 'CaOH_velocity_dist'
+n = 1e7 # < -- CaOH/CaF number of molecules
+mol_run = 'CaOH_velocity_dist_bigmols'
 desired_vel_class_vz = 30 # units: m/s
 sigma_xy = 0.0042 # <-- CaOH
 # sigma_vxy = 12.06 # <-- CaOH, He3 bg
