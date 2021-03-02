@@ -7,8 +7,7 @@ from helpers import *
 # step through time
 def propagate_properties(n, p, v, a, successes, successful_particles, l_4k_to_lens_aperture,\
     m_s, decel=True, plot=False, spin_tracking=False, spin_tracked_particles=[], \
-    pruning=None, detuning_tracked_particles=[], \
-    plot_acc=False, plot_acc_particles=[], visual=False):
+    pruning=None, detuning_tracked_particles=[], plot_acc=False, plot_acc_particles=[], visual=False):
 
     print('Propagating...')
 

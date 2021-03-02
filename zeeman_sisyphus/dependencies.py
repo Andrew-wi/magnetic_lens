@@ -12,6 +12,7 @@ import matplotlib.pyplot as plt
 import matplotlib.path as pltPath
 import math
 import numpy as np
+import pandas as pd
 import pprint
 import random
 import seaborn as sns
@@ -21,8 +22,8 @@ import seaborn as sns
 from pathlib import Path
 
 t = 0.0
-n = 1e7 # < -- CaOH/CaF number of molecules
-mol_run = 'CaOH_scan2d_des35'
+n = 1e6 # < -- CaOH/CaF number of molecules
+mol_run = 'CaOH_origins_plot'
 desired_vel_class_vz = 35 # units: m/s
 sigma_xy = 0.0042 # <-- CaOH
 # sigma_vxy = 12.06 # <-- CaOH, He3 bg

@@ -12,17 +12,16 @@ import matplotlib.pyplot as plt
 import matplotlib.path as pltPath
 import math
 import numpy as np
+import pandas as pd
 import pprint
 import random
 import seaborn as sns
 
-# from astropy.io import fits
-# from mpl_toolkits import mplot3d
 from pathlib import Path
 
 t = 0.0
-n = 1e7 # < -- CaOH/CaF number of molecules
-mol_run = 'CaOH_velocity_dist_bigmols'
+n = 1e6 # < -- CaOH/CaF number of molecules
+mol_run = 'CaOH_origins'
 desired_vel_class_vz = 30 # units: m/s
 sigma_xy = 0.0042 # <-- CaOH
 # sigma_vxy = 12.06 # <-- CaOH, He3 bg
@@ -60,6 +59,7 @@ gate_size = 0.01 # units: m
 l_xy = 0.0001818182 # mesh spacing length, as in file_read_testing.ipynb
 l_z = 0.0007518999999999998 # mesh spacing length
 b_field_maxes = [153, 200, 246]
+branching_ratios = {'A000,X000': 0.9, 'A000,X100': 0.05, 'A000,dark': 0.05}
 
 # parameter scan variables
 lens_range = 0.5 # range of values over which we scan the lens. Origin is at l_4k_to_lens_aperture
