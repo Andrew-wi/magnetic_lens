@@ -67,6 +67,8 @@ gate_list = [0.15, 0.40, 0.65, 0.90, 1.15] # <-- CaOH
 # gate_list = [0.10, 0.60, 1.10, 1.60] # <-- CaF, Figure 8
 colors = ['red', 'green', 'blue', 'purple', 'orange', 'maroon', 'skyblue', 'peru']
 gate_size = 0.01 # units: m
+branching_ratios = {'A000,X000': 0.9, 'A000,X100': 0.05, 'A000,dark': 0.05}
+zeeman_effect = {'X000': np.linspace(0, 0.009, 400), 'X100': np.linspace(-0.3, -0.1, 400)}
 
 # parameter scan variables
 lens_range = 0.5 # range of values over which we scan the lens. Origin is at l_4k_to_lens_aperture

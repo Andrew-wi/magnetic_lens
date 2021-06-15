@@ -60,6 +60,8 @@ l_xy = 0.0001818182 # mesh spacing length, as in file_read_testing.ipynb
 l_z = 0.0007518999999999998 # mesh spacing length
 b_field_maxes = [153, 200, 246]
 branching_ratios = {'A000,X000': 0.9, 'A000,X100': 0.05, 'A000,dark': 0.05}
+zeeman_effect = {'X000': np.linspace(0, 0.009, 400), 'X100': np.linspace(-0.3, -0.1, 400)}
+
 
 # parameter scan variables
 lens_range = 0.5 # range of values over which we scan the lens. Origin is at l_4k_to_lens_aperture
