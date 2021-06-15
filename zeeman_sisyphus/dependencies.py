@@ -22,7 +22,7 @@ import seaborn as sns
 from pathlib import Path
 
 t = 0.0
-n = 1e6 # < -- CaOH/CaF number of molecules
+n = 1e7 # < -- CaOH/CaF number of molecules
 mol_run = 'CaOH_origins_plot'
 desired_vel_class_vz = 35 # units: m/s
 sigma_xy = 0.0042 # <-- CaOH
